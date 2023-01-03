@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
@@ -69,14 +70,20 @@ public class TripTest {
 
       trips[i] = repo.save(trip);
     } 
-    Long count = repo.countTouristAtSameDay(trips[0].getStartDate(), cities[0].getId());
-    assertEquals(tourists.length - 1, count);
     
     for (Trip t : trips) {
       Optional<Trip> finded = repo.getById(t.getId());
       assertTrue(finded.isPresent());
       assertEquals(t.getCity().getId(), finded.get().getCity().getId());
     }
+
+    // Should find trips in a city at same day
+    Long count = repo.countTouristAtSameDay(trips[0].getStartDate(), cities[0].getId());
+    assertEquals(tourists.length - 1, count);
+
+    // Should find trips from an user
+    List<Trip> tourstTrips = repo.getTripsFromTourist(tourists[0].getId());
+    assertEquals(1, tourstTrips.size());
   }
 
   @Test
