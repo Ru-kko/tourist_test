@@ -1,27 +1,29 @@
 package com.tourist.app.utils;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Config {
-  @Value("${token.expiration}")
-  private static Long eXpirationTime;
 
-  @Value("${token.secret}")
-  private static String secret;
+  private static Environment env;
 
-  @Value("${server.port}")
-  private static Integer port;
+  @Autowired
+  public void setEnv(Environment env) {
+    Config.env = env;
+  }
   
   public static Integer getPort() {
-    return port;
+    return env.getProperty("server.port", Integer.class);
   }
 
   public static String getSecret() {
-    return secret;
+    return env.getProperty("token.secret", String.class);
   }
 
   public static Long getExpirationTime() {
-    return eXpirationTime;
+    return env.getProperty("token.expiraton", Long.class);
   } 
   
 }
