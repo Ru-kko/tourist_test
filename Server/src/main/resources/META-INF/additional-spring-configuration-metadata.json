@@ -1,0 +1,12 @@
+{
+  "properties": [
+    {
+      "name": "token.expiraton",
+      "type": "java.lang.Long"
+    },
+    {
+      "name": "token.secret",
+      "type": "java.lang.String"
+    }
+  ]
+}
