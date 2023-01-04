@@ -11,6 +11,7 @@ import com.tourist.app.dataBase.BaseRepository;
 import com.tourist.app.dataBase.trips.Trip;
 import com.tourist.app.dataBase.trips.TripsRepository;
 import com.tourist.app.services.DatabaseService;
+import com.tourist.app.utils.Config;
 
 @Service
 public class Trips extends DatabaseService<Integer, Trip> {
@@ -38,6 +39,24 @@ public class Trips extends DatabaseService<Integer, Trip> {
       toUpdate.setStartDate(oldData.get().getStartDate());
 
     return repo.update(toUpdate);
+  }
+
+  public Trip save(Trip trip) {
+
+    if (trip == null ||
+        trip.getCity() == null ||
+        trip.getCity().getId() == null ||
+        trip.getTourist() == null ||
+        trip.getTourist().getId() == null)
+      return null;
+
+    Long count = countTouristAtSameDay(trip.getStartDate(), trip.getCity().getId());
+
+    if (count > Config.getMaxTourist())
+      return null;
+
+    return super.save(trip);
+
   }
 
   public Long countTouristAtSameDay(Date startDate, Integer cityId) {

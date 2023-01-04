@@ -11,8 +11,10 @@ public class ConfigTest {
   public void should_get_not_null_configuration() {
     Integer port = Config.getPort();
     Long exp = Config.getExpirationTime();
+    Long maxTrips = Config.getMaxTourist();
     String secret = Config.getSecret();
 
+    assertNotNull(maxTrips);
     assertNotNull(port);
     assertNotNull(secret);
     assertNotNull(exp);

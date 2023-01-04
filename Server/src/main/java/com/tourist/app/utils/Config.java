@@ -13,7 +13,11 @@ public class Config {
   public void setEnv(Environment env) {
     Config.env = env;
   }
-  
+
+  public static Long getMaxTourist() {
+    return env.getProperty("trip.maximun-tourists", Long.class);
+  }
+
   public static Integer getPort() {
     return env.getProperty("server.port", Integer.class);
   }
