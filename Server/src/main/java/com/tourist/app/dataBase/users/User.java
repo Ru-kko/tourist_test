@@ -25,7 +25,7 @@ public class User implements EntityBase<Integer> {
   private String password;
   private Boolean admin;
 
-  @OneToOne(optional = false, cascade = CascadeType.ALL)
+  @OneToOne(optional = false, cascade = CascadeType.REMOVE)
   @JoinColumn(name = "tourist", referencedColumnName = "touristId")
   @JsonIgnoreProperties("account")
   private Tourist tourist;
