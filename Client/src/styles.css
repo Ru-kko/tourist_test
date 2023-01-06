@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&family=Rowdies:wght@700&display=swap");
+
+:root {
+  --drakness: rgb(0, 20, 255);
+  --white: rgb(254, 254, 254);
+  --blue: rgb(0, 231, 255);
+  --main: rgb(0, 158, 255);
+  --black: rgb(30, 31, 31);
+}
+
+* {
+  color: var(--white);
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
