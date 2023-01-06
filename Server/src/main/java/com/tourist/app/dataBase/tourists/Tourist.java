@@ -19,10 +19,9 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "Tourists", uniqueConstraints = @UniqueConstraint(columnNames = {"idCard"}))
+@Table(name = "Tourists")
 public class Tourist implements EntityBase<Integer>{
   @Id
   @Column(name = "touristId")
@@ -34,6 +33,7 @@ public class Tourist implements EntityBase<Integer>{
   private String fullName;
   private Integer travelFrequency;
   private Double travelBudget;
+  @Column(name = "idCard", unique = true)
   private String idCard;
 
   @OneToOne(mappedBy = "tourist")

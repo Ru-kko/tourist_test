@@ -15,17 +15,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.tourist.app.dataBase.cities.CitiesRepository;
 import com.tourist.app.dataBase.cities.City;
 import com.tourist.app.dataBase.tourists.TouistsRepository;
 import com.tourist.app.dataBase.tourists.Tourist;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
 public class TripTest {
   @Autowired
@@ -107,14 +104,14 @@ public class TripTest {
 
   @AfterAll
   public void delete() {
+    for (Trip t : trips) {
+      repo.delete(t);
+    }
     for (City c : cities) {
       cRepo.delete(c);
     }
     for (Tourist t : tourists) {
       tRepo.delete(t);
-    }
-    for (Trip t : trips) {
-      repo.delete(t);
     }
   }
 }

@@ -3,6 +3,7 @@ package com.tourist.app.dataBase.tourists;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.text.ParseException;
@@ -16,12 +17,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
 public class TouristTest {
   @Autowired
@@ -68,10 +67,24 @@ public class TouristTest {
   }
 
   @Test
-  void should_find_people_taht_contains_doe_in_name(){
+  void should_find_people_taht_contains_doe_in_name() {
     List<Tourist> find = repo.findByName("doe");
 
     assertTrue(find.size() >= 2);
+  }
+
+  @Test
+  void should_dont_make_two_tourists_with_same_card_id() {
+    Calendar date = Calendar.getInstance();
+
+    date.set(2003, 2, 8);
+    Tourist err = new Tourist(date, "frist ", "4321", 2, 10.00d);
+    Tourist err2 = new Tourist(date, "second", "4321", 2, 10.00d);
+
+    err = repo.save(err);
+    assertThrows(DataIntegrityViolationException.class, () -> repo.save(err2));
+
+    repo.delete(err);
   }
 
   @Test
@@ -83,10 +96,9 @@ public class TouristTest {
     Tourist updated = repo.update(touristBase);
     Optional<Tourist> findedChange = repo.getById(testData[4].getId());
 
-    
     assertTrue(findedChange.isPresent());
     assertEquals("changed", updated.getFullName());
-    assertEquals("changed", findedChange.get().getFullName()); 
+    assertEquals("changed", findedChange.get().getFullName());
   }
 
   @AfterAll
