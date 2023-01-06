@@ -1,7 +1,9 @@
 package com.tourist.app.services.db;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Calendar;
 
@@ -27,9 +29,9 @@ public class UsersTest {
   @Autowired
   private Users service;
 
-  private Tourist[] tData = new Tourist[2];
-  private User[] testData = new User[2];
-  
+  private Tourist[] tData = new Tourist[3];
+  private User[] testData = new User[3];
+
   @BeforeAll
   void initializeData() {
     Calendar bornDate = Calendar.getInstance();
@@ -37,6 +39,7 @@ public class UsersTest {
 
     tData[0] = tService.save(new Tourist(bornDate, "name 1", "1234", 1, 1.5d));
     tData[1] = tService.save(new Tourist(bornDate, "name 2", "123", 1, 1.5d));
+    tData[2] = tService.save(new Tourist(bornDate, "name 3", "12345", 1, 1.5d));
   }
 
   @Test
@@ -61,20 +64,34 @@ public class UsersTest {
     second.setTourist(tData[1]);
 
     testData[1] = service.save(second);
-    
+
     assertNotNull(testData[1]);
     assertNotNull(testData[1].getId());
     assertNotNull(testData[1].getTourist());
 
   }
 
+  @Test
+  void should_find_by_tourist_idCard(){
+    var newUser = new User();
+    newUser.setAdmin(false);
+    newUser.setPassword("secretpsw");
+    newUser.setTourist(tData[2]);
+
+    testData[2] = service.save(newUser);
+
+    var finded = service.getByIdCard(tData[2].getIdCard());
+    
+    assertTrue(finded.isPresent());
+    assertEquals(testData[2].getId() , finded.get().getId());
+  }
+
   @AfterAll
   void destroy() {
-    service.delete(testData[0]);
-    service.delete(testData[1]);
-    
     tService.delete(tData[0]);
     tService.delete(tData[1]);
 
+    service.delete(testData[0]);
+    service.delete(testData[1]);
   }
 }

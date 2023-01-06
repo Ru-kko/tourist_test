@@ -37,6 +37,10 @@ public class Users extends DatabaseService<Integer, User> {
     return repo.update(toUpdate);
   }
 
+  public Optional<User> getByIdCard(String idCard) {
+    return repo.findByTouristIdCard(idCard);
+  }
+
   @Override
   protected BaseRepository<Integer, User> getRepo() {
     return this.repo;
