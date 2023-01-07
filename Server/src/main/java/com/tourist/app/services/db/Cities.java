@@ -1,5 +1,6 @@
 package com.tourist.app.services.db;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,14 +48,21 @@ public class Cities extends DatabaseService<Integer, City> {
     Pageable content = PageRequest.of(page, 50);
     var res = repo.findByName(name, content);
 
-    return new PageResponse<>(res.getContent(), res.getTotalElements(), res.getTotalPages());
+    return new PageResponse<>(cleanSecrets(res.getContent()), res.getTotalElements(), res.getTotalPages());
   }
 
   public PageResponse<City> getAll(Integer page) {
     Pageable content = PageRequest.of(page, 50);
     Page<City> res = repo.getAll(content);
 
-    return new PageResponse<>(res.getContent(), res.getTotalElements(), res.getTotalPages());
+    return new PageResponse<>(cleanSecrets(res.getContent()), res.getTotalElements(), res.getTotalPages());
+  }
+
+  private List<City> cleanSecrets(List<City> initial) {
+    return initial.stream().map(data -> {
+      data.setTrips(null);
+      return data;
+    }).toList();
   }
 
   @Override
