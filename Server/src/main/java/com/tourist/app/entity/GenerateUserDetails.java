@@ -1,4 +1,4 @@
-package com.tourist.app.utils;
+package com.tourist.app.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;

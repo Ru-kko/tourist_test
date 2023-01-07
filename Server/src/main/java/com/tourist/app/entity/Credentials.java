@@ -1,4 +1,4 @@
-package com.tourist.app.security;
+package com.tourist.app.entity;
 
 public class Credentials {
   private String cardId;

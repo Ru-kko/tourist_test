@@ -9,7 +9,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tourist.app.security.Credentials;
+import com.tourist.app.entity.Credentials;
+import com.tourist.app.entity.GenerateUserDetails;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

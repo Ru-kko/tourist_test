@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.tourist.app.entity.GenerateUserDetails;
 import com.tourist.app.services.db.Users;
-import com.tourist.app.utils.GenerateUserDetails;
 
 @Service
 public class UserDetailService implements UserDetailsService {
