@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tourist.app.dataBase.BaseRepository;
+import com.tourist.app.dataBase.tourists.Tourist;
 import com.tourist.app.dataBase.users.User;
 import com.tourist.app.dataBase.users.UsersRepository;
 import com.tourist.app.services.DatabaseService;
@@ -27,7 +28,7 @@ public class Users extends DatabaseService<Integer, User> {
 
     if (toUpdate.getAdmin() == null)
       toUpdate.setAdmin(oldData.get().getAdmin());
-    
+
     if (toUpdate.getPassword() == null)
       toUpdate.setPassword(oldData.get().getPassword());
 
@@ -38,7 +39,16 @@ public class Users extends DatabaseService<Integer, User> {
   }
 
   public Optional<User> getByIdCard(String idCard) {
-    return repo.findByTouristIdCard(idCard);
+    Optional<User> res = repo.findByTouristIdCard(idCard);
+
+    if (res.isEmpty())
+      return res;
+
+    Tourist newTourist = new Tourist();
+    newTourist.setIdCard(idCard);
+    res.get().setTourist(newTourist);
+
+    return res;
   }
 
   @Override

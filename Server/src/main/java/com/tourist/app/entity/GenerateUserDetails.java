@@ -47,7 +47,7 @@ public class GenerateUserDetails implements UserDetails {
 
   @Override
   public String getUsername() {
-    return user.getTourist().getFullName();
+    return user.getTourist().getIdCard();
   }
 
   @Override
