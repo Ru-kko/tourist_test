@@ -1,15 +1,19 @@
 package com.tourist.app.services.db;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tourist.app.dataBase.BaseRepository;
 import com.tourist.app.dataBase.tourists.TouistsRepository;
 import com.tourist.app.dataBase.tourists.Tourist;
+import com.tourist.app.entity.PageResponse;
 import com.tourist.app.services.DatabaseService;
 
 @Service
@@ -45,16 +49,37 @@ public class Tourists extends DatabaseService<Integer, Tourist> {
     return repo.update(toUpdate);
   }
 
-  public List<Tourist> findByName(String name) {
-    return repo.findByName(name);
+  public PageResponse<Tourist> findByName(String name, Integer page) {
+    Pageable conten = PageRequest.of(page, 50);
+    Page<Tourist> res = repo.findByName(name, conten);
+
+    return new PageResponse<>(cleanSecrets(res.getContent()), res.getTotalElements(), res.getTotalPages());
+  }
+
+  public PageResponse<Tourist> getAll(Integer page) {
+    Pageable content = PageRequest.of(page, 50);
+    Page<Tourist> res = repo.getAll(content);
+
+    return new PageResponse<>(cleanSecrets(res.getContent()), res.getTotalElements(), res.getTotalPages());
   }
 
   public Optional<Tourist> getByIdCard(String idCard) {
     return repo.getByIdCard(idCard);
   }
 
-  public List<Tourist> getByBornDateTimeSpace(Date start, Date end) {
-    return repo.getByBornDateTimeSpace(start, end);
+  public PageResponse<Tourist> getByBornDateTimeSpace(Calendar start, Calendar end, Integer page) {
+
+    Page<Tourist> res = repo.getByBornDateTimeSpace(start, end, PageRequest.of(page, 50));
+
+    return new PageResponse<>(cleanSecrets(res.getContent()), res.getTotalElements(), res.getTotalPages());
+  }
+
+  private List<Tourist> cleanSecrets(List<Tourist> initial) {
+    return initial.stream().map((data) -> {
+      data.setAccount(null);
+      data.setTrips(null);
+      return data;
+    }).toList();
   }
 
   @Override

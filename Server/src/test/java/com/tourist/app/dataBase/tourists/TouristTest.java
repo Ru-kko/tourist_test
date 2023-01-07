@@ -19,6 +19,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
 
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
@@ -68,7 +69,7 @@ public class TouristTest {
 
   @Test
   void should_find_people_taht_contains_doe_in_name() {
-    List<Tourist> find = repo.findByName("doe");
+    List<Tourist> find = repo.findByName("doe", PageRequest.of(0, 10)).getContent();
 
     assertTrue(find.size() >= 2);
   }

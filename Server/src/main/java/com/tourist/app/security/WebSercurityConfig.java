@@ -41,6 +41,7 @@ public class WebSercurityConfig {
         .requestMatchers("/register").permitAll()
         .requestMatchers(HttpMethod.GET, "/tourist/**", "/trip/**", "/city/**").permitAll()
         .requestMatchers(HttpMethod.POST, "/trip/**").hasRole("USER")
+        .requestMatchers(HttpMethod.PUT, "/tourist/**").authenticated()
         .anyRequest().hasRole("ADMIN")
         .and()
         .sessionManagement()
