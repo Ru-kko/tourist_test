@@ -25,8 +25,8 @@ public class GenerateUserDetails implements UserDetails {
 
     @Override
     public String getAuthority() {
-      if (this.isAdmin) return "Admin";
-      return "User";
+      if (this.isAdmin) return "ROLE_ADMIN";
+      return "ROLE_USER";
     }
 
   }

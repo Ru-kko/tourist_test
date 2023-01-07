@@ -1,9 +1,9 @@
 package com.tourist.app.utils;
 
-import java.util.Collections;
 import java.util.Date;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -11,6 +11,16 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
 public class TokenGenerator {
+  private Claims claims;
+
+  public TokenGenerator(String token) {
+    this.claims = Jwts.parserBuilder()
+        .setSigningKey(Config.getSecret().getBytes())
+        .build()
+        .parseClaimsJws(token)
+        .getBody();
+  }
+
   public static String createToken(String cardId) {
     Date expDate = new Date(System.currentTimeMillis() + Config.getExpirationTime());
 
@@ -21,18 +31,17 @@ public class TokenGenerator {
         .compact();
   }
 
-  public static UsernamePasswordAuthenticationToken getAuth(String token) {
+  public UsernamePasswordAuthenticationToken getAuth(UserDetails details) {
     try {
-      Claims claims = Jwts.parserBuilder()
-          .setSigningKey(Config.getSecret().getBytes())
-          .build()
-          .parseClaimsJws(token)
-          .getBody();
       String id = claims.getSubject();
 
-      return new UsernamePasswordAuthenticationToken(id, null, Collections.emptyList());
+      return new UsernamePasswordAuthenticationToken(id, null, details.getAuthorities());
     } catch (JwtException e) {
       return null;
     }
+  }
+
+  public String GetUsername() {
+    return claims.getSubject();
   }
 }
