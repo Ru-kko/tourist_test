@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
@@ -15,6 +14,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
@@ -57,10 +57,10 @@ public class CityTest {
   }
 
   @Test
-  void should_find_two_cities() {
-    List<City> finded = repo.findByName("cal");
+  void should_find_two_cities() { 
+    var finded = repo.findByName("cal", PageRequest.of(0, 30));
 
-    assertTrue(finded.size() >= 3);
+    assertTrue(finded.getTotalElements() >= 3);
   }
 
   @Test

@@ -38,14 +38,17 @@ public abstract class BaseRepository<T, V extends EntityBase<T>> {
   }
 
   public void deleteByID(T id) {
-    if (id == null) return;
-    
+    if (id == null)
+      return;
+
     getRepo().deleteById(id);
   }
 
   public void delete(V entity) {
-    if (entity == null) return;
-    if (entity.getId() == null) return;
+    if (entity == null)
+      return;
+    if (entity.getId() == null)
+      return;
 
     getRepo().delete(entity);
   }

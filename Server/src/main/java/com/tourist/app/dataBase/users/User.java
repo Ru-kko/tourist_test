@@ -22,7 +22,9 @@ public class User implements EntityBase<Integer> {
   @Column(name = "userId")
   private Integer id;
 
+  @Column(nullable = false)
   private String password;
+  @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
   private Boolean admin;
 
   @OneToOne(optional = false, cascade = CascadeType.REMOVE)
