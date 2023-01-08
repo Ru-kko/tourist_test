@@ -39,7 +39,7 @@
   height: 100%;
   left: -5%;
   border-radius: 4px;
-  background-color: var(--drakness);
+  background-color: var(--darkness);
   transform: scaleY(0.1);
   transform-origin: top center;
   transition: transform 0.5s ease-in-out;
