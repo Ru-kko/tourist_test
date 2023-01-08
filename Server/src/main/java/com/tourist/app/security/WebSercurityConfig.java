@@ -1,5 +1,7 @@
 package com.tourist.app.security;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.tourist.app.services.UserDetailService;
@@ -36,11 +41,8 @@ public class WebSercurityConfig {
     filter.setAuthenticationManager(manager);
     filter.setFilterProcessesUrl("/login");
 
-    if (!Config.getCors()) {
-      http.cors().disable();
-    }
-    
-    return http
+    http
+        .cors().and()
         .csrf().disable()
         .authorizeHttpRequests()
         .requestMatchers("/register").permitAll()
@@ -53,8 +55,25 @@ public class WebSercurityConfig {
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .addFilter(filter)
-        .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-        .build();
+        .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
+
+    if (!Config.getCors()) {
+      http.cors().disable();
+    }
+    return http.build();
+  }
+
+  @Bean
+  public CorsFilter corsFilter() {
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowCredentials(true);
+    config.addAllowedOriginPattern("*");
+    config.setAllowedMethods(List.of("POST", "OPTIONS", "GET", "DELETE", "PUT"));
+    config.setAllowedHeaders(List.of("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization"));
+    source.registerCorsConfiguration("/**", config);
+
+    return new CorsFilter(source);
   }
 
   @Bean
