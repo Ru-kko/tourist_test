@@ -11,6 +11,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tourist.app.entity.Credentials;
 import com.tourist.app.entity.GenerateUserDetails;
+import com.tourist.app.entity.TokenResponse;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -28,7 +29,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     } catch (IOException err) {
     }
 
-    UsernamePasswordAuthenticationToken usernameAuthTk = new UsernamePasswordAuthenticationToken(credentials.getCardId(),
+    UsernamePasswordAuthenticationToken usernameAuthTk = new UsernamePasswordAuthenticationToken(
+        credentials.getCardId(),
         credentials.getPassword(), Collections.emptyList());
 
     return getAuthenticationManager().authenticate(usernameAuthTk);
@@ -37,12 +39,15 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
   @Override
   protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res,
       FilterChain chain, Authentication authResult) throws IOException, ServletException {
-    
+
     GenerateUserDetails userDetails = (GenerateUserDetails) authResult.getPrincipal();
 
     String token = TokenGenerator.createToken(userDetails.getUsername());
+    TokenResponse response = new TokenResponse(token, userDetails.getUsername(), "Bearer");
+    ObjectMapper mapper = new ObjectMapper();
+    String stringData = mapper.writeValueAsString(response);
 
-    res.addHeader("Authorization", "Bearer " + token);
+    res.getWriter().write(stringData);
     res.getWriter().flush();
 
     super.successfulAuthentication(req, res, chain, authResult);

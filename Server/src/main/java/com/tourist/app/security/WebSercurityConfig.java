@@ -69,6 +69,7 @@ public class WebSercurityConfig {
     CorsConfiguration config = new CorsConfiguration();
     config.setAllowCredentials(true);
     config.addAllowedOriginPattern("*");
+    config.setMaxAge(60l);
     config.setAllowedMethods(List.of("POST", "OPTIONS", "GET", "DELETE", "PUT"));
     config.setAllowedHeaders(List.of("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization"));
     source.registerCorsConfiguration("/**", config);
