@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
@@ -16,6 +15,8 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import com.tourist.app.dataBase.cities.CitiesRepository;
 import com.tourist.app.dataBase.cities.City;
@@ -79,8 +80,9 @@ public class TripTest {
     assertEquals(tourists.length - 1, count);
 
     // Should find trips from an user
-    List<Trip> tourstTrips = repo.getTripsFromTourist(tourists[0].getId());
-    assertEquals(1, tourstTrips.size());
+    Page<Trip> tourstTrips = repo.getTripsFromTourist(tourists[0].getId(), PageRequest.of(0, 50));
+
+    assertEquals(1, tourstTrips.getNumber());
   }
 
   @Test

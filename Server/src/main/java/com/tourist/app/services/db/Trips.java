@@ -1,15 +1,17 @@
 package com.tourist.app.services.db;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.tourist.app.dataBase.BaseRepository;
 import com.tourist.app.dataBase.trips.Trip;
 import com.tourist.app.dataBase.trips.TripsRepository;
+import com.tourist.app.entity.PageResponse;
 import com.tourist.app.services.DatabaseService;
 import com.tourist.app.utils.Config;
 
@@ -63,8 +65,14 @@ public class Trips extends DatabaseService<Integer, Trip> {
     return repo.countTouristAtSameDay(startDate, cityId);
   }
 
-  public List<Trip> getTripsFromTourist(Integer touristId) {
-    return repo.getTripsFromTourist(touristId);
+  public PageResponse<Trip> getTripsFromTourist(Integer touristId, Integer page) {
+    Page<Trip> pageConten = repo.getTripsFromTourist(touristId, PageRequest.of(page, 50));
+    return new PageResponse<>(pageConten.getContent() , pageConten.getTotalElements(), pageConten.getTotalPages());
+  }
+
+  public PageResponse<Trip> getTripsFromCity(Integer cityId, Integer page) {
+    Page<Trip> pageConten = repo.getTripsFromCity(cityId, PageRequest.of(page, 50));
+    return new PageResponse<>(pageConten.getContent(), pageConten.getTotalElements(), pageConten.getTotalPages());
   }
 
   @Override

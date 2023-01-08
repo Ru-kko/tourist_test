@@ -28,11 +28,11 @@ public class Trip implements EntityBase<Integer> {
 
   @Temporal(TemporalType.DATE)
   @Column(name = "startDate", nullable = true)
-  private Date startDate;  
+  private Date startDate;
 
   @ManyToOne
   @JoinColumn(name = "touristId", nullable = false)
-  @JsonIgnoreProperties("trips")
+  @JsonIgnoreProperties({ "trips", "account" })
   private Tourist tourist;
 
   @ManyToOne
