@@ -1,24 +1,29 @@
 import "./styles/home.css";
 import { city, travelers } from "../assets";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { DelayLink } from "../partials";
 
 export function Home() {
+  const [outAnim, setOut] = useState<string>()
+
+  const handleClick = () => {
+    setOut(" background-out")
+  }
+
+  useEffect(() => {
+    return () => console.log("out");
+  }, []);
+
   return (
-    <div className="background">
-      <Link to="/cities" className="city-parent">
+    <div className={"background" + (outAnim ?? "")} >
+      <DelayLink to="/cities" className="city-parent" delayTime={700} onClick={handleClick}>
         <img className="back-city" src={city} />
-        <div>
-          <h1>CITIES</h1>
-          <h1>CITIES</h1>
-        </div>
-      </Link>
-      <Link to="travelers">
+        <h1>CITIES</h1>
+      </DelayLink>
+      <DelayLink to="travelers" delayTime={700} onClick={handleClick} >
         <img className="back-travelers" src={travelers} />
-        <div>
-          <h1>TOURISTS</h1>
-          <h1>TOURISTS</h1>
-        </div>
-      </Link>
+        <h1>TOURISTS</h1>
+      </DelayLink>
     </div>
   );
 }
