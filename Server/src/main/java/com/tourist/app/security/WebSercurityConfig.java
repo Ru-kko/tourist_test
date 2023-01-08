@@ -18,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.tourist.app.services.UserDetailService;
 import com.tourist.app.utils.AuthenticationFilter;
 import com.tourist.app.utils.AuthorizationFilter;
+import com.tourist.app.utils.Config;
 
 @Configuration
 @EnableWebSecurity
@@ -35,6 +36,10 @@ public class WebSercurityConfig {
     filter.setAuthenticationManager(manager);
     filter.setFilterProcessesUrl("/login");
 
+    if (!Config.getCors()) {
+      http.cors().disable();
+    }
+    
     return http
         .csrf().disable()
         .authorizeHttpRequests()

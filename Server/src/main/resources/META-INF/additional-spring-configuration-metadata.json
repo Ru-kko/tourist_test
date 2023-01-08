@@ -9,6 +9,10 @@
   },
   {
     "name": "trip.maximun-tourists",
-    "type": "java.lang.Long",
+    "type": "java.lang.Long"
+  },
+  {
+    "name": "security.cors",
+    "type": "java.lang.Boolean",
   }
 ]}

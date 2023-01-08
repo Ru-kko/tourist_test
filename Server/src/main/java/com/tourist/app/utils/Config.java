@@ -30,4 +30,7 @@ public class Config {
     return env.getProperty("token.expiraton", Long.class);
   } 
   
+  public static Boolean getCors() {
+    return env.getProperty("security.cors", Boolean.class);
+  }
 }
