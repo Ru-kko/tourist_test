@@ -1,0 +1,52 @@
+.loading-container {
+  z-index: 10;
+}
+.loading-container span {
+  position: absolute;
+  border-radius: 6px;
+  background-color: var(--darkness);
+  height: 10px;
+  padding: 2px;
+}
+
+.loading-container span::before {
+  content: "";
+  position: absolute;
+  background-color: var(--white);
+  height: 10px;
+  border-radius: 5px;
+  top: 2px;
+  width: 98%;
+  animation: loading-anim 5s infinite;
+}
+
+@keyframes loading-anim {
+  0% {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+  16% {
+    transform: scaleX(1);
+    transform-origin: right center;
+  }
+  33% {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+  50% {
+    transform: scaleX(1);
+    transform-origin: right center;
+  }
+  66% {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+  83% {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
