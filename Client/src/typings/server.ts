@@ -1,6 +1,7 @@
 export interface Tourist {
   id?: number;
-  cardId: string;
+  fullName: string;
+  idCard: string;
   bornDate: string;
   travelFrequency: number;
   travelBudget: number;
@@ -17,5 +18,9 @@ export interface TokenResponse {
   type: string;
   cardId: string;
 }
+export interface UserDataRegistration {
+  password: string;
+  tourist: Tourist;
+}
 
-export type UserRegistration = Tourist & User;
+export type UserRegistrationRaw = Tourist & User;
