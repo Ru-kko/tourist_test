@@ -2,7 +2,7 @@ import { MouseEventHandler, useEffect } from "react";
 import { Link, LinkProps, useLocation, useNavigate } from "react-router-dom";
 
 interface IProps {
-  delayTime: number;
+  delaytime: number;
 }
 
 export function DelayLink(porps: IProps & LinkProps) {
@@ -29,7 +29,7 @@ export function DelayLink(porps: IProps & LinkProps) {
 
     timeOut = setTimeout(() => {
       navigate(porps.to);
-    }, porps.delayTime);
+    }, porps.delaytime);
   };
 
   return <Link {...porps} onClick={handleClick}></Link>;
