@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 import { RootState } from "..";
 
 import { TokenResponse } from "../../typings/server";
 
-function getInitialState(): TokenResponse | {} {
-  if (document.cookie.length > 5) {
-    return JSON.parse(document.cookie);
+function getInitialState(): TokenResponse  | void {
+  const cookie = Cookies.get("session");
+  if (cookie && cookie?.length > 5) {
+    return JSON.parse(cookie);
   }
-  return {};
 }
 
 export const SessionSlice = createSlice({
@@ -15,16 +16,18 @@ export const SessionSlice = createSlice({
   initialState: getInitialState(),
   reducers: {
     logOut: (state) => {
-      document.cookie = "";
-      state = {};
+      Cookies.remove("session")
+      state = undefined;
     },
     logIn: (state, action: PayloadAction<TokenResponse>) => {
-      document.cookie = JSON.stringify(action);
-      state = action;
+      Cookies.set("session", JSON.stringify(action), {
+        expires: 20,
+      });
+      state = action.payload;
     },
   },
 });
 
 export const SessionActions = SessionSlice.actions;
-export const SessionReducer = SessionSlice.reducer
-export const selectSession = (state: RootState) => state.session
+export const SessionReducer = SessionSlice.reducer;
+export const selectSession = (state: RootState) => state.session;
