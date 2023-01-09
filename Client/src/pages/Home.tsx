@@ -8,19 +8,15 @@ export function Home() {
 
   const handleClick = () => {
     setOut(" background-out")
-  }
-
-  useEffect(() => {
-    return () => console.log("out");
-  }, []);
+  } 
 
   return (
     <div className={"background" + (outAnim ?? "")} >
-      <DelayLink to="/cities" className="city-parent" delayTime={700} onClick={handleClick}>
+      <DelayLink to="/cities" className="city-parent" delaytime={700} onClick={handleClick}>
         <img className="back-city" src={city} />
         <h1>CITIES</h1>
       </DelayLink>
-      <DelayLink to="travelers" delayTime={700} onClick={handleClick} >
+      <DelayLink to="travelers" delaytime={700} onClick={handleClick} >
         <img className="back-travelers" src={travelers} />
         <h1>TOURISTS</h1>
       </DelayLink>
