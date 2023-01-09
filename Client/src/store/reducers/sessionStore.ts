@@ -4,11 +4,14 @@ import { RootState } from "..";
 
 import { TokenResponse } from "../../typings/server";
 
-function getInitialState(): TokenResponse  | void {
+function getInitialState(): TokenResponse | null {
   const cookie = Cookies.get("session");
+  console.log(cookie);
+  
   if (cookie && cookie?.length > 5) {
     return JSON.parse(cookie);
   }
+  return null;
 }
 
 export const SessionSlice = createSlice({
@@ -16,14 +19,19 @@ export const SessionSlice = createSlice({
   initialState: getInitialState(),
   reducers: {
     logOut: (state) => {
-      Cookies.remove("session")
-      state = undefined;
+      Cookies.remove("session");
+      console.log(Cookies.get("session"));
+      
+      state = null;
+      return state;
     },
     logIn: (state, action: PayloadAction<TokenResponse>) => {
       Cookies.set("session", JSON.stringify(action), {
         expires: 20,
       });
+      console.log(Cookies.get("session"));
       state = action.payload;
+      return state;
     },
   },
 });

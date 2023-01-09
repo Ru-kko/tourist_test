@@ -14,6 +14,7 @@ nav {
   gap: 30px;
   padding-top: 80px;
   overflow: hidden;
+  z-index: 100;
 }
 .nav-open {
   width: 15vw;
@@ -33,15 +34,26 @@ nav .icon {
   height: 40px;
 }
 
+nav .icon.session-icon {
+  height: 50px;
+  width: 50px;
+}
+.session-icon svg {
+  width: 40px;
+  height: 40px;
+}
 nav button {
   background-color: var(--darkness);
   border: none;
   cursor: pointer;
+  height: 50px;
+  width: 50px;
+}
+
+nav > button {
   position: absolute;
   right: 0;
   top: 15px;
-  height: 50px;
-  width: 50px;
   padding: 0;
 }
 
@@ -76,7 +88,7 @@ nav menu {
   width: 100%;
   text-align: center;
 }
-nav > menu > a {
+nav > menu > a, nav > menu > button {
   position: relative;
   font-weight: 700;
 }
