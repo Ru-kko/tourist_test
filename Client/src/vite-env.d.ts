@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  SERVER: string
+  VITE_SERVER: string
 }

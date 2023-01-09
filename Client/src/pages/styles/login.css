@@ -1,0 +1,118 @@
+.loggin-container {
+  position: absolute;
+  width: 60%;
+  height: 75vh;
+  margin: auto;
+  max-width: 600px;
+  border-radius: 10px;
+  background-color: var(--white);
+  padding: 50px;
+  box-shadow: 0vh 0vw 4vw 15px var(--blue);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+}
+.loggin-container * {
+  font-weight: 700;
+  color: var(--black);
+}
+.loggin-container h1 {
+  font-weight: 900;
+}
+.loggin-container h1::before {
+  content: "";
+  height: 6px;
+  width: 110%;
+  left: -5%;
+  border-radius: 3px;
+  background-color: var(--blue);
+  position: absolute;
+  z-index: -10;
+  bottom: -6px;
+}
+.log-title {
+  top: 50px;
+  position: absolute;
+}
+.loggin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  align-items: center;
+}
+.loggin-form div:not(.cut) {
+  position: relative;
+}
+.loggin-form span,
+.loggin-form .cut {
+  position: absolute;
+  top: 8px;
+  left: 15px;
+  transition: 0.5s ease-in;
+  top: -1rem;
+}
+.loggin-form span {
+  font-size: 1.5rem;
+  top: auto;
+  bottom: 3px;
+}
+.loggin-form input,
+.loggin-form button {
+  border: none;
+  border-radius: 0 15px;
+  padding: 3px 10px;
+  width: 85%;
+  box-shadow: 0px 10px 8px 1px var(--darkness);
+  font-size: 1.5rem;
+}
+.loggin-form input::-webkit-inner-spin-button,
+.loggin-form input::-webkit-outer-spin-button,
+.loggin-form input:not(:valid, :focus)::-webkit-datetime-edit {
+  display: none;
+  color: transparent;
+}
+
+.loggin-form input[type="date"] {
+  min-width: 15rem;
+}
+.loggin-form input[type="date"] ~ span {
+  left: 2.3rem;
+}
+
+.loggin-form .cut {
+  transform: scaleX(0);
+  transform-origin: bottom center;
+  box-shadow: -1px 4px 6px 0px var(--darkness);
+  border-radius: 0 0.6rem;
+}
+.loggin-form input:focus ~ .cut,
+.loggin-form input:valid ~ .cut {
+  background-color: var(--white);
+  transform: scaleX(1);
+  height: 1.2rem;
+  width: 65%;
+}
+.loggin-form input:focus ~ span,
+.loggin-form input:valid ~ span {
+  font-size: 1.2rem;
+  bottom: auto;
+  transform: translate(5px, -1.35rem);
+}
+.log-horizontal-row {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  font-weight: 600;
+  font-size: larger;
+  align-items: center;
+  justify-content: space-around;
+}
+.log-horizontal-row input {
+  max-width: 13rem;
+}
+.loggin-form:not(:valid) .submit-btn {
+  background-color: var(--main);
+  color: var(--white);
+}
