@@ -17,6 +17,7 @@
 }
 
 * {
+  list-style: none;
   color: var(--white);
   font-family: "M PLUS Rounded 1c", sans-serif;
   margin: 0;
