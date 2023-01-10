@@ -23,10 +23,26 @@ export interface UserDataRegistration {
   tourist: Tourist;
 }
 
+export interface City {
+  id: number;
+  name: string;
+  population: number;
+  mostTuristicPlace: string;
+  mostReserverdHotel: string;
+}
+
+export interface Trip {
+  id: number;
+  startDate: string;
+  tourist: Tourist;
+  city: City;
+}
+
 export interface PageResponse<T> {
   content: T[],
   lenght: number,
   totalPages: number
 }
+
 
 export type UserRegistrationRaw = Tourist & User;
