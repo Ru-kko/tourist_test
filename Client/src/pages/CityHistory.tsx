@@ -1,22 +1,20 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useHandleAsync } from "../hooks/useHandleAsync";
 import { ListContainer } from "../partials/ListContainer/ListContainer";
 import Loading from "../partials/loading/Loading";
 import { Table } from "../partials/Table/Table";
+import { getCityHistory } from "../services/city";
 import { getTouristHistory } from "../services/tourist";
 import { City, PageResponse, Tourist, Trip } from "../typings/server";
 
-export default function TouristHistory() {
+export default function CityHistory() {
   const { id } = useParams();
   const navigation = useNavigate();
   const [page, setPage] = useState(1);
   const [searchParams, _] = useSearchParams();
-  const [data, setData] = useState<PageResponse<Trip>>();
-
-  const asyncHandler = (p: Promise<PageResponse<Trip>>) => {
-    setData(undefined);
-    p.then((d) => setData(d));
-  };
+  const [data, setData] = useState<PageResponse<Trip> | null>(null);
+  const asyncHandler = useHandleAsync<PageResponse<Trip>>(setData);
 
   useEffect(() => {
     if (page <= 1) {
@@ -33,14 +31,14 @@ export default function TouristHistory() {
         setPage(parseInt(searchParams.get("page")!));
         return;
       }
-      asyncHandler(getTouristHistory(parseInt(id!), 1));
+      asyncHandler(getCityHistory(parseInt(id!), 1));
     } catch {
       navigation(-1);
     }
   }, []);
 
   return (
-    <ListContainer title={"Trips of " + (data?.content[0] ?  data.content[0].tourist.fullName : "")} >
+    <ListContainer title={"Trips in " + (data?.content[0] ?  data.content[0].tourist.fullName : "")} >
       {data ? (
         <Table
           data={data.content}

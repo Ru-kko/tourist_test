@@ -48,3 +48,11 @@ export async function deleteCity(id: number) {
     },
   });
 }
+
+export async function getCityHistory(id:number, page: number) {
+  const res = await axios.request<PageResponse<Trip>>({
+    url: import.meta.env.VITE_SERVER + "/city/" + id + "?page=" + page,
+    method: "GET"
+  })
+  return res.data
+}
