@@ -17,18 +17,16 @@ export const SessionSlice = createSlice({
   name: "session",
   initialState: getInitialState(),
   reducers: {
-    logOut: (state) => {
+    logOut: (_) => {
       Cookies.remove("session");
       
-      state = null;
-      return state;
+      return null;
     },
-    logIn: (state, action: PayloadAction<TokenResponse>) => {
+    logIn: (_, action: PayloadAction<TokenResponse>) => {
       Cookies.set("session", JSON.stringify(action), {
         expires: 20,
       });
-      state = action.payload;
-      return state;
+      return action.payload;
     },
   },
 });
