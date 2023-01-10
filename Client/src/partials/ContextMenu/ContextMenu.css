@@ -1,0 +1,21 @@
+.contex-menu {
+  background-color: var(--main);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border-radius: 5px;
+}
+
+.contex-menu * {
+  background-color: transparent;
+  border: none;
+}
+.contex-menu button {
+  padding: 2px;
+  min-width: 80px;
+  font-weight: 600;
+}
+
+.contex-menu button:hover {
+  background-color: var(--blue);
+}
