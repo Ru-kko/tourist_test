@@ -6,7 +6,6 @@ import { TokenResponse } from "../../typings/server";
 
 function getInitialState(): TokenResponse | null {
   const cookie = Cookies.get("session");
-  console.log(cookie);
   
   if (cookie && cookie?.length > 5) {
     return JSON.parse(cookie);
@@ -20,7 +19,6 @@ export const SessionSlice = createSlice({
   reducers: {
     logOut: (state) => {
       Cookies.remove("session");
-      console.log(Cookies.get("session"));
       
       state = null;
       return state;
@@ -29,7 +27,6 @@ export const SessionSlice = createSlice({
       Cookies.set("session", JSON.stringify(action), {
         expires: 20,
       });
-      console.log(Cookies.get("session"));
       state = action.payload;
       return state;
     },
