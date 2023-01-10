@@ -53,7 +53,6 @@ export function Tourists() {
                   name: "History",
                   onClick: () => {
                     navigation("/travelers/" + t.id);
-                    console.log(t.idCard, User?.cardId);
                   },
                 },
               ];

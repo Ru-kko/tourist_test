@@ -23,4 +23,10 @@ export interface UserDataRegistration {
   tourist: Tourist;
 }
 
+export interface PageResponse<T> {
+  content: T[],
+  lenght: number,
+  totalPages: number
+}
+
 export type UserRegistrationRaw = Tourist & User;
