@@ -1,0 +1,37 @@
+.list-container {
+  width: calc(80vw - 100px);
+  height: calc(90vh - 100px);
+  background-color: var(--white);
+  border-radius: 20px;
+  padding: 50px;
+  position: absolute;
+  display: grid;
+  grid-template-rows: 3rem 1fr 30px 5vh;
+  justify-items: center;
+  align-items: start;
+  row-gap: 10px;
+}
+.list-container > h1 {
+  color: var(--black);
+  font-weight: 900;
+  font-size: 2.5rem;
+}
+.list-container > h1::after {
+  content: "";
+  height: 6px;
+  width: 100% ;
+  left: 6px;
+  border-radius: 3px;
+  background-color: var(--blue);
+  position: relative;
+  display: block;
+  margin: -6px;
+  bottom: 6px;
+}
+
+.list-footer {
+  background-color: var(--main);
+  border-radius: 10px;
+  height: 5vh;
+  width: 100%;
+}
