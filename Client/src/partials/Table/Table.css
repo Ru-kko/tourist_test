@@ -1,0 +1,75 @@
+.table-container {
+  padding: 15px;
+  background-color: var(--white);
+  width: 70vw;
+}
+.table-container > table {
+  width: 100%;
+  border-radius: 5px;
+  border: solid 2px var(--black);
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+.table-container > table > caption {
+  margin: 20px auto;
+  font-weight: 800;
+  color: var(--black);
+  font-size: 2rem;
+  text-align: center;
+}
+.table-container tr {
+  background-color: var(--white);
+  border-bottom: solid 1px var(--black);
+}
+.table-container td,
+.table-container th {
+  text-align: center;
+  padding: 0.2rem;
+  color: var(--black);
+}
+.table-container th {
+  font-weight: 700;
+}
+
+.clikcable-row {
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 800px) {
+  .table-container thead > tr {
+    background-color: var(--black);
+  }
+  .table-container th {
+    color: var(--white);
+  }
+  .table-container tr:nth-child(even) {
+    background-color: var(--gray);
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .table-container table {
+    border: none;
+  }
+  .table-container table thead {
+    display: none;
+  }
+  .table-container tr {
+    border: 1px solid var(--black);
+    margin-bottom: 5px;
+    display: block;
+    border-radius: 5px;
+  }
+  .table-container tr > td {
+    display: block;
+    text-align: right;
+  }
+  .table-container tr > td:nth-child(even) {
+    background-color: var(--gray);
+  }
+  .table-container tr > td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: 700;
+  }
+}
