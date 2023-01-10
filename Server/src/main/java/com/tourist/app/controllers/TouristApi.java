@@ -8,6 +8,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.tourist.app.dataBase.tourists.Tourist;
 import com.tourist.app.dataBase.trips.Trip;
@@ -52,12 +55,11 @@ public class TouristApi {
   }
 
   @PutMapping
-  public ResponseEntity<Tourist> updateTourist(@RequestBody Tourist t) {
-    if (t == null) {
-      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
+  public ResponseEntity<Tourist> updateTourist(final Authentication auth, @RequestBody Tourist t) {
     t.setTrips(Collections.emptyList());
     t.setAccount(null);
+    final var turist = tService.getByIdCard(auth.getName());
+    t.setId(turist.get().getId());
 
     Tourist upated = tService.update(t);
 
@@ -72,5 +74,25 @@ public class TouristApi {
   public PageResponse<Trip> getTirpsHistory(@PathVariable("userid") Integer id,
       @RequestParam(name = "page", defaultValue = "1") Integer page) {
     return tripsService.getTripsFromTourist(id, page - 1);
+  }
+
+  @DeleteMapping
+  public void deleteTourist(final Authentication auth, @RequestBody(required = false) final Tourist tourist) {
+    Boolean isAdmin = false;
+
+    if (tourist != null && tourist.getId() != null) {
+      for (var i : auth.getAuthorities()) {
+        if (i.getAuthority() == "ROLE_ADMIN") {
+          isAdmin = true;
+          break;
+        }
+      }
+      if (!isAdmin) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+      tService.delete(tourist);
+    }
+    final var todelete = tService.getByIdCard(auth.getName());
+    if (todelete.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+    tService.delete(todelete.get()); 
   }
 }
