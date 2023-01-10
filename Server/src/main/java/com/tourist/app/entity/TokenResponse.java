@@ -4,14 +4,24 @@ public class TokenResponse {
   private String token;
   private String cardId;
   private String tokenType;
+  private Boolean admin;
 
   public TokenResponse() {
   }
 
-  public TokenResponse(String token, String cardId, String tokenType) {
+  public TokenResponse(String token, String cardId, String tokenType, Boolean admin) {
     this.token = token;
     this.cardId = cardId;
     this.tokenType = tokenType;
+    this.admin = admin;
+  }
+
+  public Boolean getAdmin() {
+    return admin;
+  }
+
+  public void setAdmin(Boolean admin) {
+    this.admin = admin;
   }
 
   public String getTokenType() {

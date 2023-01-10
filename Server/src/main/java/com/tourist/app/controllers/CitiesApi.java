@@ -1,7 +1,7 @@
 package com.tourist.app.controllers;
 
+import java.time.LocalDate;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +77,7 @@ public class CitiesApi {
 
   @PostMapping("/{cityid}")
   public ResponseEntity<Trip> reserve(Authentication auth, @PathVariable("cityid") Integer id,
-      @RequestParam(name = "day") @DateTimeFormat(iso = ISO.DATE) Date date) {
+      @RequestParam(name = "day") @DateTimeFormat(iso = ISO.DATE) LocalDate date) {
     Optional<City> find = cService.getById(id);
     Optional<Tourist> tourist = touristService.getByIdCard(auth.getName());
 

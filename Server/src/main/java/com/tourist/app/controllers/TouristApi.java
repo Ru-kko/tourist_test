@@ -1,6 +1,6 @@
 package com.tourist.app.controllers;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +41,11 @@ public class TouristApi {
 
   @GetMapping("/born")
   public PageResponse<Tourist> getByBornDate(@RequestParam(name = "page", defaultValue = "1") Integer page,
-      @RequestParam(name = "start") @DateTimeFormat(iso = ISO.DATE) Calendar startDate,
-      @RequestParam(name = "end", required = false) @DateTimeFormat(iso = ISO.DATE) Calendar endDate) {
+      @RequestParam(name = "start") @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
+      @RequestParam(name = "end", required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate endDate) {
     if (endDate == null) {
       endDate = startDate;
-      endDate.add(Calendar.DATE, 1);
+      endDate.plusDays(1);
     }
 
     return tService.getByBornDateTimeSpace(startDate, endDate, page - 1);

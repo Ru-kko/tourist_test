@@ -6,6 +6,7 @@ import java.util.Collections;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,10 +41,18 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
   protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res,
       FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
-    GenerateUserDetails userDetails = (GenerateUserDetails) authResult.getPrincipal();
+    final GenerateUserDetails userDetails = (GenerateUserDetails) authResult.getPrincipal();
+    Boolean admin = false;
+
+    for (GrantedAuthority i : userDetails.getAuthorities()) {
+      if (i.getAuthority() == "ROLE_ADMIN") {
+        admin = true;
+        break;
+      }
+    }
 
     String token = TokenGenerator.createToken(userDetails.getUsername());
-    TokenResponse response = new TokenResponse(token, userDetails.getUsername(), "Bearer");
+    TokenResponse response = new TokenResponse(token, userDetails.getUsername(), "Bearer ", admin);
     ObjectMapper mapper = new ObjectMapper();
     String stringData = mapper.writeValueAsString(response);
 

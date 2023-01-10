@@ -1,6 +1,6 @@
 package com.tourist.app.dataBase.tourists;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -22,14 +22,14 @@ import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "Tourists")
-public class Tourist implements EntityBase<Integer>{
+public class Tourist implements EntityBase<Integer> {
   @Id
   @Column(name = "touristId")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
   @Temporal(TemporalType.DATE)
-  private Calendar bornDate;
+  private LocalDate bornDate;
   private String fullName;
   private Integer travelFrequency;
   private Double travelBudget;
@@ -40,14 +40,14 @@ public class Tourist implements EntityBase<Integer>{
   @JsonIgnoreProperties("tourist")
   private User account;
 
-  @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "tourist")
+  @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "tourist")
   @JsonIgnoreProperties("tourist")
   private List<Trip> trips;
 
   public Tourist() {
   }
 
-  public Tourist(Calendar bornDate, String fullName, String idCard, Integer travelFrequency, Double travelBudget) {
+  public Tourist(LocalDate bornDate, String fullName, String idCard, Integer travelFrequency, Double travelBudget) {
     this.bornDate = bornDate;
     this.fullName = fullName;
     this.idCard = idCard;
@@ -103,11 +103,11 @@ public class Tourist implements EntityBase<Integer>{
     this.travelBudget = travelBudget;
   }
 
-  public Calendar getBornDate() {
+  public LocalDate getBornDate() {
     return bornDate;
   }
 
-  public void setBornDate(Calendar bornDate) {
+  public void setBornDate(LocalDate bornDate) {
     this.bornDate = bornDate;
   }
 

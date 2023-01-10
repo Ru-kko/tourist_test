@@ -1,6 +1,6 @@
 package com.tourist.app.dataBase.trips;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +15,7 @@ public class TripsRepository extends BaseRepository<Integer, Trip> {
   @Autowired
   protected ITripsRepository repo;
 
-  public Long countTouristAtSameDay(Date startDate, Integer cityId) {
+  public Long countTouristAtSameDay(LocalDate startDate, Integer cityId) {
     return repo.countTripsInACityAtSameTime(cityId, startDate);
   }
 

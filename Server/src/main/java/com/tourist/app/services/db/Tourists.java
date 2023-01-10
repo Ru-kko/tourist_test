@@ -1,6 +1,6 @@
 package com.tourist.app.services.db;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,7 +67,7 @@ public class Tourists extends DatabaseService<Integer, Tourist> {
     return repo.getByIdCard(idCard);
   }
 
-  public PageResponse<Tourist> getByBornDateTimeSpace(Calendar start, Calendar end, Integer page) {
+  public PageResponse<Tourist> getByBornDateTimeSpace(LocalDate start, LocalDate end, Integer page) {
 
     Page<Tourist> res = repo.getByBornDateTimeSpace(start, end, PageRequest.of(page, 50));
 

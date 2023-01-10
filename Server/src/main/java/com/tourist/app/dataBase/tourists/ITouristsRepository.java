@@ -1,6 +1,6 @@
 package com.tourist.app.dataBase.tourists;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -18,5 +18,5 @@ interface ITouristsRepository extends CrudRepository<Tourist, Integer> {
 
   public Page<Tourist> findAll(Pageable page);
 
-  public Page<Tourist> findAllByBornDateBetween(Calendar bornDatestart, Calendar bornDateEnd, Pageable page);
+  public Page<Tourist> findAllByBornDateBetween(LocalDate bornDatestart, LocalDate bornDateEnd, Pageable page);
 }

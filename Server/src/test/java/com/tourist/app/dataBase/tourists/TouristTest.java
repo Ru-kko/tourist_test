@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.text.ParseException;
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,9 +30,8 @@ public class TouristTest {
 
   @BeforeAll
   void initialize() throws ParseException {
-    Calendar date = Calendar.getInstance();
+    LocalDate date = LocalDate.of(2023, 1, 1);
 
-    date.set(2003, 2, 8);
 
     testData[0] = new Tourist(date, "jonh doe", "1234", 2, 10.00d);
     testData[1] = new Tourist(date, "jane doe", "12356", 2, 10.00d);
@@ -47,8 +46,7 @@ public class TouristTest {
 
   @Test
   void should_add_a_tourist() throws ParseException {
-    Calendar date = Calendar.getInstance();
-    date.set(2005, 12, 14);
+    LocalDate date = LocalDate.of(2023, 1, 1);
     Tourist newTourist = new Tourist(date, "foo", "123456789", 5, 20.00d);
 
     testData[5] = repo.save(newTourist);
@@ -76,9 +74,8 @@ public class TouristTest {
 
   @Test
   void should_dont_make_two_tourists_with_same_card_id() {
-    Calendar date = Calendar.getInstance();
+    LocalDate date = LocalDate.of(2023, 1, 1);
 
-    date.set(2003, 2, 8);
     Tourist err = new Tourist(date, "frist ", "4321", 2, 10.00d);
     Tourist err2 = new Tourist(date, "second", "4321", 2, 10.00d);
 

@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,9 +34,8 @@ public class UsersTest {
 
   @BeforeAll
   void initializeData() {
-    Calendar bornDate = Calendar.getInstance();
-    bornDate.set(2001, 10, 2);
-
+    LocalDate bornDate = LocalDate.of(2003,2,8);
+    
     tData[0] = tService.save(new Tourist(bornDate, "name 1", "1234", 1, 1.5d));
     tData[1] = tService.save(new Tourist(bornDate, "name 2", "123", 1, 1.5d));
     tData[2] = tService.save(new Tourist(bornDate, "name 3", "12345", 1, 1.5d));

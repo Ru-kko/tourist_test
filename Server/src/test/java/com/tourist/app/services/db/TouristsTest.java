@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +19,9 @@ public class TouristsTest {
 
   @Test
   void testUpdate() {
-    Calendar date = Calendar.getInstance();
-    Calendar date2 = Calendar.getInstance();
+    LocalDate date = LocalDate.of(2023, 1, 1);
+    LocalDate date2 = LocalDate.of(2003,2,8);
 
-    date.set(2003, 2, 8);
-    date2.set(2005, 12, 14);
     
     Tourist tBase = new Tourist(date, "jonh doe", "1234", 2, 10.00d);
 
@@ -40,7 +38,7 @@ public class TouristsTest {
     assertEquals(returned.getId(), tBase.getId());
     assertEquals(tBase.getFullName(), returned.getFullName());
     assertNotEquals(tBase.getTravelBudget(), returned.getTravelBudget());
-    assertNotEquals(tBase.getBornDate().getTime().getTime(), returned.getBornDate().getTime().getTime());
+    assertNotEquals(tBase.getBornDate(), returned.getBornDate());
 
     service.delete(returned);
   }

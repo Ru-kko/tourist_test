@@ -65,7 +65,7 @@ public class Session {
       final var saved = userService.save(user);
 
       final var token = TokenGenerator.createToken(saved.getTourist().getIdCard());
-      final var tokenResponse = new TokenResponse(token, user.getTourist().getIdCard(), "Bearer");
+      final var tokenResponse = new TokenResponse(token, user.getTourist().getIdCard(), "Bearer", user.getAdmin());
 
       res = ResponseEntity.ok().body(tokenResponse);
 

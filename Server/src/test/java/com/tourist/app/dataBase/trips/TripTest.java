@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
@@ -38,13 +38,12 @@ public class TripTest {
   private Tourist[] tourists = new Tourist[6];
 
   private Trip[] trips = new Trip[5];
-  private Calendar date;
+  private LocalDate date;
 
   @BeforeAll
   void initialize() {
-    date = Calendar.getInstance();
+    date = LocalDate.of(2023, 1, 1);
 
-    date.set(2023, 0, 1);
 
     for (int i = 0; i < tourists.length; i++) {
       Tourist toSave = new Tourist(date, "touris number " + i, Integer.toString(i * 12), i,
@@ -64,7 +63,7 @@ public class TripTest {
 
       trip.setCity(cities[0]);
       trip.setTourist(tourists[i]);
-      trip.setStartDate(date.getTime());
+      trip.setStartDate(date);
 
       trips[i] = repo.save(trip);
     } 
@@ -91,7 +90,7 @@ public class TripTest {
 
     newTrip.setCity(cities[1]);
     newTrip.setTourist(tourists[5]);
-    newTrip.setStartDate(date.getTime());
+    newTrip.setStartDate(date);
 
     Trip saved = repo.save(newTrip);
     Optional<Trip> find = repo.getById(saved.getId());

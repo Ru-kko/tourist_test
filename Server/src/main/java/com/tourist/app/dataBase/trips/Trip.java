@@ -1,6 +1,6 @@
 package com.tourist.app.dataBase.trips;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tourist.app.dataBase.EntityBase;
@@ -28,7 +28,7 @@ public class Trip implements EntityBase<Integer> {
 
   @Temporal(TemporalType.DATE)
   @Column(name = "startDate", nullable = true)
-  private Date startDate;
+  private LocalDate startDate;
 
   @ManyToOne
   @JoinColumn(name = "touristId", nullable = false)
@@ -56,11 +56,11 @@ public class Trip implements EntityBase<Integer> {
     this.tourist = tourist;
   }
 
-  public Date getStartDate() {
+  public LocalDate getStartDate() {
     return startDate;
   }
 
-  public void setStartDate(Date startDate) {
+  public void setStartDate(LocalDate startDate) {
     this.startDate = startDate;
   }
 

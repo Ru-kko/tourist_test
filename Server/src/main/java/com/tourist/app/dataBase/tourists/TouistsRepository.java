@@ -1,6 +1,6 @@
 package com.tourist.app.dataBase.tourists;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class TouistsRepository extends BaseRepository<Integer, Tourist>{
     return repo.findFristByIdCard(idCard);
   }
 
-  public Page<Tourist> getByBornDateTimeSpace(Calendar start, Calendar end, Pageable page) {
+  public Page<Tourist> getByBornDateTimeSpace(LocalDate start, LocalDate end, Pageable page) {
     return repo.findAllByBornDateBetween(start, end, page);
   }
 

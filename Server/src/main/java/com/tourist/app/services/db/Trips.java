@@ -1,6 +1,6 @@
 package com.tourist.app.services.db;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +53,7 @@ public class Trips extends DatabaseService<Integer, Trip> {
       return null;
 
     Long count = countTouristAtSameDay(trip.getStartDate(), trip.getCity().getId());
+    System.out.println(count + " _____ " + Config.getMaxTourist() + " _____ " + trip.getStartDate());
 
     if (count > Config.getMaxTourist())
       return null;
@@ -61,7 +62,7 @@ public class Trips extends DatabaseService<Integer, Trip> {
 
   }
 
-  public Long countTouristAtSameDay(Date startDate, Integer cityId) {
+  public Long countTouristAtSameDay(LocalDate startDate, Integer cityId) {
     return repo.countTouristAtSameDay(startDate, cityId);
   }
 
