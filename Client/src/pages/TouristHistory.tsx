@@ -41,7 +41,7 @@ export default function TouristHistory() {
   }, []);
 
   return (
-    <ListContainer title="Trips of">
+    <ListContainer title={"Trips of " + (data?.content[0] ?  data.content[0].tourist.fullName : "")} >
       {data ? (
         <Table
           data={data.content}
