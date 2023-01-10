@@ -6,7 +6,6 @@ export function Table<T>(props: Props<T>) {
   return (
     <div className="table-container">
       <table>
-        <caption>{props.title}</caption>
         <thead>
           <tr>
             {Object.entries<Header>(props.headers).map(([key, inf]) =>
@@ -51,16 +50,12 @@ export function Table<T>(props: Props<T>) {
 
 type Header = {
   name: string;
-  id?: boolean;
   render?: boolean;
-  label?: string;
 };
 
 interface Props<T> {
-  title: string;
   idcol: keyof T;
-  onRowClick?: (row: T, e?: MouseEvent<HTMLTableRowElement>) => void;
-
+  onRowClick?: (row: T, e: MouseEvent<HTMLTableRowElement>) => void;
   headers: {
     [K in keyof T]: Header;
   };

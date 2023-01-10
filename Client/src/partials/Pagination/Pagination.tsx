@@ -1,4 +1,4 @@
-import { getPagingRange } from "../../util/pagingRange";
+import { getPagingRange } from "../../util/paginationRange";
 
 import "./Pagination.css"
 
