@@ -53,7 +53,6 @@ public class Trips extends DatabaseService<Integer, Trip> {
       return null;
 
     Long count = countTouristAtSameDay(trip.getStartDate(), trip.getCity().getId());
-    System.out.println(count + " _____ " + Config.getMaxTourist() + " _____ " + trip.getStartDate());
 
     if (count > Config.getMaxTourist())
       return null;
