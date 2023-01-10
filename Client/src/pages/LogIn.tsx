@@ -1,9 +1,5 @@
 import { FormEventHandler, useEffect, useState } from "react";
-import {
-  User,
-  UserDataRegistration,
-  UserRegistrationRaw,
-} from "../typings/server";
+import { UserDataRegistration, UserRegistrationRaw } from "../typings/server";
 import { LogIn, SignUp } from "../services/session";
 import Loading from "../partials/loading/Loading";
 import {
@@ -13,38 +9,67 @@ import {
   SessionActions,
 } from "../store";
 import { useNavigate } from "react-router-dom";
-
-import "./styles/login.css";
 import Form, { InputProps } from "../partials/Form/Form";
 
+import "./styles/login.css";
+
 export default function LogInPage() {
+  const navigation = useNavigate();
+  const dispatch = useStoreDispatch();
   /**
    * *true* = loggin
    * *false* = SingUp
    */
-  const [state, setState] = useState(true);
+  const [state, setState] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, updateFormData] = useState<Partial<UserRegistrationRaw>>({});
-  const navigation = useNavigate();
-  const dispatch = useStoreDispatch();
   const sessionData = useAppSelector((st: RootState) => st.session);
 
+  const update = (key: string, val: string) => {
+    updateFormData({...formData, [key]:val});
+  };
+
+  const singInConfig: (InputProps[] | InputProps)[] = [
+    {
+      type: "number",
+      label: "Card Id",
+      name: "cardId",
+      required: true,
+      onChange: update,
+    },
+    {
+      type: "password",
+      label: "Passwrod",
+      name: "password",
+      required: true,
+      onChange: update,
+    },
+    [
+      {
+        type: "submit",
+        label: "SignIn",
+      },
+      {
+        type: "button",
+        label: "SingUp",
+        onClick: () => setState(false),
+      },
+    ],
+  ];
   const singUpConf: (InputProps[] | InputProps)[] = [
     {
       label: "Full Name",
       type: "text",
+      name: "fullName",
       required: true,
-      onChange: (_, value) => {
-        updateFormData({ ...formData, fullName: value });
-      },
+      onChange: update,
     },
     {
       label: "Born Date",
       type: "date",
+      name: "bornDate",
       required: true,
-      onChange: (_, value) => {
-        updateFormData({ ...formData, bornDate: value });
-      },
+      onChange: update,
     },
     [
       {
@@ -52,80 +77,42 @@ export default function LogInPage() {
         name: "travelBudget",
         required: true,
         label: "Budget",
-        onChange: (_, value) => {
-          updateFormData({ ...formData, travelBudget: parseInt(value) });
-        },
+        onChange: update,
       },
       {
         type: "number",
-        required: true,
         label: "Frequency",
-        onChange: (_, value) => {
-          updateFormData({ ...formData, travelBudget: parseInt(value) });
-        },
+        name: "travelFrequency",
+        required: true,
+        onChange: update,
       },
     ],
     [
       {
         type: "password",
         label: "Passwrod",
+        name: "password",
         required: true,
-        onChange: (_, value) => {
-          updateFormData({ ...formData, password: value });
-        },
+        onChange: update,
       },
       {
         type: "number",
         label: "Card Id",
+        name: "cardId",
         required: true,
-        onChange: (_, val) => {
-          updateFormData({ ...formData, cardId: val });
-        },
+        onChange: update,
       },
     ],
     [
       {
-        type: "submit",
         label: "SignUp",
+        type: "submit",
       },
       {
         type: "button",
-        label: "Sing In",
+        label: "SingIn",
         onClick: () => {
           setState(true);
-        },
-      },
-    ],
-  ];
-  const singInConfig: (InputProps[] | InputProps)[] = [
-    {
-      type: "number",
-      label: "Card Id",
-      required: true,
-      onChange: (_, val) => {
-        updateFormData({ ...formData, cardId: val });
-      },
-    },
-    {
-      type: "password",
-      label: "Passwrod",
-      required: true,
-      onChange: (_, val) => {
-        updateFormData({ ...formData, password: val });
-      },
-    },
-    [
-      {
-        type: "submit",
-        label: "Sign In",
-      },
-      {
-        type: "button",
-        label: "Sing Up",
-        onClick: () => {
-          console.log("click");
-          
-          setState(false);
         },
       },
     ],
@@ -140,6 +127,7 @@ export default function LogInPage() {
   const handleSession: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     setLoading(false);
+
     if (state) {
       LogIn({ cardId: formData.cardId!, password: formData.password! })
         .then((e) => {
@@ -165,10 +153,11 @@ export default function LogInPage() {
           idCard: formData.cardId,
           fullName: formData.fullName,
           bornDate: formData.bornDate,
-          travelBudget: formData.travelBudget,
-          travelFrequency: formData.travelBudget,
+          travelBudget: parseInt(formData.travelBudget + ""),
+          travelFrequency: parseInt(formData.travelBudget + ""),
         },
       };
+      
       SignUp(data).then((d) => {
         dispatch(SessionActions.logIn(d));
         setLoading(false);
@@ -185,10 +174,7 @@ export default function LogInPage() {
       {loading ? (
         <Loading width="200px" />
       ) : (
-        <Form
-          onSubmit={handleSession}
-          data={state ? singInConfig : singUpConf}
-        />
+        <Form onSubmit={handleSession} data={state ? singInConfig : singUpConf} />
       )}
     </div>
   );

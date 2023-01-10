@@ -36,11 +36,11 @@ public class Tourist implements EntityBase<Integer> {
   @Column(name = "idCard", unique = true)
   private String idCard;
 
-  @OneToOne(mappedBy = "tourist")
+  @OneToOne(mappedBy = "tourist", orphanRemoval = true)
   @JsonIgnoreProperties("tourist")
   private User account;
 
-  @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "tourist")
+  @OneToMany(cascade = { CascadeType.REMOVE }, mappedBy = "tourist", orphanRemoval = true)
   @JsonIgnoreProperties("tourist")
   private List<Trip> trips;
 

@@ -39,6 +39,11 @@ export interface Trip {
   city: City;
 }
 
+export interface UpdateTouristResponse {
+  token: TokenResponse;
+  updated: Tourist;
+}
+
 export interface PageResponse<T> {
   content: T[],
   lenght: number,

@@ -1,33 +1,33 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useContextMenu } from "../hooks/useContextMenu";
 import { ListContainer } from "../partials/ListContainer/ListContainer";
+import { Table } from "../partials/Table/Table";
+import { deleteTourist, getAllTourists, updateTurist } from "../services/tourist";
+import { SessionActions, useAppSelector, useStoreDispatch } from "../store";
+import { PageResponse, Tourist } from "../typings/server";
 import Loading from "../partials/loading/Loading";
 import Pagination from "../partials/Pagination/Pagination";
-import { Table } from "../partials/Table/Table";
-import { getAllTourists } from "../services/tourist";
-import { useAppSelector } from "../store";
-import { PageResponse, Tourist } from "../typings/server";
 
-import "./styles/cities.css"
+import "./styles/cities.css";
+import { useHandleAsync } from "../hooks/useHandleAsync";
+import { FloatingMenu } from "../partials/FolatingMenu/FloatingMenu";
+import Form from "../partials/Form/Form";
 
 export function Tourists() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState<PageResponse<Tourist> | null>();
   const [searchParams, _] = useSearchParams();
   const [ContextMenu, OpenContextMenu] = useContextMenu();
+  const [Floating, SetFloating] = useState<ReactNode>();
+  const dispatch = useStoreDispatch();
   const User = useAppSelector((st) => st.session);
   const navigation = useNavigate();
-
-  const handleAsycn = (p: Promise<PageResponse<Tourist>>) => {
-    setData(null);
-    p.then((d) => {
-      setData(d);
-    });
-  };
+  const handleAsync = useHandleAsync(setData);
+  
   useEffect(() => {
     searchParams.set("page", String(page));
-    handleAsycn(getAllTourists(page));
+    handleAsync(getAllTourists(page));
   }, [page]);
 
   useEffect(() => {
@@ -46,6 +46,7 @@ export function Tourists() {
   return (
     <ListContainer title="Tourist">
       {ContextMenu}
+      {Floating ?? ""}
       {data ? (
         <>
           <Table
@@ -59,12 +60,27 @@ export function Tourists() {
                 },
               ];
               if (t.idCard === User?.cardId) {
-                options.push({
-                  name: "update",
-                  onClick: () => {
-                    navigation("/update");
+                options.push(
+                  {
+                    name: "update",
+                    onClick: () => {
+                      SetFloating(
+                        <UpdateTouristsCopm
+                          tourist={t}
+                          setClose={SetFloating}
+                        />
+                        );
+                    },
                   },
-                });
+                  {
+                    name: "Delete",
+                    onClick: () => {
+                      deleteTourist().then(() => 
+                        dispatch(SessionActions.logOut())
+                      )
+                    },
+                  }
+                );
               }
               OpenContextMenu(e.clientX, e.clientY, options);
             }}
@@ -99,5 +115,87 @@ export function Tourists() {
         <Loading width="200px" />
       )}
     </ListContainer>
+  );
+}
+
+function UpdateTouristsCopm(props: {
+  tourist: Tourist;
+  setClose: (b: any) => void;
+}) {
+  const [changes, setChanges] = useState(props.tourist);
+  const dispatch = useStoreDispatch();
+  const update = (key: string, val: string) => {
+    setChanges({ ...changes, [key]: val });
+  };
+  return (
+    <FloatingMenu title="Update" closeFn={props.setClose}>
+      <Form
+        data={[
+          [
+            {
+              name: "id",
+              required: true,
+              readonly: true,
+              default: props.tourist.id + "",
+              type: "number",
+              label: "ID",
+            },
+            {
+              name: "idCard",
+              type: "number",
+              label: "Card Id",
+              default: props.tourist.idCard,
+              required: true,
+              onChange: update,
+            },
+          ],
+          {
+            name: "fullName",
+            label: "Name",
+            type: "text",
+            default: props.tourist.fullName,
+            required: true,
+            onChange: update,
+          },
+          {
+            name: "bornDate",
+            label: "Born Date",
+            type: "date",
+            default: props.tourist.bornDate,
+            required: true,
+            onChange: update,
+          },
+          [
+            {
+              name: "travelFrequency",
+              label: "Travel Frequency",
+              type: "number",
+              required: true,
+              default: props.tourist.travelFrequency + "",
+              onChange: update,
+            },
+            {
+              name: "travelBudget",
+              label: "Travel Budget",
+              type: "number",
+              required: true,
+              default: props.tourist.travelBudget + "",
+              onChange: update,
+            },
+          ],{
+            name: "submit",
+            type: "submit",
+            label: "Submit"
+          }
+        ]}
+
+        onSubmit={(e) => {
+          e.preventDefault()
+          updateTurist(changes).then((d) => {
+            dispatch(SessionActions.logIn(d.token));
+          }).finally(() => props.setClose(null))
+        }}
+      />
+    </FloatingMenu>
   );
 }

@@ -2,8 +2,11 @@ package com.tourist.app.controllers;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
@@ -22,8 +25,11 @@ import org.springframework.web.server.ResponseStatusException;
 import com.tourist.app.dataBase.tourists.Tourist;
 import com.tourist.app.dataBase.trips.Trip;
 import com.tourist.app.entity.PageResponse;
+import com.tourist.app.entity.TokenResponse;
 import com.tourist.app.services.db.Tourists;
 import com.tourist.app.services.db.Trips;
+import com.tourist.app.services.db.Users;
+import com.tourist.app.utils.TokenGenerator;
 
 @RestController
 @RequestMapping("tourist")
@@ -32,6 +38,8 @@ public class TouristApi {
   private Tourists tService;
   @Autowired
   private Trips tripsService;
+  @Autowired
+  private Users uService;
 
   @GetMapping
   public PageResponse<Tourist> getAll(@RequestParam(name = "page", defaultValue = "1") Integer page,
@@ -55,19 +63,31 @@ public class TouristApi {
   }
 
   @PutMapping
-  public ResponseEntity<Tourist> updateTourist(final Authentication auth, @RequestBody Tourist t) {
+  public ResponseEntity<Map<String, Object>> updateTourist(final Authentication auth, @RequestBody Tourist t) {
     t.setTrips(Collections.emptyList());
     t.setAccount(null);
     final var turist = tService.getByIdCard(auth.getName());
     t.setId(turist.get().getId());
 
-    Tourist upated = tService.update(t);
-
-    if (upated == null) {
+    Tourist updated; 
+    try {
+      updated = tService.update(t);
+    } catch(DataIntegrityViolationException e) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+    }
+    
+    final var user = uService.getByIdCard(updated.getIdCard());
+    if (user.isEmpty()) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+    var token = TokenGenerator.createToken(updated.getIdCard()); 
+    var tkRes = new TokenResponse(token, updated.getIdCard(), "Bearer ", user.get().getAdmin());
+    
+    var res = new HashMap<String, Object>();
+    res.put("token", tkRes);
+    res.put("updated", updated);
 
-    return ResponseEntity.ok(upated);
+    return ResponseEntity.ok(res);
   }
 
   @GetMapping("{userid}")
