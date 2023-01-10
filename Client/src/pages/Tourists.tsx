@@ -81,6 +81,7 @@ export function Tourists() {
               },
               bornDate: {
                 name: "Born Date",
+                preprocess: (d) => new Date(d as string).toDateString(),
               },
               travelFrequency: {
                 name: "Frequency",
