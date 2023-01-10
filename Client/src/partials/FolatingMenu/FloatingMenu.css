@@ -1,0 +1,54 @@
+.floating-menu-background,
+.floating-menu {
+  z-index: 200;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.floating-menu-close {
+  position: absolute;
+  background: none;
+  font-size: 3rem;
+  border: none;
+  color: var(--black);
+  font-weight: 600;
+  left: 15px;
+  cursor: pointer;
+  top: -5px;
+}
+.floating-menu-background {
+  opacity: 0.7;
+  background-color: var(--black);
+}
+.float-content {
+  position: absolute;
+  background-color: var(--white);
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc(25vh - 50px);
+  border-radius: 25px;
+  padding: 25px 25px 60px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+.float-content > h1 {
+  color: var(--black);
+  font-weight: 900;
+  font-size: 2.5rem;
+}
+.float-content > h1::after {
+  content: "";
+  height: 6px;
+  width: 100%;
+  left: 6px;
+  border-radius: 3px;
+  background-color: var(--blue);
+  position: relative;
+  display: block;
+  margin: -6px;
+  bottom: 6px;
+}

@@ -4,15 +4,15 @@ import "./Form.css";
 export default function Form(props: Props) {
   return (
     <form onSubmit={props.onSubmit}>
-      {props.data.map((inp) =>
+      {props.data.map((inp, i) =>
         inp instanceof Array ? (
-          <div className="form-horizontal-row">
-            {inp.map((d) => (
-              <InputForm {...d} />
+          <div className="form-horizontal-row" key={i + ""}>
+            {inp.map((d, ii) => (
+              <InputForm {...d} key={ii}/>
             ))}
           </div>
         ) : (
-          <InputForm {...inp} />
+          <InputForm {...inp} key={i + ""} />
         )
       )}
     </form>
@@ -27,7 +27,8 @@ function InputForm(props: InputProps) {
         type={props.type}
         name={props.name}
         required={props.required}
-        value={props.type === "button" ? props.label : undefined}
+        readOnly={props.readonly}
+        defaultValue={props.type === "button" ? props.label : props.default}
         onClick={props.onClick}
         onChange={(e) => props.onChange?.(e.target.name, e.target.value)}
       />
@@ -47,6 +48,8 @@ export interface InputProps {
   name?: string;
   type: "text" | "password" | "date" | "number" | "submit" | "button";
   required?: boolean;
+  default?: string;
+  readonly?: boolean;
   label: string;
   onChange?: (name: string, vale: string) => void;
   onClick?: MouseEventHandler<HTMLInputElement>;

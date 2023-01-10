@@ -1,3 +1,8 @@
+form * {
+  color: var(--black);
+  font-weight: 600;
+}
+
 form {
   display: flex;
   flex-direction: column;
@@ -10,6 +15,7 @@ form div:not(.cut) {
 }
 form span,
 form .cut {
+  pointer-events: none;
   position: absolute;
   top: 8px;
   left: 15px;
@@ -21,8 +27,10 @@ form span {
   font-size: 1.5rem;
   top: auto;
   bottom: 3px;
+  text-size-adjust: 50%;
 }
 form input {
+  outline: none;
   border: none;
   border-radius: 0 15px;
   padding: 3px 10px;
@@ -53,17 +61,22 @@ form .cut {
   border-radius: 0 0.6rem;
 }
 form input:focus ~ .cut,
-form input:valid ~ .cut {
+form input:valid ~ .cut,
+form input:read-only ~ .cut {
   background-color: var(--white);
   transform: scaleX(1);
   height: 1.2rem;
   width: 65%;
 }
 form input:focus ~ span,
-form input:valid ~ span {
+form input:valid ~ span,
+form input:read-only ~ span {
   font-size: 1.2rem;
-  bottom: auto;
-  transform: translate(5px, -1.35rem);
+  top: 0;
+  transform: translate(5px, -1.4rem);
+}
+form input:read-only {
+  color: var(--blue);
 }
 
 .form-horizontal-row {

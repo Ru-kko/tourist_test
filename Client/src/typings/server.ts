@@ -15,7 +15,8 @@ export interface User {
 
 export interface TokenResponse {
   token: string;
-  type: string;
+  tokenType: string;
+  admin: boolean;
   cardId: string;
 }
 export interface UserDataRegistration {

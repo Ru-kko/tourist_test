@@ -1,0 +1,42 @@
+.cities-footer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5px;
+  margin: -5px;
+}
+
+.cities-footer button {
+  height: 4vh;
+  min-width: 4vh;
+  border-radius: 5px;
+  font-weight: 900;
+  font-size: 1.5rem;
+  padding: 0 15px;
+  vertical-align: bottom;
+  border: none;
+  color: var(--black);
+}
+
+.cities-footer button:hover {
+  transform: scale(1.1);
+  background-color: var(--blue);
+  color: var(--gray);
+}
+.cities-footer a {
+ cursor: pointer; 
+}
+
+.cities-footer input {
+  width: 600px;
+  height: 3vh;
+  border-radius: 10px;
+  outline: none;
+  color: var(--black);
+  font-weight: 600;
+  padding: 0 10px;
+}

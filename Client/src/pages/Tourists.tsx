@@ -9,6 +9,8 @@ import { getAllTourists } from "../services/tourist";
 import { useAppSelector } from "../store";
 import { PageResponse, Tourist } from "../typings/server";
 
+import "./styles/cities.css"
+
 export function Tourists() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState<PageResponse<Tourist> | null>();
