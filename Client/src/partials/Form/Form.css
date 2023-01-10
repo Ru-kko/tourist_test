@@ -1,0 +1,89 @@
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  align-items: center;
+}
+form div:not(.cut) {
+  position: relative;
+  width: 90%; 
+}
+form span,
+form .cut {
+  position: absolute;
+  top: 8px;
+  left: 15px;
+  transition: 0.5s ease-in;
+  top: -1rem;
+}
+
+form span {
+  font-size: 1.5rem;
+  top: auto;
+  bottom: 3px;
+}
+form input {
+  border: none;
+  border-radius: 0 15px;
+  padding: 3px 10px;
+  box-shadow: 0px 10px 8px 1px var(--darkness);
+  font-size: 1.5rem;
+  height: 2rem;
+  width: calc(100% - 20px);
+}
+form input::-webkit-inner-spin-button,
+form input::-webkit-outer-spin-button,
+form input:not(:valid, :focus)::-webkit-datetime-edit {
+  display: none;
+  color: transparent;
+}
+
+form input[type="date"] {
+  min-width: 15rem;
+}
+form input[type="date"] ~ span {
+  left: 2.3rem;
+}
+
+form .cut {
+  transition-delay: .5s;
+  transform: scaleX(0);
+  transform-origin: bottom left;
+  box-shadow: -1px 4px 6px 0px var(--darkness);
+  border-radius: 0 0.6rem;
+}
+form input:focus ~ .cut,
+form input:valid ~ .cut {
+  background-color: var(--white);
+  transform: scaleX(1);
+  height: 1.2rem;
+  width: 65%;
+}
+form input:focus ~ span,
+form input:valid ~ span {
+  font-size: 1.2rem;
+  bottom: auto;
+  transform: translate(5px, -1.35rem);
+}
+
+.form-horizontal-row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  font-weight: 600;
+  align-items: center;
+  justify-content: space-around;
+}
+.form-horizontal-row input {
+  max-width: 13rem;
+}
+
+form input[type="button"], form input[type="submit"] {
+  height: auto;
+  width: 100%;
+}
+
+form:not(:valid) .submit-btn {
+  background-color: var(--main);
+  color: var(--white);
+}

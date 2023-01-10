@@ -15,7 +15,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import "./styles/login.css";
-type ParseFn<T> = (data: { [K in keyof Partial<T>]: T[K] }) => void;
+import Form, { InputProps } from "../partials/Form/Form";
 
 export default function LogInPage() {
   /**
@@ -28,6 +28,108 @@ export default function LogInPage() {
   const navigation = useNavigate();
   const dispatch = useStoreDispatch();
   const sessionData = useAppSelector((st: RootState) => st.session);
+
+  const singUpConf: (InputProps[] | InputProps)[] = [
+    {
+      label: "Full Name",
+      type: "text",
+      required: true,
+      onChange: (_, value) => {
+        updateFormData({ ...formData, fullName: value });
+      },
+    },
+    {
+      label: "Born Date",
+      type: "date",
+      required: true,
+      onChange: (_, value) => {
+        updateFormData({ ...formData, bornDate: value });
+      },
+    },
+    [
+      {
+        type: "number",
+        name: "travelBudget",
+        required: true,
+        label: "Budget",
+        onChange: (_, value) => {
+          updateFormData({ ...formData, travelBudget: parseInt(value) });
+        },
+      },
+      {
+        type: "number",
+        required: true,
+        label: "Frequency",
+        onChange: (_, value) => {
+          updateFormData({ ...formData, travelBudget: parseInt(value) });
+        },
+      },
+    ],
+    [
+      {
+        type: "password",
+        label: "Passwrod",
+        required: true,
+        onChange: (_, value) => {
+          updateFormData({ ...formData, password: value });
+        },
+      },
+      {
+        type: "number",
+        label: "Card Id",
+        required: true,
+        onChange: (_, val) => {
+          updateFormData({ ...formData, cardId: val });
+        },
+      },
+    ],
+    [
+      {
+        type: "submit",
+        label: "SignUp",
+      },
+      {
+        type: "button",
+        label: "Sing In",
+        onClick: () => {
+          setState(true);
+        },
+      },
+    ],
+  ];
+  const singInConfig: (InputProps[] | InputProps)[] = [
+    {
+      type: "number",
+      label: "Card Id",
+      required: true,
+      onChange: (_, val) => {
+        updateFormData({ ...formData, cardId: val });
+      },
+    },
+    {
+      type: "password",
+      label: "Passwrod",
+      required: true,
+      onChange: (_, val) => {
+        updateFormData({ ...formData, password: val });
+      },
+    },
+    [
+      {
+        type: "submit",
+        label: "Sign In",
+      },
+      {
+        type: "button",
+        label: "Sing Up",
+        onClick: () => {
+          console.log("click");
+          
+          setState(false);
+        },
+      },
+    ],
+  ];
 
   useEffect(() => {
     if (sessionData) {
@@ -81,130 +183,13 @@ export default function LogInPage() {
         <h1>{state ? "Sign In" : "Sign Up"}</h1>
       </div>
       {loading ? (
-        <Loading width="10rem" />
+        <Loading width="200px" />
       ) : (
-        <form className="loggin-form" onSubmit={handleSession}>
-          {state ? (
-            <LongginForm
-              fn={(inf) => updateFormData({ ...formData, ...inf })}
-            />
-          ) : (
-            <RegisterForm
-              fn={(inf) => updateFormData({ ...formData, ...inf })}
-            />
-          )}
-          <div className="log-horizontal-row">
-            <input
-              type="submit"
-              className="submit-btn"
-              value={state ? "SignIn" : "SignUp"}
-            />
-            or
-            <button
-              onClick={() => {
-                setState(!state);
-                updateFormData({});
-              }}
-            >
-              {!state ? "SignIn" : "SignUp"}
-            </button>
-          </div>
-        </form>
+        <Form
+          onSubmit={handleSession}
+          data={state ? singInConfig : singUpConf}
+        />
       )}
     </div>
   );
 }
-
-const LongginForm = (props: { fn: ParseFn<User> }) => (
-  <>
-    <div>
-      <input
-        type="number"
-        name="cardId"
-        required
-        onChange={(e) => props.fn({ [e.target.name]: e.target.value })}
-      />
-      <div className="cut" />
-      <span>Card Id</span>
-    </div>
-    <div>
-      <input
-        type="password"
-        name="password"
-        required
-        onChange={(e) => props.fn({ [e.target.name]: e.target.value })}
-      />
-      <div className="cut" />
-      <span>Password</span>
-    </div>
-  </>
-);
-
-const RegisterForm = (props: { fn: ParseFn<User> }) => (
-  <>
-    <div>
-      <input
-        type="text"
-        name="fullName"
-        required
-        onChange={(e) => props.fn({ [e.target.name]: e.target.value })}
-      />
-      <div className="cut" />
-      <span>Full Name</span>
-    </div>
-    <div>
-      <input
-        type="date"
-        name="bornDate"
-        required
-        onChange={(e) => props.fn({ [e.target.name]: e.target.value })}
-      />
-      <div className="cut" />
-      <span>Born Date</span>
-    </div>
-    <div className="log-horizontal-row">
-      <div>
-        <input
-          type="number"
-          name="travelFrequency"
-          required
-          onChange={(e) => props.fn({ [e.target.name]: e.target.value })}
-        />
-        <div className="cut" />
-        <span>TravelFrequecy</span>
-      </div>
-      <div>
-        <input
-          type="number"
-          name="travelBudget"
-          required
-          onChange={(e) => props.fn({ [e.target.name]: e.target.value })}
-        />
-        <div className="cut"></div>
-        <span>TravelBudget</span>
-      </div>
-    </div>
-    <div className="log-horizontal-row">
-      <div>
-        <input
-          type="number"
-          name="cardId"
-          required
-          onChange={(e) => props.fn({ [e.target.name]: e.target.value })}
-        />
-        <div className="cut" />
-        <span>CardId</span>
-      </div>
-      <div>
-        <input
-          type="password"
-          name="password"
-          required
-          onChange={(e) => props.fn({ [e.target.name]: e.target.value })}
-        />
-        <div className="cut" />
-        <span>Password</span>
-      </div>
-    </div>
-  </>
-);
