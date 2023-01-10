@@ -1,0 +1,29 @@
+.pagination {
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+  align-items: stretch;
+  justify-content: space-around;
+}
+
+.pagination > * {
+  width: 30px;
+  height: 30px;
+  border: solid 1px var(--black);
+  color: var(--black);
+  font-weight: 700;
+  background-color: var(--white);
+}
+.pagination > *:last-child, .pagination > *:first-child {
+  border: none;
+}
+
+.pagination > button:not(.page-actual):hover {
+  border: none;
+  background-color: var(--gray);
+}
+
+.pagination > .page-actual {
+  color: var(--white);
+  background-color: var(--darkness);
+}
