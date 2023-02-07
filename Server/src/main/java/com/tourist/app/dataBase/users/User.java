@@ -13,9 +13,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Users")
+@NoArgsConstructor
+@Data
 public class User implements EntityBase<Integer> {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,38 +35,4 @@ public class User implements EntityBase<Integer> {
   @JoinColumn(name = "tourist", referencedColumnName = "touristId")
   @JsonIgnoreProperties("account")
   private Tourist tourist;
-
-  public Boolean getAdmin() {
-    return admin;
-  }
-
-  public void setAdmin(Boolean admin) {
-    this.admin = admin;
-  }
-
-  public Tourist getTourist() {
-    return tourist;
-  }
-
-  public void setTourist(Tourist tourist) {
-    this.tourist = tourist;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  @Override
-  public Integer getId() {
-    return id;
-  }
-
-  @Override
-  public void setId(Integer id) {
-    this.id = id;
-  }
 }

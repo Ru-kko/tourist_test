@@ -17,9 +17,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "trips")
+@Table(name = "Trips")
+@Data
+@NoArgsConstructor
 public class Trip implements EntityBase<Integer> {
   @Id
   @Column(name = "tripId")
@@ -39,30 +43,6 @@ public class Trip implements EntityBase<Integer> {
   @JoinColumn(name = "cityId", nullable = false)
   @JsonIgnoreProperties("trips")
   private City city;
-
-  public City getCity() {
-    return city;
-  }
-
-  public void setCity(City city) {
-    this.city = city;
-  }
-
-  public Tourist getTourist() {
-    return tourist;
-  }
-
-  public void setTourist(Tourist tourist) {
-    this.tourist = tourist;
-  }
-
-  public LocalDate getStartDate() {
-    return startDate;
-  }
-
-  public void setStartDate(LocalDate startDate) {
-    this.startDate = startDate;
-  }
 
   @Override
   public Integer getId() {

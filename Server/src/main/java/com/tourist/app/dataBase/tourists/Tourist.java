@@ -20,9 +20,13 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Tourists")
+@Data
+@NoArgsConstructor
 public class Tourist implements EntityBase<Integer> {
   @Id
   @Column(name = "touristId")
@@ -50,9 +54,6 @@ public class Tourist implements EntityBase<Integer> {
   @OneToMany(mappedBy = "tourist", orphanRemoval = true, cascade = CascadeType.DETACH)
   @JsonIgnoreProperties("tourist")
   private List<Trip> trips = new ArrayList<>();
-
-  public Tourist() {
-  }
   
   public Tourist(LocalDate bornDate, String name,String lastName, String idCard, Integer travelFrequency, Double travelBudget) {
     this.bornDate = bornDate;
@@ -61,79 +62,5 @@ public class Tourist implements EntityBase<Integer> {
     this.travelBudget = travelBudget;
     this.lastName = lastName;
     this.name = name;
-  }
-  
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  public List<Trip> getTrips() {
-    return trips;
-  }
-
-  public void setTrips(List<Trip> trips) {
-    this.trips = trips;
-  }
-
-  public User getAccount() {
-    return account;
-  }
-
-  public void setAccount(User account) {
-    this.account = account;
-  }
-
-  public Integer getTravelFrequency() {
-    return travelFrequency;
-  }
-
-  public void setTravelFrequency(Integer travelFrequency) {
-    this.travelFrequency = travelFrequency;
-  }
-
-  public String getIdCard() {
-    return idCard;
-  }
-
-  public void setIdCard(String idCard) {
-    this.idCard = idCard;
-  }
-
-  public Double getTravelBudget() {
-    return travelBudget;
-  }
-
-  public void setTravelBudget(Double travelBudget) {
-    this.travelBudget = travelBudget;
-  }
-
-  public LocalDate getBornDate() {
-    return bornDate;
-  }
-
-  public void setBornDate(LocalDate bornDate) {
-    this.bornDate = bornDate;
-  }
-
-  @Override
-  public Integer getId() {
-    return id;
-  }
-
-  @Override
-  public void setId(Integer id) {
-    this.id = id;
   }
 }
