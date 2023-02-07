@@ -31,12 +31,16 @@ public class Tourists extends DatabaseService<Integer, Tourist> {
     if (oldData.isEmpty())
       return null;
 
+    toUpdate.setTrips(oldData.get().getTrips());
+
     if (toUpdate.getBornDate() == null)
       toUpdate.setBornDate(oldData.get().getBornDate());
 
-    if (toUpdate.getFullName() == null)
-      toUpdate.setFullName(oldData.get().getFullName());
+    if (toUpdate.getLastName() == null)
+      toUpdate.setLastName(oldData.get().getLastName());
 
+    if (toUpdate.getName() == null)
+      toUpdate.setName(oldData.get().getName());
     if (toUpdate.getTravelFrequency() == null)
       toUpdate.setTravelFrequency(oldData.get().getTravelFrequency());
 

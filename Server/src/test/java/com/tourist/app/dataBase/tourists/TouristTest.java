@@ -32,12 +32,11 @@ public class TouristTest {
   void initialize() throws ParseException {
     LocalDate date = LocalDate.of(2023, 1, 1);
 
-
-    testData[0] = new Tourist(date, "jonh doe", "1234", 2, 10.00d);
-    testData[1] = new Tourist(date, "jane doe", "12356", 2, 10.00d);
-    testData[2] = new Tourist(date, "pepe perez", "123478", 2, 10.00d);
-    testData[3] = new Tourist(date, "deletable", "123", 2, 10.00d);
-    testData[4] = new Tourist(date, "upadable", "134", 2, 10.00d);
+    testData[0] = new Tourist(date, "jonh", "doe", "1234", 2, 10.00d);
+    testData[1] = new Tourist(date, "jane", "doe", "12356", 2, 10.00d);
+    testData[2] = new Tourist(date, "pepe", "perez", "123478", 2, 10.00d);
+    testData[3] = new Tourist(date, "deletable", "test", "123", 2, 10.00d);
+    testData[4] = new Tourist(date, "upadable", "foo", "134", 2, 10.00d);
 
     for (int i = 0; i < testData.length; i++) {
       testData[i] = repo.save(testData[i]);
@@ -47,7 +46,7 @@ public class TouristTest {
   @Test
   void should_add_a_tourist() throws ParseException {
     LocalDate date = LocalDate.of(2023, 1, 1);
-    Tourist newTourist = new Tourist(date, "foo", "123456789", 5, 20.00d);
+    Tourist newTourist = new Tourist(date, "foo", "bar", "123456789", 5, 20.00d);
 
     testData[5] = repo.save(newTourist);
 
@@ -76,8 +75,8 @@ public class TouristTest {
   void should_dont_make_two_tourists_with_same_card_id() {
     LocalDate date = LocalDate.of(2023, 1, 1);
 
-    Tourist err = new Tourist(date, "frist ", "4321", 2, 10.00d);
-    Tourist err2 = new Tourist(date, "second", "4321", 2, 10.00d);
+    Tourist err = new Tourist(date, "frist", "last", "4321", 2, 10.00d);
+    Tourist err2 = new Tourist(date, "second", "last", "4321", 2, 10.00d);
 
     err = repo.save(err);
     assertThrows(DataIntegrityViolationException.class, () -> repo.save(err2));
@@ -89,14 +88,14 @@ public class TouristTest {
   void should_change_values_of_a_tourist() {
     Tourist touristBase = testData[4];
 
-    touristBase.setFullName("changed");
+    touristBase.setName("changed");
 
     Tourist updated = repo.update(touristBase);
     Optional<Tourist> findedChange = repo.getById(testData[4].getId());
 
     assertTrue(findedChange.isPresent());
-    assertEquals("changed", updated.getFullName());
-    assertEquals("changed", findedChange.get().getFullName());
+    assertEquals("changed", updated.getName());
+    assertEquals("changed", findedChange.get().getName());
   }
 
   @AfterAll

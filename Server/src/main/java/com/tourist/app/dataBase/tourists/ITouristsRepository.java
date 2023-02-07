@@ -11,7 +11,9 @@ import org.springframework.data.repository.query.Param;
 
 interface ITouristsRepository extends CrudRepository<Tourist, Integer> {
 
-  @Query(value = "SELECT * FROM Tourists WHERE LOWER(fullName) LIKE %:name%", countQuery = "SELECT COUNT(*) FROM Tourist WHERE LOWER(fullname) LIKE %:name%", nativeQuery = true)
+  @Query(value = "SELECT * FROM Tourists WHERE LOWER(name) LIKE %:name% OR LOWER(lastName) LIKE %:name% OR LOWER(CONCAT(name, lastName)) LIKE %:name%", 
+    countQuery = "SELECT COUNT(*) FROM Tourists WHERE LOWER(name) LIKE %:name% OR LOWER(lastName) LIKE %:name% OR LOWER(CONCAT(name, lastName)) LIKE %:name%", 
+    nativeQuery = true)
   public Page<Tourist> findByPartialName(@Param("name") String partial, Pageable page);
 
   public Optional<Tourist> findFristByIdCard(String idCard);

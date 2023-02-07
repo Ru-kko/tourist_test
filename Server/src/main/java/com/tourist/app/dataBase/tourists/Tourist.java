@@ -1,6 +1,7 @@
 package com.tourist.app.dataBase.tourists;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -30,7 +31,13 @@ public class Tourist implements EntityBase<Integer> {
 
   @Temporal(TemporalType.DATE)
   private LocalDate bornDate;
-  private String fullName;
+
+  
+  private String name;
+  private String lastName;
+  
+
+  
   private Integer travelFrequency;
   private Double travelBudget;
   @Column(name = "idCard", unique = true)
@@ -40,19 +47,36 @@ public class Tourist implements EntityBase<Integer> {
   @JsonIgnoreProperties("tourist")
   private User account;
 
-  @OneToMany(cascade = { CascadeType.REMOVE }, mappedBy = "tourist", orphanRemoval = true)
+  @OneToMany(mappedBy = "tourist", orphanRemoval = true, cascade = CascadeType.DETACH)
   @JsonIgnoreProperties("tourist")
-  private List<Trip> trips;
+  private List<Trip> trips = new ArrayList<>();
 
   public Tourist() {
   }
-
-  public Tourist(LocalDate bornDate, String fullName, String idCard, Integer travelFrequency, Double travelBudget) {
+  
+  public Tourist(LocalDate bornDate, String name,String lastName, String idCard, Integer travelFrequency, Double travelBudget) {
     this.bornDate = bornDate;
-    this.fullName = fullName;
     this.idCard = idCard;
     this.travelFrequency = travelFrequency;
     this.travelBudget = travelBudget;
+    this.lastName = lastName;
+    this.name = name;
+  }
+  
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
   }
 
   public List<Trip> getTrips() {
@@ -85,14 +109,6 @@ public class Tourist implements EntityBase<Integer> {
 
   public void setIdCard(String idCard) {
     this.idCard = idCard;
-  }
-
-  public String getFullName() {
-    return fullName;
-  }
-
-  public void setFullName(String fullName) {
-    this.fullName = fullName;
   }
 
   public Double getTravelBudget() {

@@ -34,11 +34,11 @@ public class UsersTest {
 
   @BeforeAll
   void initializeData() {
-    LocalDate bornDate = LocalDate.of(2003,2,8);
-    
-    tData[0] = tService.save(new Tourist(bornDate, "name 1", "1234", 1, 1.5d));
-    tData[1] = tService.save(new Tourist(bornDate, "name 2", "123", 1, 1.5d));
-    tData[2] = tService.save(new Tourist(bornDate, "name 3", "12345", 1, 1.5d));
+    LocalDate bornDate = LocalDate.of(2003, 2, 8);
+
+    tData[0] = tService.save(new Tourist(bornDate, "name", "1", "1234545", 1, 1.5d));
+    tData[1] = tService.save(new Tourist(bornDate, "name", "2", "123445", 1, 1.5d));
+    tData[2] = tService.save(new Tourist(bornDate, "name", "3", "12345445", 1, 1.5d));
   }
 
   @Test
@@ -71,7 +71,7 @@ public class UsersTest {
   }
 
   @Test
-  void should_find_by_tourist_idCard(){
+  void should_find_by_tourist_idCard() {
     var newUser = new User();
     newUser.setAdmin(false);
     newUser.setPassword("secretpsw");
@@ -80,9 +80,9 @@ public class UsersTest {
     testData[2] = service.save(newUser);
 
     var finded = service.getByIdCard(tData[2].getIdCard());
-    
+
     assertTrue(finded.isPresent());
-    assertEquals(testData[2].getId() , finded.get().getId());
+    assertEquals(testData[2].getId(), finded.get().getId());
   }
 
   @AfterAll

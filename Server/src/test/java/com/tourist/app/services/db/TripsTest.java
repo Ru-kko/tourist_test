@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDate;
+import java.time.Month;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -40,13 +41,13 @@ public class TripsTest {
     cData = new City("Test city", 1000, "nan", "nan");
     cData = cService.save(cData);
 
-    tripDate = LocalDate.of(2023, 1, 1);
+    tripDate = LocalDate.of(2023, Month.JANUARY, 1);
   
 
     for (int i = 0; i < tData.length; i++) {
-      LocalDate bornDate = LocalDate.of(2003, 1, i *2 );
+      LocalDate bornDate = LocalDate.of(2003, Month.APRIL, i + 1 * 2 );
 
-      tData[i] = new Tourist(bornDate, "Tourist n " + i, Integer.toString(i * 123), i, i * Math.E * i);
+      tData[i] = new Tourist(bornDate, "Tourist n " + i, " foo ", Integer.toString(i * 123), i, i * Math.E * i);
 
       tData[i] = tService.save(tData[i]);
     }
@@ -78,11 +79,11 @@ public class TripsTest {
 
   @AfterAll
   void destroy() {
-    for (Trip i : tripsData) {
-      service.delete(i);
-    }
     for (Tourist i : tData) {
       tService.deleteById(i.getId());
+    }
+    for (Trip i : tripsData) {
+      service.delete(i);
     }
     cService.deleteById(cData.getId());
   }

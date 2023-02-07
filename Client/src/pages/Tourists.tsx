@@ -3,7 +3,11 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useContextMenu } from "../hooks/useContextMenu";
 import { ListContainer } from "../partials/ListContainer/ListContainer";
 import { Table } from "../partials/Table/Table";
-import { deleteTourist, getAllTourists, updateTurist } from "../services/tourist";
+import {
+  deleteTourist,
+  getAllTourists,
+  updateTurist,
+} from "../services/tourist";
 import { SessionActions, useAppSelector, useStoreDispatch } from "../store";
 import { PageResponse, Tourist } from "../typings/server";
 import Loading from "../partials/loading/Loading";
@@ -24,7 +28,7 @@ export function Tourists() {
   const User = useAppSelector((st) => st.session);
   const navigation = useNavigate();
   const handleAsync = useHandleAsync(setData);
-  
+
   useEffect(() => {
     searchParams.set("page", String(page));
     handleAsync(getAllTourists(page));
@@ -69,15 +73,15 @@ export function Tourists() {
                           tourist={t}
                           setClose={SetFloating}
                         />
-                        );
+                      );
                     },
                   },
                   {
                     name: "Delete",
                     onClick: () => {
-                      deleteTourist().then(() => 
+                      deleteTourist().then(() =>
                         dispatch(SessionActions.logOut())
-                      )
+                      );
                     },
                   }
                 );
@@ -91,8 +95,11 @@ export function Tourists() {
                 name: "id",
                 render: false,
               },
-              fullName: {
+              name: {
                 name: "Name",
+              },
+              lastName: {
+                name: "Last Name",
               },
               idCard: {
                 name: "Card Id",
@@ -149,14 +156,23 @@ function UpdateTouristsCopm(props: {
               onChange: update,
             },
           ],
-          {
-            name: "fullName",
-            label: "Name",
-            type: "text",
-            default: props.tourist.fullName,
-            required: true,
-            onChange: update,
-          },
+          [
+            {
+              name: "name",
+              label: "Name",
+              type: "text",
+              default: props.tourist.name,
+              required: true,
+              onChange: update,
+            },
+            {
+              name: "lastName",
+              label: "Last Name",
+              type: "text",
+              default: props.tourist.lastName,
+              onChange: update,
+            },
+          ],
           {
             name: "bornDate",
             label: "Born Date",
@@ -182,18 +198,20 @@ function UpdateTouristsCopm(props: {
               default: props.tourist.travelBudget + "",
               onChange: update,
             },
-          ],{
+          ],
+          {
             name: "submit",
             type: "submit",
-            label: "Submit"
-          }
+            label: "Submit",
+          },
         ]}
-
         onSubmit={(e) => {
-          e.preventDefault()
-          updateTurist(changes).then((d) => {
-            dispatch(SessionActions.logIn(d.token));
-          }).finally(() => props.setClose(null))
+          e.preventDefault();
+          updateTurist(changes)
+            .then((d) => {
+              dispatch(SessionActions.logIn(d.token));
+            })
+            .finally(() => props.setClose(null));
         }}
       />
     </FloatingMenu>

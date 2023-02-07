@@ -46,7 +46,8 @@ public class Session {
 
     if (find.isEmpty()) {
       if (user.getTourist().getBornDate() == null ||
-          user.getTourist().getFullName() == null ||
+          user.getTourist().getName() == null ||
+          user.getTourist().getLastName() == null ||
           user.getTourist().getTravelBudget() == null ||
           user.getTourist().getTravelFrequency() == null) {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Operation failed with status 400");

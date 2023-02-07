@@ -26,7 +26,7 @@ export default function LogInPage() {
   const sessionData = useAppSelector((st: RootState) => st.session);
 
   const update = (key: string, val: string) => {
-    updateFormData({...formData, [key]:val});
+    updateFormData({ ...formData, [key]: val });
   };
 
   const singInConfig: (InputProps[] | InputProps)[] = [
@@ -57,13 +57,23 @@ export default function LogInPage() {
     ],
   ];
   const singUpConf: (InputProps[] | InputProps)[] = [
-    {
-      label: "Full Name",
-      type: "text",
-      name: "fullName",
-      required: true,
-      onChange: update,
-    },
+    [
+      {
+        label: "Name",
+        type: "text",
+        name: "name",
+        required: true,
+        onChange: update,
+      },
+      {
+        label: "Last Name",
+        type: "text",
+        name: "lastName",
+        required: true,
+        onChange: update,
+      },
+    ],
+
     {
       label: "Born Date",
       type: "date",
@@ -145,19 +155,21 @@ export default function LogInPage() {
       formData.password &&
       formData.travelBudget &&
       formData.travelFrequency &&
-      formData.fullName
+      formData.name &&
+      formData.lastName
     ) {
       const data: UserDataRegistration = {
         password: formData.password,
         tourist: {
           idCard: formData.cardId,
-          fullName: formData.fullName,
+          name: formData.name,
+          lastName: formData.lastName,
           bornDate: formData.bornDate,
           travelBudget: parseInt(formData.travelBudget + ""),
           travelFrequency: parseInt(formData.travelBudget + ""),
         },
       };
-      
+
       SignUp(data).then((d) => {
         dispatch(SessionActions.logIn(d));
         setLoading(false);
@@ -174,7 +186,10 @@ export default function LogInPage() {
       {loading ? (
         <Loading width="200px" />
       ) : (
-        <Form onSubmit={handleSession} data={state ? singInConfig : singUpConf} />
+        <Form
+          onSubmit={handleSession}
+          data={state ? singInConfig : singUpConf}
+        />
       )}
     </div>
   );

@@ -46,7 +46,7 @@ public class TripTest {
 
 
     for (int i = 0; i < tourists.length; i++) {
-      Tourist toSave = new Tourist(date, "touris number " + i, Integer.toString(i * 12), i,
+      Tourist toSave = new Tourist(date, "touris", "last name "  + i, Integer.toString(i * 12), i,
           (i * 5 / 3) * 1.0d);
       tourists[i] = tRepo.save(toSave);
     }
@@ -81,7 +81,7 @@ public class TripTest {
     // Should find trips from an user
     Page<Trip> tourstTrips = repo.getTripsFromTourist(tourists[0].getId(), PageRequest.of(0, 50));
 
-    assertEquals(1, tourstTrips.getNumber());
+    assertEquals(1, tourstTrips.getTotalElements());
   }
 
   @Test
