@@ -31,7 +31,7 @@ public class City implements EntityBase<Integer>{
   private String mostTuristicPlace;
   private String mostReserverdHotel;
 
-  @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "city")
+  @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "city", orphanRemoval = true)
   @JsonIgnoreProperties("city")
   private List<Trip> trips;
 

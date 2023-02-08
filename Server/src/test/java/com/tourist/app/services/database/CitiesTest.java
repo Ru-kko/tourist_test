@@ -1,4 +1,4 @@
-package com.tourist.app.services.db;
+package com.tourist.app.services.database;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -13,7 +13,7 @@ import com.tourist.app.dataBase.cities.City;
 @SpringBootTest
 public class CitiesTest {
   @Autowired
-  private Cities service;
+private ICityService service;
 
   @Test
   void testUpdate() {

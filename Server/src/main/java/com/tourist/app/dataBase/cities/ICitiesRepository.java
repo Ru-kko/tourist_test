@@ -5,8 +5,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-interface ICitiesRepository extends CrudRepository<City, Integer> {
+@Repository
+public interface ICitiesRepository extends CrudRepository<City, Integer> {
 
   @Query(value = "SELECT * FROM Cities WHERE LOWER(name) LIKE %:partialName%", countQuery = "SELECT COUNT(*) FROM Citites WHERE LOWER(name) LIKE %:partialName%", nativeQuery = true)
   public Page<City> findByPartialName(@Param("partialName") String partialName, Pageable page);

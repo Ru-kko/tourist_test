@@ -26,20 +26,20 @@ import com.tourist.app.dataBase.tourists.Tourist;
 import com.tourist.app.dataBase.trips.Trip;
 import com.tourist.app.entity.PageResponse;
 import com.tourist.app.entity.TokenResponse;
-import com.tourist.app.services.db.Tourists;
-import com.tourist.app.services.db.Trips;
-import com.tourist.app.services.db.Users;
+import com.tourist.app.services.database.ITouristService;
+import com.tourist.app.services.database.ITripService;
+import com.tourist.app.services.database.IUserService;
 import com.tourist.app.utils.TokenGenerator;
 
 @RestController
 @RequestMapping("tourist")
 public class TouristApi {
   @Autowired
-  private Tourists tService;
+  private ITouristService tService;
   @Autowired
-  private Trips tripsService;
+  private ITripService tripsService;
   @Autowired
-  private Users uService;
+  private IUserService uService;
 
   @GetMapping
   public PageResponse<Tourist> getAll(@RequestParam(name = "page", defaultValue = "1") Integer page,
@@ -76,7 +76,7 @@ public class TouristApi {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
     
-    final var user = uService.getByIdCard(updated.getIdCard());
+    final var user = uService.findByIdCard(updated.getIdCard());
     if (user.isEmpty()) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

@@ -8,8 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-interface ITouristsRepository extends CrudRepository<Tourist, Integer> {
+@Repository
+public interface ITouristsRepository extends CrudRepository<Tourist, Integer> {
 
   @Query(value = "SELECT * FROM Tourists WHERE LOWER(name) LIKE %:name% OR LOWER(lastName) LIKE %:name% OR LOWER(CONCAT(name, lastName)) LIKE %:name%", 
     countQuery = "SELECT COUNT(*) FROM Tourists WHERE LOWER(name) LIKE %:name% OR LOWER(lastName) LIKE %:name% OR LOWER(CONCAT(name, lastName)) LIKE %:name%", 

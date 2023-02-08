@@ -1,4 +1,4 @@
-package com.tourist.app.services.db;
+package com.tourist.app.services.database;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -24,11 +24,11 @@ import com.tourist.app.dataBase.trips.Trip;
 public class TripsTest {
 
   @Autowired
-  private Trips service;
+  private ITripService service;
   @Autowired
-  private Cities cService;
+  private ICityService cService;
   @Autowired
-  private Tourists tService;
+  private ITouristService tService;
 
   private City cData;
   private Tourist[] tData = new Tourist[6];
@@ -70,21 +70,21 @@ public class TripsTest {
     Long count = service.countTouristAtSameDay(tripDate, cData.getId());
     assertEquals(5, count);
     
-    Trip shouldDontSave = service.save(tripsData[tripsData.length - 1]);
-
-    assertNull(shouldDontSave);
+    tripsData[tripsData.length-1] = service.save(tripsData[tripsData.length - 1]);
+    assertNull(tripsData[tripsData.length -1]);
     
   }
   
 
   @AfterAll
   void destroy() {
-    for (Tourist i : tData) {
-      tService.deleteById(i.getId());
-    }
     for (Trip i : tripsData) {
-      service.delete(i);
+      if (i != null)
+        service.delete(i);
     }
-    cService.deleteById(cData.getId());
+    for (Tourist i : tData) {
+      tService.deleteByID(i.getId());
+    }
+    cService.deleteByID(cData.getId());
   }
 }

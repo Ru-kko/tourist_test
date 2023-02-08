@@ -51,7 +51,7 @@ public class Tourist implements EntityBase<Integer> {
   @JsonIgnoreProperties("tourist")
   private User account;
 
-  @OneToMany(mappedBy = "tourist", orphanRemoval = true, cascade = CascadeType.DETACH)
+  @OneToMany(mappedBy = "tourist", orphanRemoval = true, cascade = CascadeType.REMOVE)
   @JsonIgnoreProperties("tourist")
   private List<Trip> trips = new ArrayList<>();
   

@@ -24,19 +24,19 @@ import com.tourist.app.dataBase.cities.City;
 import com.tourist.app.dataBase.tourists.Tourist;
 import com.tourist.app.dataBase.trips.Trip;
 import com.tourist.app.entity.PageResponse;
-import com.tourist.app.services.db.Cities;
-import com.tourist.app.services.db.Tourists;
-import com.tourist.app.services.db.Trips;
+import com.tourist.app.services.database.ICityService;
+import com.tourist.app.services.database.ITouristService;
+import com.tourist.app.services.database.ITripService;
 
 @RestController
 @RequestMapping("/city")
 public class CitiesApi {
   @Autowired
-  private Cities cService;
+  private ICityService cService;
   @Autowired
-  private Trips tService;
+  private ITripService tService;
   @Autowired
-  private Tourists touristService;
+  private ITouristService touristService;
 
   @GetMapping
   public PageResponse<City> getAll(@RequestParam(name = "page", defaultValue = "1") Integer pageNum,

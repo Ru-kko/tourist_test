@@ -11,7 +11,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.tourist.app.dataBase.users.User;
 import com.tourist.app.entity.GenerateUserDetails;
-import com.tourist.app.services.db.Users;
+import com.tourist.app.services.database.IUserService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class AuthorizationFilter extends OncePerRequestFilter {
 
   @Autowired
-  private Users usrService;
+  private IUserService usrService;
 
   @Override
   protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res,
@@ -39,7 +39,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
     TokenGenerator generator = new TokenGenerator(bearerTk);
 
-    Optional<User> userInfo = usrService.getByIdCard(generator.GetUsername());
+    Optional<User> userInfo = usrService.findByIdCard(generator.GetUsername());
 
     if (userInfo.isPresent()) {
       UsernamePasswordAuthenticationToken usernamePAT = generator.getAuth(new GenerateUserDetails(userInfo.get()));

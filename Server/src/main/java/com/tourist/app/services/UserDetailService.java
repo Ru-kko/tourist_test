@@ -7,16 +7,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.tourist.app.entity.GenerateUserDetails;
-import com.tourist.app.services.db.Users;
-
+import com.tourist.app.services.database.IUserService;
 @Service
 public class UserDetailService implements UserDetailsService {
   @Autowired
-  private Users userService;
+  private IUserService userService;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    var user = userService.getByIdCard(username);
+    var user = userService.findByIdCard(username);
 
     if (user.isEmpty())
       throw new UsernameNotFoundException(username);

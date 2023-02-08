@@ -1,4 +1,4 @@
-package com.tourist.app.services.db;
+package com.tourist.app.services.database;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -24,10 +24,10 @@ import com.tourist.app.dataBase.users.User;
 public class UsersTest {
 
   @Autowired
-  private Tourists tService;
+  private ITouristService tService;
 
   @Autowired
-  private Users service;
+  private IUserService service;
 
   private Tourist[] tData = new Tourist[3];
   private User[] testData = new User[3];
@@ -79,7 +79,7 @@ public class UsersTest {
 
     testData[2] = service.save(newUser);
 
-    var finded = service.getByIdCard(tData[2].getIdCard());
+    var finded = service.findByIdCard(tData[2].getIdCard());
 
     assertTrue(finded.isPresent());
     assertEquals(testData[2].getId(), finded.get().getId());

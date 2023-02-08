@@ -13,8 +13,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.tourist.app.dataBase.users.User;
 import com.tourist.app.entity.TokenResponse;
-import com.tourist.app.services.db.Tourists;
-import com.tourist.app.services.db.Users;
+import com.tourist.app.services.database.ITouristService;
+import com.tourist.app.services.database.IUserService;
 import com.tourist.app.utils.TokenGenerator;
 
 @RestController
@@ -22,9 +22,9 @@ import com.tourist.app.utils.TokenGenerator;
 public class Session {
 
   @Autowired
-  private Users userService;
+  private IUserService userService;
   @Autowired
-  private Tourists touristService;
+  private ITouristService touristService;
 
   @PostMapping("/register")
   public ResponseEntity<TokenResponse> register(@RequestBody User user) {
