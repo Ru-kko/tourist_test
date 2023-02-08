@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.tourist.app.dataBase.users.IUsersRepository;
-import com.tourist.app.dataBase.users.User;
+import com.tourist.app.database.users.IUsersRepository;
+import com.tourist.app.database.users.User;
 import com.tourist.app.entity.PageResponse;
 import com.tourist.app.services.database.IUserService;
 

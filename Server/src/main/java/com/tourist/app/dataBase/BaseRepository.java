@@ -1,4 +1,4 @@
-package com.tourist.app.dataBase;
+package com.tourist.app.database;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,10 +9,8 @@ public abstract class BaseRepository<T, V extends EntityBase<T>> {
 
   public V save(V entity) {
     if (entity == null) return null;
-    if (entity.getId() != null) {
-      if (this.getById(entity.getId()).isPresent()) {
+    if (entity.getId() != null || this.getById(entity.getId()).isPresent()) {
         return null;
-      }
     }
 
     return getRepo().save(entity);

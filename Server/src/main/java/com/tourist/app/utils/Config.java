@@ -10,8 +10,8 @@ public class Config {
   private static Environment env;
 
   @Autowired
-  public void setEnv(Environment env) {
-    Config.env = env;
+  private void env(Environment environment) {
+    Config.env = environment;
   }
 
   public static Long getMaxTourist() {

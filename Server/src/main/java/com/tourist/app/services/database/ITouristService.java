@@ -3,7 +3,7 @@ package com.tourist.app.services.database;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import com.tourist.app.dataBase.tourists.Tourist;
+import com.tourist.app.database.tourists.Tourist;
 import com.tourist.app.entity.PageResponse;
 
 public interface ITouristService extends IDatabaBaseService<Integer, Tourist> {

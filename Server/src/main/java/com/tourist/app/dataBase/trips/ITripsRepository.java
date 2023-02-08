@@ -1,4 +1,4 @@
-package com.tourist.app.dataBase.trips;
+package com.tourist.app.database.trips;
 
 import java.time.LocalDate;
 

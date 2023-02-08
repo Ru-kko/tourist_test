@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tourist.app.dataBase.cities.City;
-import com.tourist.app.dataBase.tourists.Tourist;
-import com.tourist.app.dataBase.trips.Trip;
+import com.tourist.app.database.cities.City;
+import com.tourist.app.database.tourists.Tourist;
+import com.tourist.app.database.trips.Trip;
 import com.tourist.app.entity.PageResponse;
 import com.tourist.app.services.database.ICityService;
 import com.tourist.app.services.database.ITouristService;
@@ -50,7 +50,7 @@ public class CitiesApi {
   @PostMapping
   public ResponseEntity<City> createCity(@RequestBody City city) {
     if (city == null) {
-      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     city.setTrips(Collections.emptyList());
@@ -58,7 +58,7 @@ public class CitiesApi {
     City save = cService.save(city);
 
     if (save == null || save.getId() == null) {
-      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     return ResponseEntity.ok(city);
@@ -70,7 +70,7 @@ public class CitiesApi {
 
     City updated = cService.update(city);
     if (updated == null) {
-      return new ResponseEntity<City>(updated, HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(updated, HttpStatus.BAD_REQUEST);
     }
     return ResponseEntity.ok(city);
   }
@@ -82,7 +82,7 @@ public class CitiesApi {
     Optional<Tourist> tourist = touristService.getByIdCard(auth.getName());
 
     if (find.isEmpty() || tourist.isEmpty()) {
-      return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     Trip newTrip = new Trip();
@@ -93,13 +93,14 @@ public class CitiesApi {
     Trip saved = tService.save(newTrip);
 
     if (saved == null)
-      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     return ResponseEntity.ok(saved);
   }
 
   @GetMapping("/{cityid}")
-  public PageResponse<Trip> getCityHistory(@PathVariable("cityid") Integer id, @RequestParam(name = "page", defaultValue = "1") Integer page) {
+  public PageResponse<Trip> getCityHistory(@PathVariable("cityid") Integer id,
+      @RequestParam(name = "page", defaultValue = "1") Integer page) {
     return tService.getTripsFromCity(id, page - 1);
   }
 

@@ -8,8 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.tourist.app.dataBase.cities.City;
-import com.tourist.app.dataBase.cities.ICitiesRepository;
+import com.tourist.app.database.cities.City;
+import com.tourist.app.database.cities.ICitiesRepository;
 import com.tourist.app.entity.PageResponse;
 import com.tourist.app.services.database.ICityService;
 

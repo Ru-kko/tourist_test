@@ -6,7 +6,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.tourist.app.dataBase.users.User;
+import com.tourist.app.database.users.User;
 
 public class GenerateUserDetails implements UserDetails {
 
@@ -25,7 +25,7 @@ public class GenerateUserDetails implements UserDetails {
 
     @Override
     public String getAuthority() {
-      if (this.isAdmin) return "ROLE_ADMIN";
+      if (Boolean.TRUE.equals(this.isAdmin)) return "ROLE_ADMIN";
       return "ROLE_USER";
     }
 

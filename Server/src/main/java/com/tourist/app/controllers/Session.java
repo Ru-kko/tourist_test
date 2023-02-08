@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.tourist.app.dataBase.users.User;
+import com.tourist.app.database.users.User;
 import com.tourist.app.entity.TokenResponse;
 import com.tourist.app.services.database.ITouristService;
 import com.tourist.app.services.database.IUserService;

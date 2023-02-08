@@ -28,6 +28,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     try {
       credentials = new ObjectMapper().readValue(req.getReader(), Credentials.class);
     } catch (IOException err) {
+      // Do nothing
     }
 
     UsernamePasswordAuthenticationToken usernameAuthTk = new UsernamePasswordAuthenticationToken(
@@ -45,7 +46,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     Boolean admin = false;
 
     for (GrantedAuthority i : userDetails.getAuthorities()) {
-      if (i.getAuthority() == "ROLE_ADMIN") {
+      if (i.getAuthority().equals("ROLE_ADMIN")) {
         admin = true;
         break;
       }

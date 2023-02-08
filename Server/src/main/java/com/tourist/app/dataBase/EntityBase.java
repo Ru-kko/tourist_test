@@ -1,4 +1,4 @@
-package com.tourist.app.dataBase;
+package com.tourist.app.database;
 
 public interface EntityBase<T> {
   public T getId();

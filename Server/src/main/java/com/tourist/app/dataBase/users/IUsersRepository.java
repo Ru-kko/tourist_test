@@ -1,4 +1,4 @@
-package com.tourist.app.dataBase.users;
+package com.tourist.app.database.users;
 
 import java.util.Optional;
 

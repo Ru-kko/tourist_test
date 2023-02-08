@@ -2,7 +2,6 @@ package com.tourist.app.security;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -29,14 +28,8 @@ import com.tourist.app.utils.Config;
 @EnableWebSecurity
 @EnableWebMvc
 public class WebSercurityConfig {
-
-  @Autowired
-  private UserDetailService userDetailService;
-  @Autowired
-  private AuthorizationFilter authFilter;
-
   @Bean
-  SecurityFilterChain setFilterChains(HttpSecurity http, AuthenticationManager manager) throws Exception {
+  SecurityFilterChain setFilterChains(HttpSecurity http, AuthenticationManager manager, AuthorizationFilter authFilter) throws Exception {
     var filter = new AuthenticationFilter();
     filter.setAuthenticationManager(manager);
     filter.setFilterProcessesUrl("/login");
@@ -58,7 +51,7 @@ public class WebSercurityConfig {
         .addFilter(filter)
         .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
 
-    if (!Config.getCors()) {
+    if (Boolean.FALSE.equals(Config.getCors())) {
       http.cors().disable();
     }
     return http.build();
@@ -79,7 +72,7 @@ public class WebSercurityConfig {
   }
 
   @Bean
-  AuthenticationManager authManage(HttpSecurity http, PasswordEncoder pswEncoder) throws Exception {
+  AuthenticationManager authManage(HttpSecurity http, PasswordEncoder pswEncoder, UserDetailService userDetailService) throws Exception {
     return http.getSharedObject(AuthenticationManagerBuilder.class)
         .userDetailsService(userDetailService)
         .passwordEncoder(pswEncoder)

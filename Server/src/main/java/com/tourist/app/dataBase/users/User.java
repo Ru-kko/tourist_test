@@ -1,8 +1,10 @@
-package com.tourist.app.dataBase.users;
+package com.tourist.app.database.users;
+
+import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.tourist.app.dataBase.EntityBase;
-import com.tourist.app.dataBase.tourists.Tourist;
+import com.tourist.app.database.EntityBase;
+import com.tourist.app.database.tourists.Tourist;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -21,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "Users")
 @NoArgsConstructor
 @Data
-public class User implements EntityBase<Integer> {
+public class User implements EntityBase<Integer>, Serializable{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "userId")

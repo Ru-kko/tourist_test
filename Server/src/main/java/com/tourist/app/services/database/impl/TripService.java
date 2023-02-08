@@ -9,8 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.tourist.app.dataBase.trips.ITripsRepository;
-import com.tourist.app.dataBase.trips.Trip;
+import com.tourist.app.database.trips.ITripsRepository;
+import com.tourist.app.database.trips.Trip;
 import com.tourist.app.entity.PageResponse;
 import com.tourist.app.services.database.ITripService;
 import com.tourist.app.utils.Config;

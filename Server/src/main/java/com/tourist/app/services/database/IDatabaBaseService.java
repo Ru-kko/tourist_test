@@ -2,7 +2,7 @@ package com.tourist.app.services.database;
 
 import java.util.Optional;
 
-import com.tourist.app.dataBase.EntityBase;
+import com.tourist.app.database.EntityBase;
 import com.tourist.app.entity.PageResponse;
 
 public interface IDatabaBaseService<T, V extends EntityBase<T>> {

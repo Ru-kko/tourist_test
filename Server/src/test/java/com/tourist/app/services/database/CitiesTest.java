@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.tourist.app.dataBase.cities.City;
+import com.tourist.app.database.cities.City;
 
 @SpringBootTest
 public class CitiesTest {

@@ -9,7 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.tourist.app.dataBase.users.User;
+import com.tourist.app.database.users.User;
 import com.tourist.app.entity.GenerateUserDetails;
 import com.tourist.app.services.database.IUserService;
 
@@ -39,7 +39,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
     TokenGenerator generator = new TokenGenerator(bearerTk);
 
-    Optional<User> userInfo = usrService.findByIdCard(generator.GetUsername());
+    Optional<User> userInfo = usrService.findByIdCard(generator.getUsername());
 
     if (userInfo.isPresent()) {
       UsernamePasswordAuthenticationToken usernamePAT = generator.getAuth(new GenerateUserDetails(userInfo.get()));

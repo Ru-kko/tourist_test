@@ -41,7 +41,7 @@ public class TokenGenerator {
     }
   }
 
-  public String GetUsername() {
+  public String getUsername() {
     return claims.getSubject();
   }
 }

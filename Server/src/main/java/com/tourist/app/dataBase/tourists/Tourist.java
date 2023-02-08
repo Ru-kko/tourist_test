@@ -1,13 +1,14 @@
-package com.tourist.app.dataBase.tourists;
+package com.tourist.app.database.tourists;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.tourist.app.dataBase.EntityBase;
-import com.tourist.app.dataBase.trips.Trip;
-import com.tourist.app.dataBase.users.User;
+import com.tourist.app.database.EntityBase;
+import com.tourist.app.database.trips.Trip;
+import com.tourist.app.database.users.User;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -27,7 +28,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "Tourists")
 @Data
 @NoArgsConstructor
-public class Tourist implements EntityBase<Integer> {
+public class Tourist implements EntityBase<Integer>, Serializable {
   @Id
   @Column(name = "touristId")
   @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,4 +1,4 @@
-package com.tourist.app.dataBase.cities;
+package com.tourist.app.database.cities;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

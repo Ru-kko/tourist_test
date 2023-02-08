@@ -2,7 +2,7 @@ package com.tourist.app.services.database;
 
 import java.time.LocalDate;
 
-import com.tourist.app.dataBase.trips.Trip;
+import com.tourist.app.database.trips.Trip;
 import com.tourist.app.entity.PageResponse;
 
 public interface ITripService extends IDatabaBaseService<Integer, Trip> {

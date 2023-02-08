@@ -1,6 +1,6 @@
 package com.tourist.app.services.database;
 
-import com.tourist.app.dataBase.cities.City;
+import com.tourist.app.database.cities.City;
 import com.tourist.app.entity.PageResponse;
 
 public interface ICityService extends IDatabaBaseService<Integer, City> {

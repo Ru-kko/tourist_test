@@ -16,8 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.tourist.app.dataBase.tourists.Tourist;
-import com.tourist.app.dataBase.users.User;
+import com.tourist.app.database.tourists.Tourist;
+import com.tourist.app.database.users.User;
 
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)

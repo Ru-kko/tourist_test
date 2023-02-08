@@ -15,9 +15,9 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.tourist.app.dataBase.cities.City;
-import com.tourist.app.dataBase.tourists.Tourist;
-import com.tourist.app.dataBase.trips.Trip;
+import com.tourist.app.database.cities.City;
+import com.tourist.app.database.tourists.Tourist;
+import com.tourist.app.database.trips.Trip;
 
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)

@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.tourist.app.dataBase.tourists.Tourist;
-import com.tourist.app.dataBase.trips.Trip;
+import com.tourist.app.database.tourists.Tourist;
+import com.tourist.app.database.trips.Trip;
 import com.tourist.app.entity.PageResponse;
 import com.tourist.app.entity.TokenResponse;
 import com.tourist.app.services.database.ITouristService;
@@ -55,8 +55,7 @@ public class TouristApi {
       @RequestParam(name = "start") @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
       @RequestParam(name = "end", required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate endDate) {
     if (endDate == null) {
-      endDate = startDate;
-      endDate.plusDays(1);
+      endDate = startDate.plusDays(1);
     }
 
     return tService.getByBornDateTimeSpace(startDate, endDate, page - 1);
@@ -67,6 +66,11 @@ public class TouristApi {
     t.setTrips(Collections.emptyList());
     t.setAccount(null);
     final var turist = tService.getByIdCard(auth.getName());
+
+    if (turist.isEmpty()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     t.setId(turist.get().getId());
 
     Tourist updated; 
@@ -102,12 +106,12 @@ public class TouristApi {
 
     if (tourist != null && tourist.getId() != null) {
       for (var i : auth.getAuthorities()) {
-        if (i.getAuthority() == "ROLE_ADMIN") {
+        if (i.getAuthority().equals("ROLE_ADMIN")) {
           isAdmin = true;
           break;
         }
       }
-      if (!isAdmin) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+      if (Boolean.FALSE.equals(isAdmin)) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
       tService.delete(tourist);
     }
     final var todelete = tService.getByIdCard(auth.getName());
