@@ -10,6 +10,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ITripsRepository extends CrudRepository<Trip, Integer> {
+  /**
+   * Count the number of trips in a city at the same day.
+   * 
+   * @param cityID The ID of the city that the trip is in.
+   * @param startDate The date the trip starts
+   * @return The number of trips in a city at the same time.
+   */
   @Query(value= "SELECT COUNT(*) FROM Trips WHERE cityId = ?1 AND startDate = DATE(?2)", nativeQuery = true)
   public Long countTripsInACityAtSameTime(Integer cityID, LocalDate startDate);
 

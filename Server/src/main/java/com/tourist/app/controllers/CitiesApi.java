@@ -31,6 +31,9 @@ import com.tourist.app.services.database.ICityService;
 import com.tourist.app.services.database.ITouristService;
 import com.tourist.app.services.database.ITripService;
 
+/**
+ * It's a REST controller that handles requests to the /city endpoint
+ */
 @RestController
 @RequestMapping("/city")
 public class CitiesApi {
@@ -41,6 +44,15 @@ public class CitiesApi {
   @Autowired
   private ITouristService touristService;
 
+  /**
+   * It takes in a page number and a name, and returns a list of cities that match the name, or all
+   * cities if no name is provided
+   * 
+   * @param pageNum The page number to be returned.
+   * @param name The name of the parameter.
+   * @return A PageResponse object with a list of CityDTO objects, the total number of elements, and
+   * the total number of pages.
+   */
   @GetMapping
   public PageResponse<CityDTO> getAll(@RequestParam(name = "page", defaultValue = "1") Integer pageNum,
       @RequestParam(name = "name", required = false) String name) {
@@ -54,8 +66,15 @@ public class CitiesApi {
     return new PageResponse<>(CityDTO.toDtoList(res.getContent()), res.getTotalElements(), res.getTotalPages());
   }
 
+  /**
+   * It takes a CityDTO, converts it to a City, saves it to the database, and returns the DTO
+   * 
+   * @param cityDt The CityDTO that will be converted to a City object and saved to the
+   * database.
+   * @return ResponseEntity<CityDTO>
+   */
   @PostMapping
-  public ResponseEntity<City> createCity(@RequestBody CityDTO cityDt) {
+  public ResponseEntity<CityDTO> createCity(@RequestBody CityDTO cityDt) {
     if (cityDt == null) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
@@ -70,9 +89,15 @@ public class CitiesApi {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    return ResponseEntity.ok(city);
+    return ResponseEntity.ok(CityDTO.cityToDto(save));
   }
 
+  /**
+   * It updates a city.
+   * 
+   * @param cityDt The city that we want to update.
+   * @return A  is being returned.
+   */
   @PutMapping
   public ResponseEntity<CityDTO> updateCity(@RequestBody CityDTO cityDt) {
     var city = CityDTO.dtoToCity(cityDt);
@@ -86,6 +111,14 @@ public class CitiesApi {
     return ResponseEntity.ok(CityDTO.cityToDto(updated));
   }
 
+  /**
+   * It takes the city id and the date as parameters, and returns a TripDTO object
+   * 
+   * @param auth Authentication object that contains the user's credentials.
+   * @param id the id of the city to reserve
+   * @param date The date of the trip
+   * @return A TripDTO object
+   */
   @PostMapping("/{cityid}")
   public ResponseEntity<TripDTO> reserve(Authentication auth, @PathVariable("cityid") Integer id,
       @RequestParam(name = "day") @DateTimeFormat(iso = ISO.DATE) LocalDate date) {
@@ -109,6 +142,13 @@ public class CitiesApi {
     return ResponseEntity.ok(TripDTO.tripToDto(saved));
   }
 
+  /**
+   * Get a list of trips from a city, with pagination.
+   * 
+   * @param id the id of the city
+   * @param page The page number to return.
+   * @return A list of trips from a city.
+   */
   @GetMapping("/{cityid}")
   public PageResponse<TripDTO> getCityHistory(@PathVariable("cityid") Integer id,
       @RequestParam(name = "page", defaultValue = "1") Integer page) {
@@ -116,6 +156,11 @@ public class CitiesApi {
     return new PageResponse<>(TripDTO.toDtoList(res.getContent()), res.getTotalElements(), res.getTotalPages());
   }
 
+  /**
+   * It deletes a city from the database.
+   * 
+   * @param city The city object that will be deleted.
+   */
   @DeleteMapping
   public void delete(@RequestBody City city) {
     cService.delete(city);

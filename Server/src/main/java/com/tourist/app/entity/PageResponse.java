@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * It's a class that represents esential data of a page with data
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

@@ -24,6 +24,12 @@ public class UserDTO implements EntityBase<Integer> {
   @NonNull
   private String password;
 
+  /**
+   * It maps a User entity to DTO
+   * 
+   * @param entity The entity to map.
+   * @return A DTO object
+   */
   public static UserDTO userToDto(User entity) {
     var res = new UserDTO();
     
@@ -35,6 +41,13 @@ public class UserDTO implements EntityBase<Integer> {
     return res;
   }
 
+  
+  /**
+   * It takes a DTO object and maps to a User
+   * 
+   * @param dto The DTO object to be mapped to a User.
+   * @return A User
+   */
   public static User dtoToUser(UserDTO dto) {
     var res = new User();
 
@@ -46,6 +59,12 @@ public class UserDTO implements EntityBase<Integer> {
     return res;
   }
 
+  /**
+   * Convert a list of Users objects to a list of DTO.
+   * 
+   * @param list The list of objects to be converted to DTOs.
+   * @return A list of DTOs.
+   */
   public static List<UserDTO> toDtoList(List<User> list) {
     return list.stream().map(UserDTO::userToDto).toList();
   }

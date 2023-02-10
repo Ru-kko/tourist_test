@@ -8,6 +8,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.tourist.app.database.users.User;
 
+/**
+ * This class is a wrapper for the User class that implements the UserDetails interface
+ * to check authoritys and user credentials
+ * *Also see*
+ * @see com.tourist.app.services.UserDetailService
+ * @see com.tourist.app.utils.AuthenticationFilter
+ * @see com.tourist.app.utils.AuthorizationFilter
+ */
 public class GenerateUserDetails implements UserDetails {
 
   private User user;

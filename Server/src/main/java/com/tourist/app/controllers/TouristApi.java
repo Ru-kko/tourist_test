@@ -32,6 +32,9 @@ import com.tourist.app.services.database.ITripService;
 import com.tourist.app.services.database.IUserService;
 import com.tourist.app.utils.TokenGenerator;
 
+/**
+ * It's a REST controller that handles the requests to the /tourist endpoint
+ */
 @RestController
 @RequestMapping("tourist")
 public class TouristApi {
@@ -42,6 +45,14 @@ public class TouristApi {
   @Autowired
   private IUserService uService;
 
+  /**
+   * This function returns a list of TouristDTO, which are the result of converting the
+   * Tourist returned by the TouristService
+   * 
+   * @param page the page number, starting from 1
+   * @param name The name of the user or users.
+   * @return A list of TouristDTOs
+   */
   @GetMapping
   public PageResponse<TouristDTO> getAll(@RequestParam(name = "page", defaultValue = "1") Integer page,
       @RequestParam(name = "name", required = false) String name) {
@@ -55,6 +66,15 @@ public class TouristApi {
     return new PageResponse<>(TouristDTO.toDtoList(res.getContent()), res.getTotalElements(), res.getTotalPages());
   }
 
+  /**
+   * "Get all tourists born between startDate and endDate, and return a page of them."
+   * 
+   * @param page the page number, default value is 1
+   * @param startDate the start date of the date range
+   * @param endDate the end date of the time space. If it's not specified, it will be set to the start
+   * date plus one day.
+   * @return A list of TouristDTOs
+   */
   @GetMapping("/born")
   public PageResponse<TouristDTO> getByBornDate(@RequestParam(name = "page", defaultValue = "1") Integer page,
       @RequestParam(name = "start") @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
@@ -68,6 +88,13 @@ public class TouristApi {
     return new PageResponse<>(TouristDTO.toDtoList(res.getContent()), res.getTotalElements(), res.getTotalPages());
   }
 
+  /**
+   * It updates a tourist's information. The tourist only can update his self
+   * 
+   * @param auth Authentication object that contains the user's credentials.
+   * @param t TouristDTO
+   * @return A map with the token and the updated tourist.
+   */
   @PutMapping
   public ResponseEntity<Map<String, Object>> updateTourist(final Authentication auth, @RequestBody TouristDTO t) {
     final var turist = tService.getByIdCard(auth.getName());
@@ -99,6 +126,13 @@ public class TouristApi {
     return ResponseEntity.ok(res);
   }
 
+  /**
+   * It returns a list of trips for a given tourist
+   * 
+   * @param id the id of the tourist
+   * @param page the page number to return (defaults to 1)
+   * @return A list of trips that the tourist has taken.
+   */
   @GetMapping("{userid}")
   public PageResponse<TripDTO> getTirpsHistory(@PathVariable("userid") Integer id,
       @RequestParam(name = "page", defaultValue = "1") Integer page) {
@@ -107,6 +141,13 @@ public class TouristApi {
     return new PageResponse<>(TripDTO.toDtoList(res.getContent()), res.getTotalElements(), res.getTotalPages());
   }
 
+  /**
+   * It deletes a tourist.
+   * The tourist only can delete itself if it's not an admin
+   * 
+   * @param auth Authentication object that contains the user's credentials.
+   * @param tourist the tourist to be deleted
+   */
   @DeleteMapping
   public void deleteTourist(final Authentication auth, @RequestBody(required = false) final TouristDTO tourist) {
     Boolean isAdmin = false;

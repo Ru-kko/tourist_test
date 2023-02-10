@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * It's a Eentity that holds the authorization token and user information
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

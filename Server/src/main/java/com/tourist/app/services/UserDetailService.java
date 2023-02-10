@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.tourist.app.entity.GenerateUserDetails;
 import com.tourist.app.services.database.IUserService;
+/**
+ * It implements the UserDetailsService interface and overrides the loadUserByUsername method
+ * to check if the provided token is asociated to an user
+ */
 @Service
 public class UserDetailService implements UserDetailsService {
   @Autowired

@@ -25,6 +25,12 @@ public class TripDTO implements EntityBase<Integer> {
   @NonNull
   private CityDTO city;
 
+  /**
+   * It maps a Trip entity to DTO
+   * 
+   * @param entity The entity to map.
+   * @return A DTO object
+   */
   public static TripDTO tripToDto(Trip entity) {
     var res = new TripDTO();
  
@@ -36,6 +42,12 @@ public class TripDTO implements EntityBase<Integer> {
     return res;
   }
 
+  /**
+   * It takes a DTO object and maps to a Trip
+   * 
+   * @param dto The DTO object to be mapped to a Trip.
+   * @return A Trip
+   */
   public static Trip dtoToTrip(TripDTO dto) {
     var res = new Trip();
 
@@ -47,6 +59,12 @@ public class TripDTO implements EntityBase<Integer> {
     return res;
   }
 
+  /**
+   * Convert a list of Trips to a list of DTOs.
+   * 
+   * @param list The list of objects to be converted to DTOs.
+   * @return A list of DTOs.
+   */
   public static List<TripDTO> toDtoList(List<Trip> list) {
     return list.stream().map(TripDTO::tripToDto).toList();
   }

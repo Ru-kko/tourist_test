@@ -17,6 +17,9 @@ import com.tourist.app.services.database.ITouristService;
 import com.tourist.app.services.database.IUserService;
 import com.tourist.app.utils.TokenGenerator;
 
+/**
+ * It's a REST controller that handles regitration
+ */
 @RestController
 @RequestMapping
 public class Session {
@@ -26,6 +29,13 @@ public class Session {
   @Autowired
   private ITouristService touristService;
 
+  /**
+   * It receives a userDTO, checks if the user is valid, checks if the tourist is valid, checks if the
+   * tourist exists, if not, it creates it, then it creates the user and returns a token
+   * 
+   * @param user The user to be registered.
+   * @return A tokenResponse object
+   */
   @PostMapping("/register")
   public ResponseEntity<TokenResponse> register(@RequestBody UserDTO user) {
     ResponseEntity<TokenResponse> res;
