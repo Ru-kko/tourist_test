@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.tourist.app.database.users.User;
 import com.tourist.app.entity.TokenResponse;
+import com.tourist.app.entity.dto.UserDTO;
 import com.tourist.app.services.database.ITouristService;
 import com.tourist.app.services.database.IUserService;
 import com.tourist.app.utils.TokenGenerator;
@@ -27,46 +27,47 @@ public class Session {
   private ITouristService touristService;
 
   @PostMapping("/register")
-  public ResponseEntity<TokenResponse> register(@RequestBody User user) {
+  public ResponseEntity<TokenResponse> register(@RequestBody UserDTO user) {
     ResponseEntity<TokenResponse> res;
+    var userEntity = UserDTO.dtoToUser(user);
 
-    if (user == null ||
-        user.getId() != null ||
-        user.getPassword() == null ||
-        user.getTourist() == null ||
-        user.getTourist().getIdCard() == null) {
+    if (userEntity == null ||
+        userEntity.getId() != null ||
+        userEntity.getPassword() == null ||
+        userEntity.getTourist() == null ||
+        userEntity.getTourist().getIdCard() == null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Operation failed with status code 400");
 
     }
-    user.setAdmin(false);
-    user.getTourist().setId(null);
-    user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+    userEntity.setAdmin(false);
+    userEntity.getTourist().setId(null);
+    userEntity.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 
     final var find = touristService.getByIdCard(user.getTourist().getIdCard());
 
     if (find.isEmpty()) {
-      if (user.getTourist().getBornDate() == null ||
-          user.getTourist().getName() == null ||
-          user.getTourist().getLastName() == null ||
-          user.getTourist().getTravelBudget() == null ||
-          user.getTourist().getTravelFrequency() == null) {
+      if (userEntity.getTourist().getBornDate() == null ||
+          userEntity.getTourist().getName() == null ||
+          userEntity.getTourist().getLastName() == null ||
+          userEntity.getTourist().getTravelBudget() == null ||
+          userEntity.getTourist().getTravelFrequency() == null) {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Operation failed with status 400");
       }
       try {
-        var newTourist = touristService.save(user.getTourist());
-        user.setTourist(newTourist);
+        var newTourist = touristService.save(userEntity.getTourist());
+        userEntity.setTourist(newTourist);
       } catch (DataIntegrityViolationException e) {
         throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "There is an tourist with that cardId ");
       }
     } else {
-      user.setTourist(find.get());
+      userEntity.setTourist(find.get());
     }
 
     try {
-      final var saved = userService.save(user);
+      final var saved = userService.save(userEntity);
 
       final var token = TokenGenerator.createToken(saved.getTourist().getIdCard());
-      final var tokenResponse = new TokenResponse(token, user.getTourist().getIdCard(), "Bearer ", user.getAdmin());
+      final var tokenResponse = new TokenResponse(token, userEntity.getTourist().getIdCard(), "Bearer ", user.getAdmin());
 
       res = ResponseEntity.ok().body(tokenResponse);
 

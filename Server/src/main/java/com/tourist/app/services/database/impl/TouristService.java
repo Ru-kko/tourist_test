@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.tourist.app.database.tourists.ITouristsRepository;
 import com.tourist.app.database.tourists.Tourist;
-import com.tourist.app.entity.PageResponse;
 import com.tourist.app.services.database.ITouristService;
 
 @Service
@@ -20,20 +19,15 @@ class TouristService implements ITouristService {
   private ITouristsRepository repo;
 
   @Override
-  public PageResponse<Tourist> findByName(String name, Integer page) {
+  public Page<Tourist> findByName(String name, Integer page) {
     Pageable conten = PageRequest.of(page, 50);
-    Page<Tourist> res = repo.findByPartialName(name, conten);
-
-    return new PageResponse<>(res.getContent(), res.getTotalElements(), res.getTotalPages());
+    return repo.findByPartialName(name, conten);
   }
 
   @Override
-  public PageResponse<Tourist> getAll(Integer page) {
+  public Page<Tourist> getAll(Integer page) {
     Pageable content = PageRequest.of(page, 50);
-    Page<Tourist> res = repo.findAll(content);
-
-    return new PageResponse<>(res.getContent(), res.getTotalElements(), res.getTotalPages());
-
+    return repo.findAll(content);
   }
 
   @Override
@@ -97,9 +91,7 @@ class TouristService implements ITouristService {
   }
 
   @Override
-  public PageResponse<Tourist> getByBornDateTimeSpace(LocalDate start, LocalDate end, Integer page) {
-    Page<Tourist> res = repo.findAllByBornDateBetween(start, end, PageRequest.of(page, 50));
-
-    return new PageResponse<>(res.getContent(), res.getTotalElements(), res.getTotalPages());
+  public Page<Tourist> getByBornDateTimeSpace(LocalDate start, LocalDate end, Integer page) {
+    return  repo.findAllByBornDateBetween(start, end, PageRequest.of(page, 50));
   }
 }

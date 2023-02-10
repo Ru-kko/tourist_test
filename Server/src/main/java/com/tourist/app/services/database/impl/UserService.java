@@ -3,12 +3,12 @@ package com.tourist.app.services.database.impl;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.tourist.app.database.users.IUsersRepository;
 import com.tourist.app.database.users.User;
-import com.tourist.app.entity.PageResponse;
 import com.tourist.app.services.database.IUserService;
 
 @Service
@@ -17,10 +17,9 @@ class UserService implements IUserService {
   private IUsersRepository repo;
 
   @Override
-  public PageResponse<User> getAll(Integer page) {
+  public Page<User> getAll(Integer page) {
     var content = PageRequest.of(page, 50);
-    var res = repo.findAll(content);
-    return new PageResponse<>(res.getContent(), res.getTotalElements(), res.getTotalPages());
+    return repo.findAll(content);
   }
 
   @Override

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.tourist.app.database.cities.City;
 import com.tourist.app.database.cities.ICitiesRepository;
-import com.tourist.app.entity.PageResponse;
 import com.tourist.app.services.database.ICityService;
 
 @Service
@@ -19,11 +18,9 @@ class CityService implements ICityService {
   private ICitiesRepository repo;
 
   @Override
-  public PageResponse<City> getAll(Integer page) {
+  public Page<City> getAll(Integer page) {
     Pageable content = PageRequest.of(page, 50);
-    Page<City> res = repo.findAll(content);
-
-    return new PageResponse<>(res.getContent(), res.getTotalElements(), res.getTotalPages());
+    return repo.findAll(content);
   }
 
   @Override
@@ -76,10 +73,8 @@ class CityService implements ICityService {
   }
 
   @Override
-  public PageResponse<City> findByName(String name, Integer page) {
+  public Page<City> findByName(String name, Integer page) {
     Pageable content = PageRequest.of(page, 50);
-    var res = repo.findByPartialName(name, content);
-
-    return new PageResponse<>(res.getContent(), res.getTotalElements(), res.getTotalPages());
+    return repo.findByPartialName(name, content);
   }
 }

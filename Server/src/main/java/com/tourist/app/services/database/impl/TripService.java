@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.tourist.app.database.trips.ITripsRepository;
 import com.tourist.app.database.trips.Trip;
-import com.tourist.app.entity.PageResponse;
 import com.tourist.app.services.database.ITripService;
 import com.tourist.app.utils.Config;
 
@@ -21,11 +20,9 @@ public class TripService implements ITripService {
   private ITripsRepository repo;
 
   @Override
-  public PageResponse<Trip> getAll(Integer page) {
+  public Page<Trip> getAll(Integer page) {
     Pageable content = PageRequest.of(page, 50);
-    Page<Trip> res = repo.findAll(content);
-
-    return new PageResponse<>(res.getContent(), res.getTotalElements(), res.getTotalPages());
+    return repo.findAll(content);
   }
 
   @Override
@@ -84,15 +81,13 @@ public class TripService implements ITripService {
   }
 
   @Override
-  public PageResponse<Trip> getTripsFromTourist(Integer touristId, Integer page) {
-    Page<Trip> pageConten = repo.findByTouristId(touristId, PageRequest.of(page, 50));
-    return new PageResponse<>(pageConten.getContent(), pageConten.getTotalElements(), pageConten.getTotalPages());
+  public Page<Trip> getTripsFromTourist(Integer touristId, Integer page) {
+    return repo.findByTouristId(touristId, PageRequest.of(page, 50));
   }
 
   @Override
-  public PageResponse<Trip> getTripsFromCity(Integer cityId, Integer page) {
-    Page<Trip> pageConten = repo.findByCityId(cityId, PageRequest.of(page, 50));
-    return new PageResponse<>(pageConten.getContent(), pageConten.getTotalElements(), pageConten.getTotalPages());
+  public Page<Trip> getTripsFromCity(Integer cityId, Integer page) {
+    return repo.findByCityId(cityId, PageRequest.of(page, 50));
   }
 
   @Override

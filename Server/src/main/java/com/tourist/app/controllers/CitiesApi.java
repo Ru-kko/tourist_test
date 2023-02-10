@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,8 @@ import com.tourist.app.database.cities.City;
 import com.tourist.app.database.tourists.Tourist;
 import com.tourist.app.database.trips.Trip;
 import com.tourist.app.entity.PageResponse;
+import com.tourist.app.entity.dto.CityDTO;
+import com.tourist.app.entity.dto.TripDTO;
 import com.tourist.app.services.database.ICityService;
 import com.tourist.app.services.database.ITouristService;
 import com.tourist.app.services.database.ITripService;
@@ -39,19 +42,25 @@ public class CitiesApi {
   private ITouristService touristService;
 
   @GetMapping
-  public PageResponse<City> getAll(@RequestParam(name = "page", defaultValue = "1") Integer pageNum,
+  public PageResponse<CityDTO> getAll(@RequestParam(name = "page", defaultValue = "1") Integer pageNum,
       @RequestParam(name = "name", required = false) String name) {
+    Page<City> res;
     if (name != null) {
-      return cService.findByName(name, pageNum - 1);
+      res = cService.findByName(name, pageNum - 1);
+    } else {
+      res = cService.getAll(pageNum - 1);
     }
-    return cService.getAll(pageNum - 1);
+
+    return new PageResponse<>(CityDTO.toDtoList(res.getContent()), res.getTotalElements(), res.getTotalPages());
   }
 
   @PostMapping
-  public ResponseEntity<City> createCity(@RequestBody City city) {
-    if (city == null) {
+  public ResponseEntity<City> createCity(@RequestBody CityDTO cityDt) {
+    if (cityDt == null) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+    var city = CityDTO.dtoToCity(cityDt);
 
     city.setTrips(Collections.emptyList());
 
@@ -65,18 +74,20 @@ public class CitiesApi {
   }
 
   @PutMapping
-  public ResponseEntity<City> updateCity(@RequestBody City city) {
+  public ResponseEntity<CityDTO> updateCity(@RequestBody CityDTO cityDt) {
+    var city = CityDTO.dtoToCity(cityDt);
+
     city.setTrips(Collections.emptyList());
 
     City updated = cService.update(city);
     if (updated == null) {
-      return new ResponseEntity<>(updated, HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(CityDTO.cityToDto(updated), HttpStatus.BAD_REQUEST);
     }
-    return ResponseEntity.ok(city);
+    return ResponseEntity.ok(CityDTO.cityToDto(updated));
   }
 
   @PostMapping("/{cityid}")
-  public ResponseEntity<Trip> reserve(Authentication auth, @PathVariable("cityid") Integer id,
+  public ResponseEntity<TripDTO> reserve(Authentication auth, @PathVariable("cityid") Integer id,
       @RequestParam(name = "day") @DateTimeFormat(iso = ISO.DATE) LocalDate date) {
     Optional<City> find = cService.getById(id);
     Optional<Tourist> tourist = touristService.getByIdCard(auth.getName());
@@ -95,13 +106,14 @@ public class CitiesApi {
     if (saved == null)
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-    return ResponseEntity.ok(saved);
+    return ResponseEntity.ok(TripDTO.tripToDto(saved));
   }
 
   @GetMapping("/{cityid}")
-  public PageResponse<Trip> getCityHistory(@PathVariable("cityid") Integer id,
+  public PageResponse<TripDTO> getCityHistory(@PathVariable("cityid") Integer id,
       @RequestParam(name = "page", defaultValue = "1") Integer page) {
-    return tService.getTripsFromCity(id, page - 1);
+    var res = tService.getTripsFromCity(id, page - 1);
+    return new PageResponse<>(TripDTO.toDtoList(res.getContent()), res.getTotalElements(), res.getTotalPages());
   }
 
   @DeleteMapping

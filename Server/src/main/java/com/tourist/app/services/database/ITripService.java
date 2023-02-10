@@ -2,14 +2,15 @@ package com.tourist.app.services.database;
 
 import java.time.LocalDate;
 
+import org.springframework.data.domain.Page;
+
 import com.tourist.app.database.trips.Trip;
-import com.tourist.app.entity.PageResponse;
 
 public interface ITripService extends IDatabaBaseService<Integer, Trip> {
 
-  public PageResponse<Trip> getTripsFromTourist(Integer touristId, Integer page);
+  public Page<Trip> getTripsFromTourist(Integer touristId, Integer page);
 
-  public PageResponse<Trip> getTripsFromCity(Integer cityId, Integer page);
+  public Page<Trip> getTripsFromCity(Integer cityId, Integer page);
 
   public Long countTouristAtSameDay(LocalDate startDate, Integer cityId);
 }

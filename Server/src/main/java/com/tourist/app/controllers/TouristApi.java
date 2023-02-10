@@ -1,12 +1,12 @@
 package com.tourist.app.controllers;
 
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
@@ -23,9 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.tourist.app.database.tourists.Tourist;
-import com.tourist.app.database.trips.Trip;
 import com.tourist.app.entity.PageResponse;
 import com.tourist.app.entity.TokenResponse;
+import com.tourist.app.entity.dto.TouristDTO;
+import com.tourist.app.entity.dto.TripDTO;
 import com.tourist.app.services.database.ITouristService;
 import com.tourist.app.services.database.ITripService;
 import com.tourist.app.services.database.IUserService;
@@ -42,29 +43,33 @@ public class TouristApi {
   private IUserService uService;
 
   @GetMapping
-  public PageResponse<Tourist> getAll(@RequestParam(name = "page", defaultValue = "1") Integer page,
+  public PageResponse<TouristDTO> getAll(@RequestParam(name = "page", defaultValue = "1") Integer page,
       @RequestParam(name = "name", required = false) String name) {
+    Page<Tourist> res; 
     if (name != null) {
-      return tService.findByName(name, page - 1);
+      res = tService.findByName(name, page - 1);
+    } else {
+      res = tService.getAll(page - 1);
     }
-    return tService.getAll(page - 1);
+
+    return new PageResponse<>(TouristDTO.toDtoList(res.getContent()), res.getTotalElements(), res.getTotalPages());
   }
 
   @GetMapping("/born")
-  public PageResponse<Tourist> getByBornDate(@RequestParam(name = "page", defaultValue = "1") Integer page,
+  public PageResponse<TouristDTO> getByBornDate(@RequestParam(name = "page", defaultValue = "1") Integer page,
       @RequestParam(name = "start") @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
       @RequestParam(name = "end", required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate endDate) {
     if (endDate == null) {
       endDate = startDate.plusDays(1);
     }
 
-    return tService.getByBornDateTimeSpace(startDate, endDate, page - 1);
+    var res = tService.getByBornDateTimeSpace(startDate, endDate, page - 1);
+
+    return new PageResponse<>(TouristDTO.toDtoList(res.getContent()), res.getTotalElements(), res.getTotalPages());
   }
 
   @PutMapping
-  public ResponseEntity<Map<String, Object>> updateTourist(final Authentication auth, @RequestBody Tourist t) {
-    t.setTrips(Collections.emptyList());
-    t.setAccount(null);
+  public ResponseEntity<Map<String, Object>> updateTourist(final Authentication auth, @RequestBody TouristDTO t) {
     final var turist = tService.getByIdCard(auth.getName());
 
     if (turist.isEmpty()) {
@@ -75,7 +80,7 @@ public class TouristApi {
 
     Tourist updated; 
     try {
-      updated = tService.update(t);
+      updated = tService.update(TouristDTO.dtoToTourist(t));
     } catch(DataIntegrityViolationException e) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
@@ -89,19 +94,21 @@ public class TouristApi {
     
     var res = new HashMap<String, Object>();
     res.put("token", tkRes);
-    res.put("updated", updated);
+    res.put("updated", TouristDTO.touristToDto(updated));
 
     return ResponseEntity.ok(res);
   }
 
   @GetMapping("{userid}")
-  public PageResponse<Trip> getTirpsHistory(@PathVariable("userid") Integer id,
+  public PageResponse<TripDTO> getTirpsHistory(@PathVariable("userid") Integer id,
       @RequestParam(name = "page", defaultValue = "1") Integer page) {
-    return tripsService.getTripsFromTourist(id, page - 1);
+    final var res = tripsService.getTripsFromTourist(id, page - 1);
+
+    return new PageResponse<>(TripDTO.toDtoList(res.getContent()), res.getTotalElements(), res.getTotalPages());
   }
 
   @DeleteMapping
-  public void deleteTourist(final Authentication auth, @RequestBody(required = false) final Tourist tourist) {
+  public void deleteTourist(final Authentication auth, @RequestBody(required = false) final TouristDTO tourist) {
     Boolean isAdmin = false;
 
     if (tourist != null && tourist.getId() != null) {
@@ -112,7 +119,7 @@ public class TouristApi {
         }
       }
       if (Boolean.FALSE.equals(isAdmin)) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-      tService.delete(tourist);
+      tService.deleteByID(tourist.getId());
     }
     final var todelete = tService.getByIdCard(auth.getName());
     if (todelete.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
