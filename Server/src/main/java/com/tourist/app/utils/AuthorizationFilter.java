@@ -18,6 +18,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * It's a filter that intercepts every request and checks if the request has a valid token. If it does,
+ * it sets the user's information in the security context
+ */
 @Component
 public class AuthorizationFilter extends OncePerRequestFilter {
 

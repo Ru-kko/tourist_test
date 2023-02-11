@@ -19,6 +19,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * It's a filter that intercepts requests to the /login endpoint, and if the credentials are valid, it
+ * generates a token and sends it back to the client
+ */
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
   @Override
   public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)

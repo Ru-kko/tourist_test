@@ -28,9 +28,15 @@ public class TouristDTO implements EntityBase<Integer> {
   private Integer travelFrequency;
   @NonNull
   private Double travelBudget;
- @NonNull
+  @NonNull
   private String idCard;
 
+  /**
+   * It maps a Tourist entity to DTO
+   * 
+   * @param entity The entity to map.
+   * @return A DTO object
+   */
   public static TouristDTO touristToDto(Tourist entity) {
     var res = new TouristDTO();
     
@@ -45,6 +51,12 @@ public class TouristDTO implements EntityBase<Integer> {
     return res;
   }
 
+  /**
+   * It takes a DTO object and maps to a Tourist
+   * 
+   * @param dto The DTO object to be mapped to a Tourist.
+   * @return A Tourist
+   */
   public static Tourist dtoToTourist(TouristDTO dto) {
     var res = new Tourist();
 
@@ -59,6 +71,12 @@ public class TouristDTO implements EntityBase<Integer> {
     return res;
   }
 
+  /**
+   * Convert a list of Tourists to a list of TouristDTO.
+   * 
+   * @param list The list of objects to be converted to DTOs.
+   * @return A list of DTOs.
+   */
   public static List<TouristDTO> toDtoList(List<Tourist> list) {
     return list.stream().map(TouristDTO::touristToDto).toList();
   }

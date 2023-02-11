@@ -1,22 +1,12 @@
 package com.tourist.app.entity;
 
+import lombok.Data;
+
+/**
+ * It's a simple POJO that contains two fields, cardId and password, and getters and setters for each
+ */
+@Data
 public class Credentials {
   private String cardId;
-  private String password;
-
-  public String getCardId() {
-    return cardId;
-  }
-
-  public void setCardId(String cardId) {
-    this.cardId = cardId;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
+  private String password; 
 }

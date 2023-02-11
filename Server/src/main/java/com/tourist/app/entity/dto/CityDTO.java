@@ -26,6 +26,12 @@ public class CityDTO implements EntityBase<Integer> {
   @NonNull
   private String mostReserverdHotel;
 
+  /**
+   * It maps a City entity to CityDTO
+   * 
+   * @param entity The entity to map.
+   * @return A CityDTO object
+   */
   public static CityDTO cityToDto(City entity) {
     var res = new CityDTO();
     
@@ -38,6 +44,12 @@ public class CityDTO implements EntityBase<Integer> {
     return res;
   }
 
+  /**
+   * It takes a CityDTO object and maps to a City object
+   * 
+   * @param dto The DTO object to be mapped to a City object.
+   * @return A City object
+   */
   public static City dtoToCity(CityDTO dto) {
     var res = new City();
 
@@ -50,6 +62,12 @@ public class CityDTO implements EntityBase<Integer> {
     return res;
   }
 
+  /**
+   * Convert a list of Cities to a list of CityDTO objects.
+   * 
+   * @param list The list of objects to be converted to DTOs.
+   * @return A list of CityDTO objects.
+   */
   public static List<CityDTO> toDtoList(List<City> list) {
     return list.stream().map(CityDTO::cityToDto).toList();
   }
