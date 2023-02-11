@@ -13,6 +13,7 @@ import com.tourist.app.database.users.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -48,7 +49,7 @@ public class Tourist implements EntityBase<Integer>, Serializable {
   @Column(name = "idCard", unique = true)
   private String idCard;
 
-  @OneToOne(mappedBy = "tourist", orphanRemoval = true)
+  @OneToOne(mappedBy = "tourist", orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
   @JsonIgnoreProperties("tourist")
   private User account;
 
