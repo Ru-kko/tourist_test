@@ -17,7 +17,7 @@ public interface ITripsRepository extends CrudRepository<Trip, Integer> {
    * @param startDate The date the trip starts
    * @return The number of trips in a city at the same time.
    */
-  @Query(value= "SELECT COUNT(*) FROM Trips WHERE cityId = ?1 AND startDate = DATE(?2)", nativeQuery = true)
+  @Query(value= "SELECT COUNT(*) FROM Trips WHERE cityId = ?1 AND startDate = CONVERT(DATE, ?2)", nativeQuery = true)
   public Long countTripsInACityAtSameTime(Integer cityID, LocalDate startDate);
 
   public Page<Trip> findByTouristId(Integer touristId, Pageable page);

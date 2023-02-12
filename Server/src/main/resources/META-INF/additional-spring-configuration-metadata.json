@@ -1,6 +1,6 @@
 {"properties": [
   {
-    "name": "token.expiraton",
+    "name": "token.expiration",
     "type": "java.lang.Long"
   },
   {
@@ -13,6 +13,6 @@
   },
   {
     "name": "security.cors",
-    "type": "java.lang.Boolean",
+    "type": "java.lang.Boolean"
   }
 ]}

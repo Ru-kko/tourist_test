@@ -31,8 +31,8 @@ public class User implements EntityBase<Integer>, Serializable{
 
   @Column(nullable = false)
   private String password;
-  @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-  private Boolean admin;
+  @Column(nullable = false)
+  private Boolean admin = false;
 
   @OneToOne(optional = false, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
   @JoinColumn(name = "tourist", referencedColumnName = "touristId")

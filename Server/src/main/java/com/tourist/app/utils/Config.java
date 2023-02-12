@@ -1,7 +1,6 @@
 package com.tourist.app.utils;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,12 +10,38 @@ import org.springframework.stereotype.Component;
 @Component
 public class Config {
 
-  private static Environment env;
+  private static Long maxTourist;
+  private static Integer port;
+  private static String secret;
+  private static Long expTime;
+  private static Boolean cors;
 
-  @Autowired
-  private void env(Environment environment) {
-    Config.env = environment;
+
+  @Value("${trip.maximun-tourists}")
+  void setMaxTourist(Long maxTourist) {
+    Config.maxTourist = maxTourist;
   }
+
+  @Value("${server.port}")
+  void setPort(Integer port) {
+    Config.port = port;
+  }
+
+  @Value("${token.secret}")
+  void setSecret(String secret) {
+    Config.secret = secret;
+  }
+
+  @Value("${token.expiration}")
+  void setExpTime(Long expTime) {
+    Config.expTime = expTime;
+  }
+
+  @Value("${security.cors}")
+  void setCors(Boolean cors) {
+    Config.cors = cors;
+  } 
+
 
   /**
    * This function returns the maximum number of tourists allowed in a city at same day.
@@ -25,7 +50,7 @@ public class Config {
    * @return The maximum number of tourists allowed.
    */
   public static Long getMaxTourist() {
-    return env.getProperty("trip.maximun-tourists", Long.class);
+    return Config.maxTourist;
   }
 
   /**
@@ -35,7 +60,7 @@ public class Config {
    * @return The port number of the server.
    */
   public static Integer getPort() {
-    return env.getProperty("server.port", Integer.class);
+    return Config.port;
   }
 
   /**
@@ -44,7 +69,7 @@ public class Config {
    * @return The value of the token.secret property from the application.properties file.
    */
   public static String getSecret() {
-    return env.getProperty("token.secret", String.class);
+    return Config.secret;
   }
   /**
    * If the token.expiration property is set in the environment, return it.
@@ -52,14 +77,14 @@ public class Config {
    * @return The value of the token.expiration property.
    */
   public static Long getExpirationTime() {
-    return env.getProperty("token.expiraton", Long.class);
+    return Config.expTime;
   } 
   /**
    * If the security.cors property is set in the enviromen, return it otherwise return false
    * @return Boolean 
    */
   public static Boolean getCors() {
-    var res = env.getProperty("security.cors", Boolean.class);
+    var res = Config.cors;
     return res != null && res; 
   }
 }
