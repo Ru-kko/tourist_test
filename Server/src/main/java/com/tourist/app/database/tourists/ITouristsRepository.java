@@ -5,13 +5,13 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ITouristsRepository extends CrudRepository<Tourist, Integer> {
+public interface ITouristsRepository extends JpaRepository<Tourist, Integer> {
 
   /**
    * It searches for a tourist by name or last name.
@@ -26,8 +26,6 @@ public interface ITouristsRepository extends CrudRepository<Tourist, Integer> {
   public Page<Tourist> findByPartialName(@Param("name") String partial, Pageable page);
 
   public Optional<Tourist> findFristByIdCard(String idCard);
-
-  public Page<Tourist> findAll(Pageable page);
 
   /**
    * Find all Tourists whose bornDate is between bornDatestart and bornDateEnd, and return them in a

@@ -4,12 +4,12 @@ import java.time.LocalDate;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ITripsRepository extends CrudRepository<Trip, Integer> {
+public interface ITripsRepository extends JpaRepository<Trip, Integer> {
   /**
    * Count the number of trips in a city at the same day.
    * 
@@ -24,5 +24,4 @@ public interface ITripsRepository extends CrudRepository<Trip, Integer> {
 
   public Page<Trip> findByCityId(Integer cityId, Pageable page);
 
-  public Page<Trip> findAll(Pageable page);
 }
