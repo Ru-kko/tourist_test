@@ -21,7 +21,7 @@ import com.tourist.app.database.trips.Trip;
 
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
-public class TripsTest {
+class TripsTest {
 
   @Autowired
   private ITripService service;

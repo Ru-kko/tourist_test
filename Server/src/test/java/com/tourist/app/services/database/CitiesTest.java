@@ -11,9 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.tourist.app.database.cities.City;
 
 @SpringBootTest
-public class CitiesTest {
+class CitiesTest {
   @Autowired
-private ICityService service;
+  private ICityService service;
 
   @Test
   void testUpdate() {
@@ -28,12 +28,10 @@ private ICityService service;
 
     City returned = service.update(changed);
 
-
-    
     assertEquals(returned.getId(), cBase.getId());
     assertEquals(cBase.getMostTuristicPlace(), returned.getMostTuristicPlace());
     assertNotEquals(cBase.getName(), returned.getName());
-    
+
     service.delete(returned);
   }
 }

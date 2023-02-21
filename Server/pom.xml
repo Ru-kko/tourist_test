@@ -84,15 +84,18 @@
       <version>0.10.5</version>
       <scope>runtime</scope>
   	</dependency>
-	</dependencies>
-
+	</dependencies>	
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+				<version>3.9.1.2184</version>
+      </plugin>
 		</plugins>
 	</build>
-
 </project>

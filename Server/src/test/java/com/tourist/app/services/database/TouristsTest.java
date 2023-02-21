@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.tourist.app.database.tourists.Tourist;
 
 @SpringBootTest
-public class TouristsTest {
+class TouristsTest {
   @Autowired
   private ITouristService service;
 

@@ -18,27 +18,27 @@ public class Config {
 
 
   @Value("${trip.maximun-tourists}")
-  private void setMaxTourist(Long maxTourist) {
+  private void maxTourist(Long maxTourist) {
     Config.maxTourist = maxTourist;
   }
 
   @Value("${server.port}")
-  private void setPort(Integer port) {
+  private void port(Integer port) {
     Config.port = port;
   }
 
   @Value("${token.secret}")
-  private void setSecret(String secret) {
+  private void secret(String secret) {
     Config.secret = secret;
   }
 
   @Value("${token.expiration}")
-  private void setExpTime(Long expTime) {
+  private void expTime(Long expTime) {
     Config.expTime = expTime;
   }
 
   @Value("${security.cors}")
-  private void setCors(Boolean cors) {
+  private void cors(Boolean cors) {
     Config.cors = cors;
   } 
 
