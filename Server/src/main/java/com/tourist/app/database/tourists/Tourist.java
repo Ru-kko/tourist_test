@@ -49,11 +49,11 @@ public class Tourist implements EntityBase<Integer>, Serializable {
   @Column(name = "idCard", unique = true)
   private String idCard;
 
-  @OneToOne(mappedBy = "tourist", orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+  @OneToOne(mappedBy = "tourist", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
   @JsonIgnoreProperties("tourist")
   private User account;
 
-  @OneToMany(mappedBy = "tourist", orphanRemoval = true, cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy = "tourist", orphanRemoval = true, cascade = CascadeType.ALL)
   @JsonIgnoreProperties("tourist")
   private List<Trip> trips = new ArrayList<>();
   

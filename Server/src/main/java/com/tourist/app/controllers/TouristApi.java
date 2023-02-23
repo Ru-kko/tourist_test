@@ -1,8 +1,6 @@
 package com.tourist.app.controllers;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -24,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.tourist.app.database.tourists.Tourist;
 import com.tourist.app.entity.PageResponse;
+import com.tourist.app.entity.TokenAndTourist;
 import com.tourist.app.entity.TokenResponse;
 import com.tourist.app.entity.dto.TouristDTO;
 import com.tourist.app.entity.dto.TripDTO;
@@ -96,7 +95,7 @@ public class TouristApi {
    * @return A map with the token and the updated tourist.
    */
   @PutMapping
-  public ResponseEntity<Map<String, Object>> updateTourist(final Authentication auth, @RequestBody TouristDTO t) {
+  public ResponseEntity<TokenAndTourist> updateTourist(final Authentication auth, @RequestBody TouristDTO t) {
     final var turist = tService.getByIdCard(auth.getName());
 
     if (turist.isEmpty()) {
@@ -119,9 +118,7 @@ public class TouristApi {
     var token = TokenGenerator.createToken(updated.getIdCard()); 
     var tkRes = new TokenResponse(token, updated.getIdCard(), "Bearer ", user.get().getAdmin());
     
-    var res = new HashMap<String, Object>();
-    res.put("token", tkRes);
-    res.put("updated", TouristDTO.touristToDto(updated));
+    var res = new TokenAndTourist(tkRes, TouristDTO.touristToDto(updated));
 
     return ResponseEntity.ok(res);
   }
@@ -151,6 +148,7 @@ public class TouristApi {
   @DeleteMapping
   public void deleteTourist(final Authentication auth, @RequestBody(required = false) final TouristDTO tourist) {
     Boolean isAdmin = false;
+    Tourist toDelete;
 
     if (tourist != null && tourist.getId() != null) {
       for (var i : auth.getAuthorities()) {
@@ -160,11 +158,13 @@ public class TouristApi {
         }
       }
       if (Boolean.FALSE.equals(isAdmin)) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-      tService.deleteByID(tourist.getId());
+      toDelete = TouristDTO.dtoToTourist(tourist);
+    } else {
+      var userTourist = tService.getByIdCard(auth.getName());
+      if (userTourist.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+      toDelete = userTourist.get();
     }
-    final var todelete = tService.getByIdCard(auth.getName());
-    if (todelete.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
-    tService.delete(todelete.get()); 
+    tService.delete(toDelete); 
   }
 }

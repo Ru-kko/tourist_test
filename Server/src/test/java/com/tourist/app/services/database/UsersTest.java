@@ -87,10 +87,13 @@ class UsersTest {
 
   @AfterAll
   void destroy() {
-    tService.delete(tData[0]);
-    tService.delete(tData[1]);
-
-    service.delete(testData[0]);
-    service.delete(testData[1]);
+    for (User i: testData) {
+      if (i != null)
+        service.delete(i);
+    }
+    for (Tourist i: tData) {
+      if (i != null)
+        tService.delete(i);
+    }
   }
 }

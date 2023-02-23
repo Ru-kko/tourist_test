@@ -9,7 +9,6 @@ import com.tourist.app.database.tourists.Tourist;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,7 +33,7 @@ public class User implements EntityBase<Integer>, Serializable{
   @Column(nullable = false)
   private Boolean admin = false;
 
-  @OneToOne(optional = false, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+  @OneToOne(optional = false, cascade = CascadeType.MERGE)
   @JoinColumn(name = "tourist", referencedColumnName = "touristId")
   @JsonIgnoreProperties("account")
   private Tourist tourist;
