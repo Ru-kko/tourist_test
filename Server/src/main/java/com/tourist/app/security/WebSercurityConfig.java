@@ -48,7 +48,9 @@ public class WebSercurityConfig {
         .authorizeHttpRequests()
         // set role permissions
         .requestMatchers("/register").permitAll()
-        .requestMatchers(HttpMethod.GET, "/tourist/**", "/trip/**", "/city/**").permitAll()
+        .requestMatchers(HttpMethod.GET, "/tourist/born", "/trip/**", "/city/**").permitAll()
+        .requestMatchers(HttpMethod.GET, "/tourist/@me").authenticated()
+        .requestMatchers(HttpMethod.GET, "/tourist/{userid}").permitAll()
         .requestMatchers(HttpMethod.POST, "/city/{cityid}").authenticated()
         .requestMatchers(HttpMethod.PUT, "/tourist/**", "/tourist").authenticated()
         .requestMatchers(HttpMethod.DELETE, "/tourist").authenticated()

@@ -1,6 +1,8 @@
 package com.tourist.app.controllers;
 
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -10,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,12 +34,15 @@ import com.tourist.app.services.database.ITripService;
 import com.tourist.app.services.database.IUserService;
 import com.tourist.app.utils.TokenGenerator;
 
+import lombok.var;
+
 /**
  * It's a REST controller that handles the requests to the /tourist endpoint
  */
 @RestController
 @RequestMapping("tourist")
 public class TouristApi {
+  private static final Logger LOGGER = Logger.getLogger("com.tourist.app.controllers");
   @Autowired
   private ITouristService tService;
   @Autowired
@@ -66,6 +72,23 @@ public class TouristApi {
   }
 
   /**
+   * It gets the current user's information from the database and returns it
+   * 
+   * @param auth Authentication, credentials from user
+   * @return TouristDTO
+   */
+  @GetMapping("/@me")
+  public TouristDTO getme(final Authentication auth) {
+    var me = tService.getByIdCard(auth.getName());
+
+    if (me.isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+
+    return TouristDTO.touristToDto(me.get());
+  }
+
+  /**
    * "Get all tourists born between startDate and endDate, and return a page of them."
    * 
    * @param page the page number, default value is 1
@@ -92,7 +115,7 @@ public class TouristApi {
    * 
    * @param auth Authentication object that contains the user's credentials.
    * @param t TouristDTO
-   * @return A map with the token and the updated tourist.
+   * @return An object with the token and the updated tourist.
    */
   @PutMapping
   public ResponseEntity<TokenAndTourist> updateTourist(final Authentication auth, @RequestBody TouristDTO t) {
@@ -104,10 +127,11 @@ public class TouristApi {
 
     t.setId(turist.get().getId());
 
-    Tourist updated; 
+    Tourist updated;
     try {
       updated = tService.update(TouristDTO.dtoToTourist(t));
     } catch(DataIntegrityViolationException e) {
+      LOGGER.log(Level.WARNING, e.getCause().getMessage(), e);
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
     
@@ -151,7 +175,7 @@ public class TouristApi {
     Tourist toDelete;
 
     if (tourist != null && tourist.getId() != null) {
-      for (var i : auth.getAuthorities()) {
+      for (GrantedAuthority i : auth.getAuthorities()) {
         if (i.getAuthority().equals("ROLE_ADMIN")) {
           isAdmin = true;
           break;
