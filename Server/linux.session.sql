@@ -1,5 +1,0 @@
-DROP TABLE Users;
-DROP TABLE Trips;
-DROP TABLE Tourists;
-DROP TABLE Cities;
-
