@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 public class Tourist implements EntityBase<Integer>, Serializable {
   @Id
   @Column(name = "touristId")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
   @Temporal(TemporalType.DATE)

@@ -25,7 +25,7 @@ import lombok.Data;
 public class City implements EntityBase<Integer>, Serializable {
   @Id
   @Column(name = "cityId")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
   private String name;
   private Integer population;

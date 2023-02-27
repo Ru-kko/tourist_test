@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class User implements EntityBase<Integer>, Serializable{
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "userId")
   private Integer id;
 
