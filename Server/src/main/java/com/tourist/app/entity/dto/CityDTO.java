@@ -8,22 +8,15 @@ import com.tourist.app.database.cities.City;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class CityDTO implements EntityBase<Integer> {
   private Integer id;
-  @NonNull
   private String name;
-  @NonNull
   private Integer population;
-  @NonNull
   private String mostTuristicPlace;
-  @NonNull
   private String mostReserverdHotel;
 
   /**

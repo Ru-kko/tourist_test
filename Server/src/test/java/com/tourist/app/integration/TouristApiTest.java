@@ -32,8 +32,6 @@ import com.tourist.app.entity.TokenResponse;
 import com.tourist.app.entity.dto.TouristDTO;
 import com.tourist.app.entity.dto.UserDTO;
 
-import lombok.var;
-
 @TestInstance(Lifecycle.PER_CLASS)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class TouristApiTest {
@@ -97,7 +95,7 @@ class TouristApiTest {
   @Test
   @SuppressWarnings("null")
   void shouldMakeChangesOnRelatedTourist() {
-    var allRes = restTemplate.exchange(HOST + "/tourst", HttpMethod.GET, null,
+    var allRes = restTemplate.exchange(HOST + "/tourist", HttpMethod.GET, null,
         new ParameterizedTypeReference<PageResponse<TouristDTO>>() {});
 
     assertNotNull(allRes.getBody());
