@@ -1,5 +1,8 @@
 package com.tourist.app.controllers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -23,6 +26,7 @@ import com.tourist.app.utils.TokenGenerator;
 @RestController
 @RequestMapping
 public class Session {
+  private static final Logger LOGGER = Logger.getLogger("com.tourist.app.controllers.Session");
 
   @Autowired
   private IUserService userService;
@@ -47,7 +51,6 @@ public class Session {
         userEntity.getTourist() == null ||
         userEntity.getTourist().getIdCard() == null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Operation failed with status code 400");
-
     }
     userEntity.setAdmin(false);
     userEntity.getTourist().setId(null);
@@ -67,6 +70,7 @@ public class Session {
         var newTourist = touristService.save(userEntity.getTourist());
         userEntity.setTourist(newTourist);
       } catch (DataIntegrityViolationException e) {
+        LOGGER.log(Level.INFO, e.getMessage(), e);
         throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "There is an tourist with that cardId ");
       }
     } else {
@@ -77,11 +81,12 @@ public class Session {
       final var saved = userService.save(userEntity);
 
       final var token = TokenGenerator.createToken(saved.getTourist().getIdCard());
-      final var tokenResponse = new TokenResponse(token, userEntity.getTourist().getIdCard(), "Bearer ", user.getAdmin());
+      final var tokenResponse = new TokenResponse(token, userEntity.getTourist().getIdCard(), "Bearer ", saved.getAdmin());
 
       res = ResponseEntity.ok().body(tokenResponse);
 
     } catch (DataIntegrityViolationException e) {
+      LOGGER.log(Level.INFO, e.getMessage(), e);
       throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "That tourist has an associated user");
     }
 
