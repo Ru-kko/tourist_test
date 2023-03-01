@@ -2,6 +2,7 @@ package com.tourist.app.controllers;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.tourist.app.database.cities.City;
 import com.tourist.app.database.tourists.Tourist;
@@ -56,13 +58,12 @@ public class CitiesApi {
   @GetMapping
   public PageResponse<CityDTO> getAll(@RequestParam(name = "page", defaultValue = "1") Integer pageNum,
       @RequestParam(name = "name", required = false) String name) {
-    Page<City> res;
     if (name != null) {
-      res = cService.findByName(name, pageNum - 1);
-    } else {
-      res = cService.getAll(pageNum - 1);
+      Page<City> res = cService.findByName(name, pageNum - 1);
+      return new PageResponse<>(CityDTO.toDtoList(res.getContent()), res.getTotalElements(), res.getTotalPages());
     }
 
+    Page<City> res = cService.getAll(pageNum - 1);
     return new PageResponse<>(CityDTO.toDtoList(res.getContent()), res.getTotalElements(), res.getTotalPages());
   }
 
@@ -75,9 +76,8 @@ public class CitiesApi {
    */
   @PostMapping
   public ResponseEntity<CityDTO> createCity(@RequestBody CityDTO cityDt) {
-    if (cityDt == null) {
+    if (cityDt == null)
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
 
     var city = CityDTO.dtoToCity(cityDt);
 
@@ -85,9 +85,8 @@ public class CitiesApi {
 
     City save = cService.save(city);
 
-    if (save == null || save.getId() == null) {
+    if (save == null || save.getId() == null)
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
 
     return ResponseEntity.ok(CityDTO.cityToDto(save));
   }
@@ -154,6 +153,26 @@ public class CitiesApi {
       @RequestParam(name = "page", defaultValue = "1") Integer page) {
     var res = tService.getTripsFromCity(id, page - 1);
     return new PageResponse<>(TripDTO.toDtoList(res.getContent()), res.getTotalElements(), res.getTotalPages());
+  }
+
+
+  /**
+   * If the user is not the owner of the trip, then the user is not allowed to delete the trip
+   * 
+   * @param auth Authentication object
+   * @param id the id of the trip to be deleted
+   */
+  @DeleteMapping("/trip/{tripId}")
+  public void deleteTrip(final Authentication auth, @PathVariable("tripId") Integer id) {
+    var user = touristService.getByIdCard(auth.getName()).orElse(null);
+    var trip = tService.getById(id).orElse(null);
+
+    if (user == null || trip == null)
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+    if (!Objects.equals(trip.getTourist().getId(), user.getId()))
+      throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+    
+    tService.deleteByID(id);
   }
 
   /**

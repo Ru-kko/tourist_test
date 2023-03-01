@@ -154,7 +154,7 @@ public class TouristApi {
    * @param page the page number to return (defaults to 1)
    * @return A list of trips that the tourist has taken.
    */
-  @GetMapping("{userid}")
+  @GetMapping("/{userid}")
   public PageResponse<TripDTO> getTirpsHistory(@PathVariable("userid") Integer id,
       @RequestParam(name = "page", defaultValue = "1") Integer page) {
     final var res = tripsService.getTripsFromTourist(id, page - 1);

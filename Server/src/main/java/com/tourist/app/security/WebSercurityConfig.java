@@ -39,6 +39,7 @@ public class WebSercurityConfig {
   @Bean
   SecurityFilterChain setFilterChains(HttpSecurity http, AuthenticationManager manager, AuthorizationFilter authFilter) throws Exception {
     var filter = new AuthenticationFilter();
+    final var t = "/tourist";
     filter.setAuthenticationManager(manager);
     filter.setFilterProcessesUrl("/login");
 
@@ -48,12 +49,12 @@ public class WebSercurityConfig {
         .authorizeHttpRequests()
         // set role permissions
         .requestMatchers("/register").permitAll()
-        .requestMatchers(HttpMethod.GET, "/tourist","/tourist/born", "/trip/**", "/city/**").permitAll()
-        .requestMatchers(HttpMethod.GET, "/tourist/@me").authenticated()
+        .requestMatchers(HttpMethod.GET, t,"/tourist/born", "/trip/**", "/city/**").permitAll()
         .requestMatchers(HttpMethod.GET, "/tourist/{userid}").permitAll()
+        .requestMatchers(HttpMethod.GET, "/tourist/@me").authenticated()
         .requestMatchers(HttpMethod.POST, "/city/{cityid}").authenticated()
-        .requestMatchers(HttpMethod.PUT, "/tourist/**", "/tourist").authenticated()
-        .requestMatchers(HttpMethod.DELETE, "/tourist").authenticated()
+        .requestMatchers(HttpMethod.PUT, "/tourist/**", t).authenticated()
+        .requestMatchers(HttpMethod.DELETE, t, "/city/trip/{tripId}").authenticated()
         .anyRequest().hasRole("ADMIN")
         .and()
         .sessionManagement()
