@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   standalone: true,
-  selector: 'app-loading-bar',
+  selector: 'loading-bar',
   templateUrl: './loading-bar.component.html',
   styleUrls: ['./loading-bar.component.css']
 })
