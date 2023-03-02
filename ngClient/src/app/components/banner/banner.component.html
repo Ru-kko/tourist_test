@@ -1,9 +1,9 @@
-<div>
-  <delayed-link href="city" [delay]="700" class="city">
+<div [class]="class">
+  <delayed-link href="home" [delay]="700" class="city" (click)="onClick()">
     <img src="assets/cityBackground.jpg" alt="">
     <h1>Cities</h1>
   </delayed-link>
-  <delayed-link href="tourist" [delay]="700" class="travelers">
+  <delayed-link href="home" [delay]="700" class="travelers" (click)="onClick()">
     <img src="assets/travelers.jpg" alt="">
     <h1>Tourists</h1>
   </delayed-link>
