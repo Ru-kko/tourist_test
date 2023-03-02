@@ -1,0 +1,133 @@
+div {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  position: sticky;
+  display: flex;
+  overflow: hidden;
+  transition: transform 0.5s ease-in;
+}
+
+img {
+  transition: transform ease 0.5s;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  object-fit: cover;
+  width: 60vw;
+  height: 100vh;
+  position: absolute;
+}
+
+h1 {
+  position: relative;
+  visibility: hidden;
+  top: 40%;
+  font-weight: 900;
+  font-size: 4rem;
+  display: inline-block;
+  z-index: 10;
+}
+
+h1::before {
+  content: "";
+  opacity: 0.6;
+  position: absolute;
+  width: 110%;
+  height: 100%;
+  left: -5%;
+  border-radius: 4px;
+  background-color: var(--darkness);
+  transform: scaleY(0.1);
+  transform-origin: top center;
+  transition: transform 0.5s ease-in-out;
+  z-index: -10;
+}
+
+:host ::ng-deep delayed-link > a {
+  display: block;
+  height: 100vh;
+  width: 50vw;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.5s ease-out;
+}
+
+:host ::ng-deep delayed-link > a:hover > h1 {
+  visibility: visible;
+}
+
+:host ::ng-deep delayed-link > a:hover h1::before {
+  transform-origin: bottom center;
+  transform: scale(1);
+}
+
+:host::ng-deep delayed-link.city > a::after {
+  transform: scaleX(-1);
+}
+
+:host ::ng-deep delayed-link > a::after {
+  box-shadow: inset -30vw 0vh 13vw 0vw rgb(0 0 0 / 70%);
+  content: "";
+  display: block;
+  height: 100vh;
+  width: 60vw;
+  position: absolute;
+  top: 0;
+  transition: box-shadow 0.5s ease-in-out;
+  mask-image: linear-gradient(
+    270deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 70%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    270deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 60%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+:host ::ng-deep delayed-link a:hover img {
+  transform: scale(1.1);
+}
+
+:host ::ng-deep delayed-link a:hover:after {
+  box-shadow: none;
+}
+
+:host ::ng-deep delayed-link.city > a > img {
+  mask-image: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 70%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 60%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  object-position: 100% 0;
+  left: 0;
+}
+
+:host ::ng-deep delayed-link.travelers a > img {
+  mask-image: linear-gradient(
+    270deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 70%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    270deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 60%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  top: 0;
+  object-position: 90% 0;
+  right: 0;
+}

@@ -1,5 +1,6 @@
 HELP.md
 node_modules
+.angular
 .env
 dist/
 target/
