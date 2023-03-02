@@ -1,0 +1,31 @@
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+button::after,
+button::before,
+div {
+  background-color: var(--white);
+  content: "";
+  border-radius: 100vmin;
+  display: block;
+  height: 15%;
+  margin: 15% 0;
+  width: 100%;
+  transition: .5s;
+  transform-origin: center;
+}
+
+.off::before {
+  transform: translateY(200%) rotate(135deg);
+}
+
+.off::after {
+  transform: translateY(-200%) rotate(-135deg);
+}
+
+.off > div {
+  transform: scale(0);
+}
