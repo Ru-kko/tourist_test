@@ -12,6 +12,5 @@ export class BannerComponent {
   class: String = "";
   onClick() {
     this.class = "out"
-    console.log(this.class);
   }
 }
