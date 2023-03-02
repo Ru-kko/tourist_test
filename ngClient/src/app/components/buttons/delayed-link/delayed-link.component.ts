@@ -19,9 +19,9 @@ export class DelayedLinkComponent {
   clickDelay(e: MouseEvent) {
     e.preventDefault();
     if (this.clicked) return;
+    this.onClick?.(e);
     setTimeout(() => {
       this.router.navigate([this.href]);
-      this.onClick?.(e);
     }, this.delay);
   }
 }
