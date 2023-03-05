@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  standalone: true,
   selector: 'open-toggle-btn',
   templateUrl: './close-btn.component.html',
   styleUrls: ['./close-btn.component.css'],

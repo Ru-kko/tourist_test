@@ -1,13 +1,10 @@
-import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  standalone: true,
   selector: 'table-component',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
-  imports: [CommonModule, NgForOf, NgIf, NgForOf],
 })
 export class ListComponent<T extends Object> implements OnInit {
   @Input() idCol?: keyof T;

@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
-
-
+import { BannerComponent } from './components/banner/banner.component';
+import { DelayedLinkComponent } from 'src/app/modules/home/components/delayed-link/delayed-link.component';
+import { HomeAppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
-    HomeComponent
+    HomeComponent,
+    DelayedLinkComponent,
+    BannerComponent
   ],
   imports: [
-    CommonModule
+    HomeAppRoutingModule,
   ]
 })
 export class HomeModule { }

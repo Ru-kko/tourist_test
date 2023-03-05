@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  standalone: true,
   selector: 'delayed-link',
   templateUrl: './delayed-link.component.html',
   styleUrls: ['./delayed-link.component.css'],
