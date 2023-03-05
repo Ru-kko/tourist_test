@@ -9,12 +9,14 @@ import { CloseBtnComponent } from './components/buttons/close-btn/close-btn.comp
 import { LoadingBarComponent } from './components/loading-bar/loading-bar.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { CommonModule } from '@angular/common';
+import { ListComponent } from './components/list/list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    ListComponent,
     PaginationComponent,
     LoadingBarComponent,
     CloseBtnComponent,

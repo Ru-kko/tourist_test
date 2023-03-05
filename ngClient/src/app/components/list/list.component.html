@@ -1,0 +1,21 @@
+<div>
+  <table>
+    <thead>
+      <tr>
+        <ng-container *ngFor="let i of headers | keyvalue">
+          <th *ngIf="i.value.render !== false">
+            {{ i.value.name }}
+          </th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let row of data"
+        (click)="rowClick?.(row, $event)"
+        (class)="({ clickable: rowClick })"
+        [innerHtml]="createRow(row)"
+      ></tr>
+    </tbody>
+  </table>
+</div>
