@@ -1,9 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
+  standalone: true,
   selector: 'pagination',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css'],
+  imports: [CommonModule],
 })
 export class PaginationComponent implements OnInit {
   @Input() pages: number = 1;
@@ -14,8 +17,6 @@ export class PaginationComponent implements OnInit {
     
   ngOnInit(): void {
     this.range = this.getPagingRange(this.actual, this.pages);
-    console.log(this.range, this.actual, this.pages);
-    
   }
 
   clickDecrease() {

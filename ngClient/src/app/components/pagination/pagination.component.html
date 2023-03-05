@@ -1,5 +1,5 @@
 <div>
-  <button (click)="clickDecrease()" [ngClass]="{'clickable': actual > 1}">&laquo;</button>
-  <button *ngFor="let i of range" [ngClass]="{'clickable': i !== actual}">{{i}}</button>
-  <button (click)="clickIncrease()" [ngClass]="{'clickable': actual < pages}">&raquo;</button>
+  <button (click)="clickDecrease()" [class]="{ clickable: actual > 1 }">&laquo;</button>
+  <button *ngFor="let i of range" [class]="{ clickable: i !== actual }">{{ i }}</button>
+  <button (click)="clickIncrease()" [class]="{ clickable: actual < pages }">&raquo;</button>
 </div>
