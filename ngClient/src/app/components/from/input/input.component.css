@@ -1,0 +1,84 @@
+div {
+  position: relative;
+}
+
+span,
+.cut {
+  pointer-events: none;
+  position: absolute;
+  top: 8px;
+  left: 15px;
+  transition: 0.5s ease-in;
+  top: -1rem;
+  color: var(--black);
+  font-weight: 900;
+}
+
+span {
+  font-size: 1.5rem;
+  top: auto;
+  bottom: 3px;
+  text-size-adjust: 50%;
+}
+
+input {
+  color: var(--black);
+  outline: none;
+  border: none;
+  border-radius: 0 15px;
+  padding: 3px 10px;
+  box-shadow: 0px 10px 8px 1px var(--darkness);
+  font-size: 1.5rem;
+  height: 2rem;
+  width: calc(100% - 20px);
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button,
+input:not(:valid, :focus)::-webkit-datetime-edit {
+  display: none;
+  color: transparent;
+}
+
+input[type="date"] {
+  min-width: 15rem;
+}
+
+input[type="date"] ~ span {
+  left: 2.3rem;
+}
+
+.cut {
+  transition-delay: 0.5s;
+  transform: scaleX(0);
+  transform-origin: bottom left;
+  box-shadow: -1px 4px 6px 0px var(--darkness);
+  border-radius: 0 0.6rem;
+}
+
+
+input:focus ~ .cut,
+input:valid ~ .cut,
+input:read-only ~ .cut {
+  background-color: var(--white);
+  transform: scaleX(1);
+  height: 1.2rem;
+  width: 65%;
+}
+
+input:focus ~ span,
+input:valid ~ span,
+input:read-only ~ span {
+  font-size: 1.2rem;
+  top: 0;
+  transform: translate(5px, -1.4rem);
+}
+
+input:read-only {
+  color: var(--blue);
+}
+
+input[type="button"], input[type="submit"] {
+  height: auto;
+  width: 100%;
+}

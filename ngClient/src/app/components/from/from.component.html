@@ -1,0 +1,13 @@
+<form (submit)="submit($event)">
+  <ng-container *ngFor="let i of data">
+    <div *ngIf="isArray(i); else singleInput">
+      <form-component-input
+        *ngFor="let j of i | as inputProps[]"
+        [inputProps]="j"
+      ></form-component-input>
+    </div>
+    <ng-template #singleInput>
+      <form-component-input [inputProps]="i | as"></form-component-input>
+    </ng-template>
+  </ng-container>
+</form>

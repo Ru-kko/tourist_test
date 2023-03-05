@@ -10,12 +10,14 @@ import { LoadingBarComponent } from './components/loading-bar/loading-bar.compon
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { CommonModule } from '@angular/common';
 import { ListComponent } from './components/list/list.component';
+import { FromComponent } from './components/from/from.component';
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    FromComponent,
     ListComponent,
     PaginationComponent,
     LoadingBarComponent,

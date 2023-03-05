@@ -1,0 +1,21 @@
+<div>
+  <input
+    [type]="inputProps.type"
+    [name]="inputProps.name"
+    [required]="inputProps.required"
+    [readOnly]="inputProps.readOnly"
+    [defaultValue]="
+      inputProps.type === 'button' || inputProps.type === 'submit'
+        ? inputProps.label
+        : inputProps.default ?? ''
+    "
+    (click)="inputProps.onClick?.($event)"
+    (change)="changeValue(inputProps.name, $event)"
+  />
+  <ng-container
+    *ngIf="inputProps.type !== 'button' && inputProps.type !== 'submit'"
+  >
+    <div class="cut"></div>
+    <span>{{ inputProps.label }}</span>
+  </ng-container>
+</div>
