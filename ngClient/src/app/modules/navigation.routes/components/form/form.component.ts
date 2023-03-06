@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { InputProps } from './input/input.component';
+import { InputComponent, InputProps } from './input/input.component';
 
 @Component({
   selector: 'from-component',
@@ -11,14 +11,16 @@ export class FormComponent {
   @Input() data: (InputProps[] | InputProps)[] = [];
 
   submit(e: Event) {
-    this.onSubmit?.((e.target) as HTMLFormElement);
+    this.onSubmit?.(e.target as HTMLFormElement);
   }
 
   isArray(obj: InputProps[] | InputProps): boolean {
-    return Array.isArray(obj)
+    return Array.isArray(obj);
   }
 
   cast<T>(obj: any): T {
     return obj as T;
   }
 }
+
+export { InputComponent };

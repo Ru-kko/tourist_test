@@ -2,7 +2,7 @@
   <ng-container *ngFor="let i of data">
     <div *ngIf="isArray(i); else singleInput">
       <form-component-input
-        *ngFor="let j of i | as inputProps[]"
+        *ngFor="let j of i | as InputProps[]"
         [inputProps]="j"
       ></form-component-input>
     </div>

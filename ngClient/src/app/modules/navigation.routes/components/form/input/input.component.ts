@@ -1,12 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  standalone: true,
   selector: 'form-component-input',
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.css'],
-  imports: [CommonModule]
+  styleUrls: ['./input.component.css']
 })
 export class InputComponent implements OnInit {
   @Input() inputProps!: InputProps;
