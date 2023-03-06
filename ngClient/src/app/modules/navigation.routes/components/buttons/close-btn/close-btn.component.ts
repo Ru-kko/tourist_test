@@ -7,22 +7,17 @@ import { Component, Input } from '@angular/core';
 })
 export class CloseBtnComponent {
   @Input() size: String = '50px';
-  @Input() onclick?: (e: MouseEvent, status: btnState) => void;
-  @Input() initialState: btnState = 'off';
+  @Input() onclick?: (e: MouseEvent, status: boolean) => void;
+  /**
+   * false -> show menu
+   * true -> show x to close
+   */
+  @Input() state:boolean  = false;
 
-  className: btnState = this.initialState;
 
   handleClick(e: MouseEvent) {
-    switch (this.className) {
-      case 'off':
-        this.className = 'on';
-        break;
-      case 'on':
-        this.className = 'off';
-        break;
-    }
-    this.onclick?.(e, this.className);
+    this.state = !this.state;
+    this.onclick?.(e, this.state);
   }
 }
 
-type btnState = 'on' | 'off';

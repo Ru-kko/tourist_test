@@ -18,14 +18,14 @@ div {
   transform-origin: center;
 }
 
-.off::before {
+.on::before {
   transform: translateY(200%) rotate(135deg);
 }
 
-.off::after {
+.on::after {
   transform: translateY(-200%) rotate(-135deg);
 }
 
-.off > div {
+.on > div {
   transform: scale(0);
 }
