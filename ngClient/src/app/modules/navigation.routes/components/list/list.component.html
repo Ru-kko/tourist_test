@@ -1,9 +1,9 @@
 <table>
   <thead>
     <tr>
-      <ng-container *ngFor="let i of headers | keyvalue">
-        <th *ngIf="i.value.render !== false">
-          {{ i.value.name }}
+      <ng-container *ngFor="let i of getKeys()">
+        <th *ngIf="i.render !== false">
+          {{ i.name }}
         </th>
       </ng-container>
     </tr>

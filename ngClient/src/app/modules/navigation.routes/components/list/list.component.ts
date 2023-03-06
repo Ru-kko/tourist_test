@@ -20,6 +20,10 @@ export class ListComponent<T extends Object> implements OnInit {
     }
   }
 
+  getKeys() {
+    return Object.values(this.headers);
+  }
+
   createRow(row: T) {
     let res = '';
     Object.entries<Header<T, keyof T>>(this.headers).forEach(([k, v]) => {

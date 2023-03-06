@@ -2,6 +2,8 @@
   height: 100%;
   overflow: auto;
   width: 100%;
+  border-radius: 20px;
+  border: solid 2px var(--black);
 }
 
 :host::-webkit-scrollbar {
@@ -16,9 +18,8 @@
 }
 
 table {
+  /* height: 100%; */
   width: 100%;
-  border-radius: 5px;
-  border: solid 2px var(--black);
   border-spacing: 0;
   border-collapse: collapse;
 }
@@ -43,7 +44,7 @@ th {
 }
 
 @media only screen and (max-width: 800px) {
-  table {
+  :host {
     border: none;
   }
   table thead {
