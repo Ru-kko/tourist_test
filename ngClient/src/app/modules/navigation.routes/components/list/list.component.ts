@@ -9,9 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class ListComponent<T extends Object> implements OnInit {
   @Input() idCol?: keyof T;
   @Input() rowClick?: (row: T, e: MouseEvent) => void;
-  @Input() headers!: {
-    [K in keyof T]: Header<T, keyof T>;
-  };
+  @Input() headers!: Headers<T>;
   @Input() data: T[] = [];
 
   constructor(private sanitizer: DomSanitizer) {}
@@ -33,8 +31,6 @@ export class ListComponent<T extends Object> implements OnInit {
         `;
       }
     });
-    console.log(res);
-    
     return this.sanitizer.bypassSecurityTrustHtml(res);
   }
 }
@@ -43,4 +39,8 @@ interface Header<T, K extends keyof T> {
   preprocess?: (d: T[K]) => string;
   name: string;
   render?: boolean;
+}
+
+export type Headers<T> = {
+  [K in keyof T]: Header<T, keyof T>
 }
