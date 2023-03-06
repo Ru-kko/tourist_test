@@ -1,5 +1,5 @@
-export { PaginationComponent } from './pagination/pagination.component';
-export { LoadingBarComponent } from './loading-bar/loading-bar.component';
-export { ListComponent } from './list/list.component';
-export { CloseBtnComponent } from './buttons/close-btn/close-btn.component';
-export { FormComponent } from './form/form.component' 
+export * from './pagination/pagination.component';
+export * from './loading-bar/loading-bar.component';
+export * from './list/list.component';
+export * from './buttons/close-btn/close-btn.component';
+export * from './form/form.component' 

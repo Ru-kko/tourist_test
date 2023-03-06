@@ -1,0 +1,127 @@
+nav {
+  width: 50px;
+  height: 100vh;
+  transition: width 0.5s ease-in;
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation: nav-enter 0.5s 1 forwards;
+  background-color: var(--main);
+  box-shadow: -5vw 0vh 2vw 6vw var(--darkness);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+  padding-top: 80px;
+  overflow: hidden;
+  z-index: 100;
+}
+
+:host/deep/ nav > open-toggle-btn {
+  background-color: var(--darkness);
+  border: none;
+  cursor: pointer;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  right: 0;
+  top: 15px;
+  padding: 0;
+}
+
+.nav-open {
+  width: 15vw;
+}
+:host/deep/.nav-open > menu > a > fa-icon:not(.session-icon) svg {
+  display: none;
+}
+.session-link {
+  margin-top: auto;
+  align-self: center;
+}
+
+:host/deep/.icon svg {
+  display: block;
+  padding: 5px;
+  width: 40px;
+  height: 40px;
+}
+
+:host/deep/.session-icon svg {
+  width: 40px;
+  height: 40px;
+}
+
+nav menu {
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+  text-align: center;
+}
+nav > menu > a, nav > menu > button {
+  position: relative;
+  font-weight: 700;
+}
+
+nav > menu > a::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  background-color: var(--darkness);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: 0.5s ease-in-out 0.1s;
+  z-index: -10;
+}
+nav > menu > a.active::before {
+  transform: scaleX(100%);
+}
+
+nav.nav-open > a > h1 {
+  position: relative;
+  font-weight: 900;
+  font-size: 2.5rem;
+  text-align: center;
+  display: inline-block;
+  transition: text-shadow ease-in 0.5s;
+}
+
+nav.nav-open h2,
+nav.nav-open h1 {
+  display: inline-block;
+}
+
+nav h1,
+nav h2 {
+  display: none;
+}
+
+nav > a > h1::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  bottom: -0.2rem;
+  left: 0;
+  height: 0.2rem;
+  background-color: var(--white);
+  transition: box-shadow ease-in 0.5s;
+}
+nav > a:hover h1 {
+  text-shadow: 10px 10px 0px var(--darkness);
+}
+nav > a:hover h1::before {
+  box-shadow: 0px 0px 20px 7px var(--black);
+}
+
+@keyframes nav-enter {
+  form {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}

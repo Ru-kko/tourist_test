@@ -1,0 +1,38 @@
+<nav [class]="{ 'nav-open': navState }">
+  <open-toggle-btn [onclick]="toggle" initialState="on"></open-toggle-btn>
+  <a href="/">
+    <h1>technical test</h1>
+  </a>
+  <menu>
+    <a
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{
+        paths: 'exact',
+        matrixParams: 'ignored',
+        fragment: 'ignored',
+        queryParams: 'ignored'
+      }"
+    >
+      <fa-icon [icon]="userIcon" class="icon"></fa-icon>
+      <h2>Tourists</h2>
+    </a>
+    <a
+      routerLink="/city"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{
+        paths: 'exact',
+        matrixParams: 'ignored',
+        fragment: 'ignored',
+        queryParams: 'ignored'
+      }"
+    >
+      <fa-icon [icon]="cityIcon" class="icon"></fa-icon>
+      <h2>Cities</h2>
+    </a>
+    <a routerLink="/" class="session-link">
+      <!-- Todo: use global state to check if is logged -->
+      <fa-icon [icon]="unLogged" class="icon session-icon"></fa-icon>
+    </a>
+  </menu>
+</nav>
