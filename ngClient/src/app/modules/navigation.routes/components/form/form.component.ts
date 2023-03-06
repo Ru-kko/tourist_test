@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { InputComponent, InputProps } from './input/input.component';
 
 @Component({
-  selector: 'from-component',
+  selector: 'form-component',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css'],
 })
