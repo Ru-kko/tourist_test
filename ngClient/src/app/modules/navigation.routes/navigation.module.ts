@@ -5,6 +5,8 @@ import { CloseBtnComponent, FormComponent, InputComponent, ListComponent, Loadin
 import { NavigationComponent } from './components/navigation/navigation.component'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CastPipe } from 'src/app/pipes/cast.pipe';
+import { PageContainerComponent } from './components/page-container/page-container.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -15,12 +17,23 @@ import { CastPipe } from 'src/app/pipes/cast.pipe';
     LoadingBarComponent,
     PaginationComponent,
     NavigationComponent,
-    InputComponent
+    InputComponent,
+    PageContainerComponent
   ],
   imports: [
     FontAwesomeModule,
     NavigationRoutingModule,
     CastPipe,
+    CommonModule
+  ],
+  exports: [
+    PageContainerComponent,
+    CloseBtnComponent,
+    FormComponent,
+    ListComponent,
+    NavigationModuleComponent,
+    LoadingBarComponent,
+    PaginationComponent
   ]
 })
 export class NavigationModule { }
