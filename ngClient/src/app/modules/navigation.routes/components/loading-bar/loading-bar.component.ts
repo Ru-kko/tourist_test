@@ -6,5 +6,4 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./loading-bar.component.css']
 })
 export class LoadingBarComponent {
-  @Input() width: String = "200px"
 }
