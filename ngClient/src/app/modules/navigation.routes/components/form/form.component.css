@@ -2,28 +2,28 @@ form {
   background-color: var(--white);
   display: flex;
   flex-direction: column;
-  width: fit-content;
-  margin: 10px;
-  gap: 2.2rem;
+  width: 100%;
+  gap: 20px;
   align-items: center;
 }
 
 form div {
   position: relative;
-  width: 90%; 
+  width: 90%;
 }
 
 div {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 20px;
   font-weight: 600;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 :host/deep/div input {
-  max-width: 13rem;
+  max-width: 15rem;
 }
 
 :host/deep/form:not(:valid) input[type="submit"] {

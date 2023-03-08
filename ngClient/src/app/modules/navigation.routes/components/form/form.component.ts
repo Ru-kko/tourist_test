@@ -23,4 +23,4 @@ export class FormComponent {
   }
 }
 
-export { InputComponent };
+export { InputComponent, InputProps };
