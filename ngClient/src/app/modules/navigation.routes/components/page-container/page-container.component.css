@@ -4,7 +4,7 @@
   border-radius: 20px;
   padding: 2.5rem;
   display: grid;
-  grid-template-rows: 3rem 1fr 30px 5vh;
+  grid-template-rows: 3rem 1fr 30px;
   justify-items: center;
   align-items: start;
   row-gap: 20px;
