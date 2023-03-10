@@ -1,0 +1,10 @@
+<app-page-container width="w7" title="Tourists">
+  <table-component
+    [headers]="headers"
+    [data]="data.content"
+  ></table-component>
+  <ng-template #loading>
+    <loading-bar class="loading" width="20vw"></loading-bar>
+  </ng-template>
+  <pagination></pagination>
+</app-page-container>

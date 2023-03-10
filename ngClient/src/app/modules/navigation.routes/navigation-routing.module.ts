@@ -9,12 +9,21 @@ const routes: Routes = [
     children: [
       {
         path: 'city',
-        loadChildren: ()  => import('../city/city.module').then(({CityModule}) => CityModule),
+        loadChildren: () =>
+          import('../city/city.module').then(({ CityModule }) => CityModule),
       },
       {
         path: 'session',
-        loadChildren: () => import('../Auth/auth.module').then(({AuthModule}) => AuthModule)
-      }
+        loadChildren: () =>
+          import('../Auth/auth.module').then(({ AuthModule }) => AuthModule),
+      },
+      {
+        path: 'tourist',
+        loadChildren: () =>
+          import('../tuourist/tourist.module').then(
+            ({ TouristModule }) => TouristModule
+          ),
+      },
     ],
   },
 ];
