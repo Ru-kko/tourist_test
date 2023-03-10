@@ -36,8 +36,11 @@ nav {
   display: none;
 }
 .session-link {
+  background: none;
   margin-top: auto;
   align-self: center;
+  cursor: pointer;
+  border: none;
 }
 
 :host/deep/.icon svg {

@@ -30,9 +30,15 @@
       <fa-icon [icon]="cityIcon" class="icon"></fa-icon>
       <h2>Cities</h2>
     </a>
-    <a routerLink="/" class="session-link">
-      <!-- Todo: use global state to check if is logged -->
-      <fa-icon [icon]="unLogged" class="icon session-icon"></fa-icon>
-    </a>
+
+    <button class="session-link" *ngIf="authState !== false;else logginLink" (click)="logOut()">
+      <fa-icon [icon]="logged" class="icon session-icon"></fa-icon>
+    </button>
+    <ng-template #logginLink >
+
+      <a routerLink="/session" class="session-link">
+        <fa-icon [icon]="unLogged" class="icon session-icon"></fa-icon>
+      </a>
+    </ng-template>
   </menu>
 </nav>
