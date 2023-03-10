@@ -79,6 +79,7 @@ input:read-only {
 }
 
 input[type="button"], input[type="submit"] {
+  cursor: pointer;
   height: auto;
   width: 100%;
 }

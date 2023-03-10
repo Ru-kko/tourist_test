@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { InputComponent, InputProps } from './input/input.component';
 
 @Component({
@@ -6,20 +6,19 @@ import { InputComponent, InputProps } from './input/input.component';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css'],
 })
-export class FormComponent {
-  @Input() onSubmit?: (e: HTMLFormElement) => void;
+export class FormComponent<T> {
+  @Output() onSubmit: EventEmitter<FormData> = new EventEmitter();
   @Input() data: (InputProps[] | InputProps)[] = [];
+  formData: Partial<T> = {};
 
-  submit(e: Event) {
-    this.onSubmit?.(e.target as HTMLFormElement);
+  submit(event: Event) {
+    event.preventDefault();
+    this.onSubmit.emit(new FormData(event.target as HTMLFormElement));
+    return false;
   }
 
   isArray(obj: InputProps[] | InputProps): boolean {
     return Array.isArray(obj);
-  }
-
-  cast<T>(obj: any): T {
-    return obj as T;
   }
 }
 

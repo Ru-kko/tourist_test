@@ -2,9 +2,9 @@
   <input
     [type]="inputProps.type"
     [name]="inputProps.name"
-    [required]="inputProps.required"
+    [required]="inputProps.required ?? false"
     [readOnly]="inputProps.readOnly"
-    [defaultValue]="
+    [value]="
       inputProps.type === 'button' || inputProps.type === 'submit'
         ? inputProps.label
         : inputProps.default ?? ''
