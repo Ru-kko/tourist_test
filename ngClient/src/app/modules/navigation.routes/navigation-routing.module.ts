@@ -11,6 +11,10 @@ const routes: Routes = [
         path: 'city',
         loadChildren: ()  => import('../city/city.module').then(({CityModule}) => CityModule),
       },
+      {
+        path: 'session',
+        loadChildren: () => import('../Auth/auth.module').then(({AuthModule}) => AuthModule)
+      }
     ],
   },
 ];

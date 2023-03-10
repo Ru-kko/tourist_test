@@ -1,0 +1,12 @@
+<app-page-container [title]="title" width="w4" height="h5">
+  <form-component
+    (onSubmit)="onSignUp($event)"
+    [data]="signUp"
+    class="session-form"
+    *ngIf="title === 'Sign Up'; else loggin"
+    >
+  </form-component>
+  <ng-template #loggin>
+    <form-component (onSubmit)="onLogIn($event)" [data]="login" class="session-form"></form-component>
+  </ng-template>
+</app-page-container>
