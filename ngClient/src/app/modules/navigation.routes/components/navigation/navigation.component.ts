@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   faMountainCity,
   faRightFromBracket,
+  faUser,
   faUsers,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +18,7 @@ export class NavigationComponent implements OnInit {
   userIcon: IconDefinition = faUsers;
   cityIcon: IconDefinition = faMountainCity;
   logged: IconDefinition = faRightFromBracket;
-  unLogged: IconDefinition = faUsers;
+  unLogged: IconDefinition = faUser;
   authState: AuthTokenResponse | boolean = false;
   navState: boolean = false;
   toggle = (_: MouseEvent, state: boolean) => {
