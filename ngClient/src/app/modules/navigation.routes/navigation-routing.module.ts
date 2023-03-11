@@ -24,6 +24,20 @@ const routes: Routes = [
             ({ TouristModule }) => TouristModule
           ),
       },
+      {
+        path: 'city/:id',
+        loadChildren: () =>
+          import('../trips/trips.module').then(
+            ({ TripsModule }) => TripsModule
+          ),
+      },
+      {
+        path: 'tourist/:id',
+        loadChildren: () =>
+          import('../trips/trips.module').then(
+            ({ TripsModule }) => TripsModule
+          ),
+      }
     ],
   },
 ];
