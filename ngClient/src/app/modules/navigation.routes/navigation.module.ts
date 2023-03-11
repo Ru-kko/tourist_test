@@ -15,6 +15,7 @@ import { CastPipe } from 'src/app/pipes/cast.pipe';
 import { PageContainerComponent } from './components/page-container/page-container.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { DropdownMunuComponent } from './components/dropdown-munu/dropdown-munu.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
     NavigationComponent,
     InputComponent,
     PageContainerComponent,
+    DropdownMunuComponent,
   ],
   imports: [
     FontAwesomeModule,
@@ -36,6 +38,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
   ],
   exports: [
+    DropdownMunuComponent,
     PageContainerComponent,
     CloseBtnComponent,
     FormComponent,

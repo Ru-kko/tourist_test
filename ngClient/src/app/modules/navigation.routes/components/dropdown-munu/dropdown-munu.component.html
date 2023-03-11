@@ -1,0 +1,18 @@
+<ul
+  *ngIf="props.open"
+  [ngStyle]="{ top: props.y + 'px', left: props.x + 'px' }"
+>
+  <li *ngFor="let btn of props.buttons">
+    <a
+      *ngIf="btn.link; else button"
+      [href]="btn.href ?? '#'"
+      (click)="clickHandler(btn.text)"
+      >{{ btn.text }}</a
+    >
+    <ng-template #button>
+      <button (click)="clickHandler(btn.text)">
+        {{ btn.text }}
+      </button>
+    </ng-template>
+  </li>
+</ul>
