@@ -97,10 +97,7 @@ export class AuthPageComponent implements OnInit {
       password: form.get('password')?.toString() ?? '',
     };
 
-    this.authService.logIn(data).subscribe({
-      next: () => this.router.back(),
-      error: this.haddleError,
-    });
+    this.authService.logIn(data).then(() => this.router.back()).catch(this.haddleError)
   }
 
   onSignUp(form: FormData) {
@@ -118,10 +115,7 @@ export class AuthPageComponent implements OnInit {
       },
     };
 
-    this.authService.register(data).subscribe({
-      next: () => this.router.back(),
-      error: this.haddleError,
-    });
+    this.authService.register(data).then(() => this.router.back()).catch(this.haddleError)
   }
 
   private haddleError(e: HttpErrorResponse) {
