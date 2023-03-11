@@ -9,6 +9,7 @@ export class PageContainerComponent {
   @Input() title: string = 'missing title';
   @Input() width: Widths = 'w8';
   @Input() height: Heigths = 'h9';
+  @Input() floating: boolean = false;
 }
 
 type Widths = 'w4' | 'w5' | 'w6' | 'w7' | 'w8';

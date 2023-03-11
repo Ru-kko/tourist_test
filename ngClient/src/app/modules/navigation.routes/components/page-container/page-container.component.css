@@ -29,6 +29,18 @@
   bottom: 6px;
 }
 
+.floating {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: rgba(30,30,31,.6);
+  top: 0;
+  left: 0;
+}
+
 @media (min-aspect-ratio: 1) {
   .w4 {
     width: calc(40vw - 100px);
