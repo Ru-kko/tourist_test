@@ -40,7 +40,6 @@ export class AuthService {
     return new Promise<AuthTokenResponse>((res, rej) => {
       this.http.post<AuthTokenResponse>(this.HOST + '/login', form).subscribe({
         next: (data) => {
-          console.log(data);
           localStorage.setItem('auth', JSON.stringify(data));
           this.authentication.next(data);
           res(data);
