@@ -1,3 +1,17 @@
-<app-page-container width="w7">
-  <table-component [data]="testData" [headers]="headers"></table-component>
+<app-page-container width="w7" title="Cities" [floating]="true">
+  <table-component
+    *ngIf="loaded; else loading"
+    [data]="data.content"
+    [headers]="headers"
+    (rowClick)="rowClick($event)"
+  ></table-component>
+  <ng-template #loading>
+    <loading-bar class="loading" width="20vw"></loading-bar>
+  </ng-template>
+  <pagination
+    *ngIf="loaded"
+    [pages]="data.totalPages"
+    [actual]="page"
+  ></pagination>
 </app-page-container>
+<dropdown-munu [props]="dropdownArguments" (onClick)="buttonClick($event)"></dropdown-munu>
