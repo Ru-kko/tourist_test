@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -8,7 +8,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class ListComponent<T extends Object> implements OnInit {
   @Input() idCol?: keyof T;
-  @Input() rowClick?: (row: T, e: MouseEvent) => void;
+  @Output() rowClick: EventEmitter<{row: T, event: MouseEvent}> = new EventEmitter();
   @Input() headers!: Headers<T>;
   @Input() data: T[] = [];
 
@@ -36,6 +36,10 @@ export class ListComponent<T extends Object> implements OnInit {
       }
     });
     return this.sanitizer.bypassSecurityTrustHtml(res);
+  }
+
+  handleClick(e: MouseEvent, row: T) {
+    this.rowClick.emit({row: row, event: e});
   }
 }
 

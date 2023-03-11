@@ -11,7 +11,7 @@
   <tbody>
     <tr
       *ngFor="let row of data"
-      (click)="rowClick?.(row, $event)"
+      (click)="handleClick($event, row)"
       (class)="({ clickable: rowClick })"
       [innerHtml]="createRow(row)"
     ></tr>
