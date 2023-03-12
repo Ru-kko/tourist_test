@@ -74,8 +74,10 @@ input:read-only ~ span {
   transform: translate(5px, -1.4rem);
 }
 
-input:read-only {
+input[readonly] {
   color: var(--blue);
+  font-weight: 900;
+  background-color: var(--gray);
 }
 
 input[type="button"], input[type="submit"] {
