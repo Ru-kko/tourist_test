@@ -1,4 +1,4 @@
-<app-page-container width="w7" title="Cities" [floating]="true">
+<app-page-container width="w7" title="Cities" [floating]="false">
   <table-component
     *ngIf="loaded; else loading"
     [data]="data.content"
@@ -13,5 +13,8 @@
     [pages]="data.totalPages"
     [actual]="page"
   ></pagination>
+</app-page-container>
+<app-page-container *ngIf="currentForm" [floating]="true" width="w4" height="h5" [title]="currentForm.title">
+  <form-component [data]="currentForm.props" (onSubmit)="onSubmit($event)" ></form-component>
 </app-page-container>
 <dropdown-munu [props]="dropdownArguments" (onClick)="buttonClick($event)"></dropdown-munu>

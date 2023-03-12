@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DropDownMenuArgs, Headers } from '../navigation.routes/components';
+import {
+  DropDownMenuArgs,
+  Headers,
+  InputProps,
+} from '../navigation.routes/components';
 import {
   AuthTokenResponse,
   City,
@@ -9,6 +13,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { CityService } from './services/CityApi.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-city',
@@ -20,6 +25,8 @@ export class CityComponent implements OnInit {
   loaded: boolean = false;
   auth: boolean | AuthTokenResponse = false;
   page: number = 1;
+
+  currentForm?: FloatingForm;
   headers: Headers<City> = {
     id: {
       name: 'id',
@@ -51,6 +58,14 @@ export class CityComponent implements OnInit {
       },
     ],
   };
+  cancel: InputProps = {
+    label: 'Cancel',
+    type: 'button',
+    name: 'cancel',
+    onClick: () => {
+      this.currentForm = undefined;
+    },
+  };
 
   constructor(
     private cityService: CityService,
@@ -74,6 +89,95 @@ export class CityComponent implements OnInit {
     this.authService.store$.subscribe((auth) => (this.auth = auth));
   }
 
+  generateCreationForm(): (InputProps | InputProps[])[] {
+    return [
+      { name: 'name', type: 'text', label: 'Name', required: true },
+      {
+        name: 'population',
+        type: 'number',
+        label: 'Population',
+        required: true,
+      },
+      [
+        {
+          name: 'mostReserverdHotel',
+          type: 'text',
+          label: 'Best Hotel',
+          required: true,
+        },
+        {
+          name: 'mostTuristicPlace',
+          type: 'text',
+          label: 'BestPlace',
+          required: true,
+        },
+      ],
+      [{ name: 'submit', type: 'submit', label: 'Create' }, this.cancel],
+    ];
+  }
+
+  generateEditForm(data: City): (InputProps | InputProps[])[] {
+    return [
+      {
+        name: 'id',
+        type: 'number',
+        required: true,
+        label: 'ID',
+        readOnly: true,
+        default: String(data.id),
+      },
+      {
+        name: 'name',
+        type: 'text',
+        label: 'Name',
+        required: true,
+        default: data.name,
+      },
+      {
+        name: 'population',
+        type: 'number',
+        label: 'Population',
+        default: String(data.population),
+        required: true,
+      },
+      [
+        {
+          name: 'mostReserverdHotel',
+          type: 'text',
+          label: 'Best Hotel',
+          default: String(data.mostReserverdHotel),
+          required: true,
+        },
+        {
+          name: 'mostTuristicPlace',
+          type: 'text',
+          label: 'BestPlace',
+          default: String(data.mostTuristicPlace),
+          required: true,
+        },
+      ],
+      [{ name: 'submit', type: 'submit', label: 'Edit' }, this.cancel],
+    ];
+  }
+
+  generateReservationForm(id: number): (InputProps | InputProps[])[] {
+    return [
+      [
+        {
+          name: 'id',
+          type: 'number',
+          required: true,
+          label: 'ID',
+          readOnly: true,
+          default: String(id),
+        },
+        { name: 'startDate', type: 'date', required: true, label: 'Date' },
+        { name: 'submit', type: 'submit', label: 'Reservate' },
+        this.cancel,
+      ],
+    ];
+  }
+
   rowClick({ row, event }: { row: City; event: MouseEvent }) {
     const args: DropDownMenuArgs<Button> = {
       open: true,
@@ -84,7 +188,7 @@ export class CityComponent implements OnInit {
         {
           text: Button.History,
           link: true,
-          href: '/',
+          href: '/city/' + row.id,
         },
       ],
     };
@@ -99,10 +203,95 @@ export class CityComponent implements OnInit {
     this.dropdownArguments = args;
   }
 
-  buttonClick(foo: any) {
-    // ToDo use it to handle droptown options
+  onSubmit(data: FormData) {
+    const endRequest = () => {
+      this.currentForm = undefined;
+    };
+    if (this.currentForm?.type === Button.Reservate) {
+      this.cityService
+        .reservateCity(
+          Number(data.get('id'))!,
+          data.get('startDate')?.valueOf() as string
+        )
+        .subscribe({
+          next: endRequest,
+          error: this.handleError,
+        });
+      return;
+    }
+    const city: Partial<City> = {};
+
+    city.name = data.get('name')?.valueOf() as string;
+    city.population = data.get('population')?.valueOf() as number;
+    city.mostTuristicPlace = data.get('mostTuristicPlace')?.valueOf() as string;
+    city.mostReserverdHotel = data
+      .get('mostReserverdHotel')
+      ?.valueOf() as string;
+
+    if (this.currentForm?.type === Button.New) {
+      this.cityService.createCity(city as City).subscribe({
+        next: endRequest,
+        error: this.handleError,
+      });
+      return;
+    }
+    city.id = Number(data.get('id'));
+
+    this.cityService.editCity(city as City).subscribe({
+      next: endRequest,
+      error: this.handleError,
+    });
+  }
+
+  handleError(error: HttpErrorResponse) {
+    switch (error.status) {
+      case 400:
+        return alert('verify your data');
+      case 403:
+        this.currentForm = undefined;
+        return alert("you shouldn't do this");
+      default:
+        alert("sorry it shouldn't be happening");
+    }
+  }
+
+  buttonClick({ button, data }: { button: Button; data: City }) {
+    switch (button) {
+      case Button.New:
+        this.currentForm = {
+          props: this.generateCreationForm(),
+          title: 'Add New City',
+          type: Button.New,
+        };
+        break;
+      case Button.Edit:
+        this.currentForm = {
+          props: this.generateEditForm(data),
+          title: 'Editing ' + data.name,
+          type: Button.Edit,
+        };
+        break;
+      case Button.Reservate:
+        this.currentForm = {
+          props: this.generateReservationForm(data.id),
+          title: 'Reservate ' + data.name,
+          type: Button.Reservate,
+        };
+        break;
+      case Button.Delete:
+        this.cityService
+          .deleteCity(data.id)
+          .subscribe({ error: this.handleError });
+    }
   }
 }
+
+interface FloatingForm {
+  props: (InputProps | InputProps[])[];
+  title: string;
+  type: Button;
+}
+
 enum Button {
   History = 'History',
   Reservate = 'Reservate',
