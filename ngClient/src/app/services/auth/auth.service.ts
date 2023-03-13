@@ -49,7 +49,7 @@ export class AuthService {
     });
   }
 
-  update(token: AuthTokenResponse) {
+  update(token: AuthTokenResponse | boolean) {
     localStorage.setItem('auth', JSON.stringify(token));
     this.authentication.next(token);
   }

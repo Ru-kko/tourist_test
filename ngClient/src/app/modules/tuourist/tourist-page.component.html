@@ -1,10 +1,26 @@
 <app-page-container width="w7" title="Tourists">
   <table-component
+    *ngIf="loaded; else loading"
     [headers]="headers"
     [data]="data.content"
+    (rowClick)="onRowClick($event)"
   ></table-component>
   <ng-template #loading>
     <loading-bar class="loading" width="20vw"></loading-bar>
   </ng-template>
-  <pagination></pagination>
+  <pagination
+    *ngIf="loaded"
+    [pages]="data.totalPages"
+    [actual]="page"
+  ></pagination>
 </app-page-container>
+<app-page-container
+  *ngIf="currentForm"
+  [floating]="true"
+  width="w4"
+  height="h5"
+  [title]="currentForm.title"
+>
+  <form-component [data]="currentForm.props" (onSubmit)="onSubmit($event)" ></form-component>
+</app-page-container>
+<dropdown-munu [props]="dropdownArguments" (onClick)="buttonClick($event)" ></dropdown-munu>
