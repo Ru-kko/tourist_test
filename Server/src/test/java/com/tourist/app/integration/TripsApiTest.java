@@ -36,24 +36,8 @@ import com.tourist.app.entity.dto.UserDTO;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@Sql(statements = {
-    "DELETE FROM Trips WHERE tripId = 124 OR tripId = 125 OR tripId = 126 OR tripId = 127;",
-    "DELETE FROM Tourists WHERE touristId = 125 OR touristId = 126 OR touristId = 127;",
-    "DELETE FROM Cities WHERE cityId = 124;"
-}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-@Sql(statements = {
-    "INSERT INTO Cities (cityId, name, population, mostTuristicPlace, mostReserverdHotel) VALUES " +
-        "(124, 'Frist', 123, 'Foo', 'Bar');",
-    "INSERT INTO Tourists (touristId, name, lastName, bornDate,travelBudget, travelFrequency , idCard) VALUES " +
-        "(125, 'Fooo', '02' ,'2012-03-12', 1120.2, 5, '1127464'), " +
-        "(126, 'User', '01' ,'2003-02-08', 10.2, 5, '1156764'), " +
-        "(127, 'User', '01' ,'2000-12-21', 15832.2, 5, '1564');",
-    "INSERT INTO Trips (tripId, startDate, cityId,touristId) VALUES " +
-        "(124, '2023-10-04', 124, 125), " +
-        "(125, '2023-10-04', 124, 125), " +
-        "(126, '2023-10-04', 124, 126), " +
-        "(127, '2023-10-04', 124, 127);"
-})
+@Sql(scripts = {"/dataDrop.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(scripts = {"/dataInit.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 @SuppressWarnings("null")
 class TripsApiTest {
   @Autowired

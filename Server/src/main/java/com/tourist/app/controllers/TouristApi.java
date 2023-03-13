@@ -34,7 +34,6 @@ import com.tourist.app.services.database.ITripService;
 import com.tourist.app.services.database.IUserService;
 import com.tourist.app.utils.TokenGenerator;
 
-import lombok.var;
 
 /**
  * It's a REST controller that handles the requests to the /tourist endpoint

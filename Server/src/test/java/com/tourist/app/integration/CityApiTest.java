@@ -36,13 +36,8 @@ import com.tourist.app.entity.dto.TouristDTO;
 import com.tourist.app.entity.dto.UserDTO;
 
 @TestInstance(Lifecycle.PER_CLASS)
-@Sql(statements = {
-    "DELETE FROM Cities WHERE cityId = 124 OR cityId = 125 OR cityId = 126" }, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-@Sql(statements = {
-    "INSERT INTO Cities (cityId, name, population, mostTuristicPlace, mostReserverdHotel) " +
-        "VALUES (124, 'Frist', 123, 'Foo', 'Bar')," +
-        "(125, 'Second', 325, 'Fizz', 'Buzz')," +
-        "(126, 'Third', 1452, 'Oof', 'Rab');" })
+@Sql(scripts = {"/dataDrop.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(scripts = {"/dataInit.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class CityApiTest {
   @Autowired
