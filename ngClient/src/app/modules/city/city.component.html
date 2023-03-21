@@ -1,20 +1,20 @@
 <app-page-container width="w7" title="Cities" [floating]="false">
-  <table-component
+  <app-table-component
     *ngIf="loaded; else loading"
     [data]="data.content"
     [headers]="headers"
     (rowClick)="rowClick($event)"
-  ></table-component>
+  ></app-table-component>
   <ng-template #loading>
-    <loading-bar class="loading" width="20vw"></loading-bar>
+    <app-loading-bar class="loading" width="20vw"></app-loading-bar>
   </ng-template>
-  <pagination
+  <app-pagination
     *ngIf="loaded"
     [pages]="data.totalPages"
     [actual]="page"
-  ></pagination>
+  ></app-pagination>
 </app-page-container>
 <app-page-container *ngIf="currentForm" [floating]="true" width="w4" height="h5" [title]="currentForm.title">
-  <form-component [data]="currentForm.props" (onSubmit)="onSubmit($event)" ></form-component>
+  <app-form-component [data]="currentForm.props" (Submit)="onSubmit($event)" ></app-form-component>
 </app-page-container>
-<dropdown-munu [props]="dropdownArguments" (onClick)="buttonClick($event)"></dropdown-munu>
+<app-dropdown-menu [props]="dropdownArguments" (Click)="buttonClick($event)"></app-dropdown-menu>

@@ -17,9 +17,9 @@ import { TripsApiService } from './services/trips-api.service';
   styleUrls: ['./trips-page.component.css'],
 })
 export class TripsPageComponent implements OnInit {
-  title: string = '';
-  loaded: boolean = false;
-  page: number = 1;
+  title = '';
+  loaded = false;
+  page = 1;
   info: PageResponse<Trip> = EmptyResponse();
   headres: Headers<Trip> = {
     id: {
@@ -51,7 +51,7 @@ export class TripsPageComponent implements OnInit {
     });
     if (location.pathname.startsWith('/city/')) {
       this.tripService
-        .getTripsFromCity(this.router.snapshot.paramMap.get('id')!, this.page)
+        .getTripsFromCity(this.router.snapshot.paramMap.get('id') as string, this.page)
         .subscribe({
           next: (data) => {
             this.title = 'Trips in ' + (data.content[0]?.city.name ?? 'NaN');
@@ -63,7 +63,7 @@ export class TripsPageComponent implements OnInit {
     } else {
       this.tripService
         .getTripsFromTourist(
-          this.router.snapshot.paramMap.get('id')!,
+          this.router.snapshot.paramMap.get('id') as string,
           this.page
         )
         .subscribe({

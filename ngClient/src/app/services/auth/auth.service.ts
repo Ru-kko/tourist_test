@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, take } from 'rxjs';
 import { AuthTokenResponse, User, UserRegistration } from 'src/app/typings';
 import { environment } from 'src/environments/environment.development';
 import { BehaviorSubject } from 'rxjs';
@@ -16,7 +15,7 @@ export class AuthService {
   readonly store$ = this.authentication.asObservable();
 
   constructor(private http: HttpClient) {
-    let auth = localStorage.getItem('auth');
+    const auth = localStorage.getItem('auth');
 
     this.authentication.next(auth ? JSON.parse(auth) : false);
   }

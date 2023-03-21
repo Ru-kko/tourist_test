@@ -92,7 +92,7 @@ export class AuthPageComponent implements OnInit {
   }
 
   onLogIn(form: FormData) {
-    let data: User = {
+    const data: User = {
       cardId: form.get('cardId')?.toString() ?? '',
       password: form.get('password')?.toString() ?? '',
     };

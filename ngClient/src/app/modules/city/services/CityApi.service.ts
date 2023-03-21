@@ -26,7 +26,7 @@ export class CityService {
     });
   }
 
-  getCities(page: number = 1): Observable<PageResponse<City>> {
+  getCities(page = 1): Observable<PageResponse<City>> {
     return this.http.get<PageResponse<City>>(this.endpoint + '?page=' + page);
   }
 

@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'pagination',
+  selector: 'app-pagination',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css'],
 })
 export class PaginationComponent implements OnInit {
-  @Input() pages: number = 1;
-  @Input() actual: number = 1;
+  @Input() pages = 1;
+  @Input() actual = 1;
   @Input() onclick?: (n: number) => void;
 
   range!: number[];

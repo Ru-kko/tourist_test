@@ -27,7 +27,7 @@ export class TouristApiService {
     });
   }
 
-  getTourists(page: number = 1): Observable<PageResponse<Tourist>> {
+  getTourists(page = 1): Observable<PageResponse<Tourist>> {
     return this.http.get<PageResponse<Tourist>>(
       this.endpoint + '?page=' + page
     );

@@ -2,11 +2,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'table-component',
+  selector: 'app-table-component',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
 })
-export class ListComponent<T extends Object> implements OnInit {
+export class ListComponent<T extends object> implements OnInit {
   @Input() idCol?: keyof T;
   @Output() rowClick: EventEmitter<{row: T, event: MouseEvent}> = new EventEmitter();
   @Input() headers!: Headers<T>;
@@ -20,7 +20,7 @@ export class ListComponent<T extends Object> implements OnInit {
     }
   }
 
-  getKeys() {
+  getKeys(): (Header<T, keyof T>)[] {
     return Object.values(this.headers);
   }
 

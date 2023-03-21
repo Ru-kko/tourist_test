@@ -20,7 +20,7 @@ export class NavigationComponent implements OnInit {
   logged: IconDefinition = faRightFromBracket;
   unLogged: IconDefinition = faUser;
   authState: AuthTokenResponse | boolean = false;
-  navState: boolean = false;
+  navState = false;
   toggle = (_: MouseEvent, state: boolean) => {
     this.navState = state;
   };

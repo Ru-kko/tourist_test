@@ -7,7 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CastPipe implements PipeTransform {
 
-  transform<T>(value: any): T {
+  transform<T>(value: unknown): T {
     return value as T;
   }
 

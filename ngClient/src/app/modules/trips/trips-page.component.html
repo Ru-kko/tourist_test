@@ -1,7 +1,7 @@
 <app-page-container [title]="title" width="w5">
-  <loading-bar *ngIf="!loaded; else load" class="loading"></loading-bar>
+  <app-loading-bar *ngIf="!loaded; else load" class="loading"></app-loading-bar>
   <ng-template #load>
-    <table-component  [headers]="headres" [data]="info.content"></table-component>
-    <pagination [pages]="info.totalPages" [actual]="page"></pagination>
+    <app-table-component  [headers]="headres" [data]="info.content"></app-table-component>
+    <app-pagination [pages]="info.totalPages" [actual]="page"></app-pagination>
   </ng-template>
 </app-page-container>

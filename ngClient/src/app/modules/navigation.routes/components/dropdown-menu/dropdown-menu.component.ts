@@ -8,11 +8,11 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'dropdown-munu',
-  templateUrl: './dropdown-munu.component.html',
-  styleUrls: ['./dropdown-munu.component.css'],
+  selector: 'app-dropdown-menu',
+  templateUrl: './dropdown-menu.component.html',
+  styleUrls: ['./dropdown-menu.component.css'],
 })
-export class DropdownMunuComponent<T extends string> implements OnChanges {
+export class DropdownMenuComponent<T extends string> implements OnChanges {
   @Input() props: DropDownMenuArgs<T> = {
     open: false,
     buttons: [],
@@ -20,7 +20,7 @@ export class DropdownMunuComponent<T extends string> implements OnChanges {
     y: 0,
     saveData: null,
   };
-  @Output() onClick: EventEmitter<{ button: T; data: any }> =
+  @Output() Click: EventEmitter<{ button: T; data: unknown }> =
     new EventEmitter();
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -42,14 +42,14 @@ export class DropdownMunuComponent<T extends string> implements OnChanges {
   }
 
   clickHandler(btn: T) {
-    this.onClick.emit({ data: this.props.saveData, button: btn });
+    this.Click.emit({ data: this.props.saveData, button: btn });
   }
 }
 
 export interface DropDownMenuArgs<T extends string> {
   open: boolean;
   buttons: DropDownBtn<T>[];
-  saveData?: any;
+  saveData?: unknown;
   x: number;
   y: number;
 }

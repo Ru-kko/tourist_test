@@ -2,15 +2,15 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'delayed-link',
+  selector: 'app-delayed-link',
   templateUrl: './delayed-link.component.html',
   styleUrls: ['./delayed-link.component.css'],
 })
 export class DelayedLinkComponent {
-  private clicked: Boolean = false;
+  private clicked = false;
 
-  @Input() delay: number = 500;
-  @Input() href: String = '#';
+  @Input() delay = 500;
+  @Input() href = '#';
   @Input() onClick?: (e: MouseEvent) => void;
 
   constructor(private router: Router) {}

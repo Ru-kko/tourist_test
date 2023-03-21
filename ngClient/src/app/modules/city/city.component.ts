@@ -22,9 +22,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class CityComponent implements OnInit {
   data: PageResponse<City> = EmptyResponse();
-  loaded: boolean = false;
+  loaded = false;
   auth: boolean | AuthTokenResponse = false;
-  page: number = 1;
+  page = 1;
 
   currentForm?: FloatingForm;
   headers: Headers<City> = {
@@ -210,7 +210,7 @@ export class CityComponent implements OnInit {
     if (this.currentForm?.type === Button.Reservate) {
       this.cityService
         .reservateCity(
-          Number(data.get('id'))!,
+          Number(data.get('id')),
           data.get('startDate')?.valueOf() as string
         )
         .subscribe({
@@ -255,7 +255,8 @@ export class CityComponent implements OnInit {
     }
   }
 
-  buttonClick({ button, data }: { button: Button; data: City }) {
+  buttonClick({ button, data }: { button: Button; data: unknown }) {
+    const city = data as City;
     switch (button) {
       case Button.New:
         this.currentForm = {
@@ -266,21 +267,21 @@ export class CityComponent implements OnInit {
         break;
       case Button.Edit:
         this.currentForm = {
-          props: this.generateEditForm(data),
-          title: 'Editing ' + data.name,
+          props: this.generateEditForm(city),
+          title: 'Editing ' + city.name,
           type: Button.Edit,
         };
         break;
       case Button.Reservate:
         this.currentForm = {
-          props: this.generateReservationForm(data.id),
-          title: 'Reservate ' + data.name,
+          props: this.generateReservationForm(city.id),
+          title: 'Reservate ' + city.name,
           type: Button.Reservate,
         };
         break;
       case Button.Delete:
         this.cityService
-          .deleteCity(data.id)
+          .deleteCity(city.id)
           .subscribe({ error: this.handleError });
     }
   }

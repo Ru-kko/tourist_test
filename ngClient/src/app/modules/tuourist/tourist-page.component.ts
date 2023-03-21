@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import {
@@ -20,11 +20,11 @@ import { TouristApiService } from './services/tourist-api.service';
   templateUrl: './tourist-page.component.html',
   styleUrls: ['./tourist-page.component.css'],
 })
-export class TouristPageComponent {
+export class TouristPageComponent implements OnInit {
   data: PageResponse<Tourist> = EmptyResponse();
-  loaded: boolean = false;
+  loaded = false;
   auth: boolean | AuthTokenResponse = false;
-  page: number = 1;
+  page = 1;
   currentForm?: FloatingForm;
 
   dropdownArguments: DropDownMenuArgs<Button> = {
@@ -174,15 +174,16 @@ export class TouristPageComponent {
     this.dropdownArguments = args;
   }
 
-  buttonClick({ button, data }: { button: Button; data: Tourist }) {
+  buttonClick({ button, data }: { button: Button; data: unknown }) {
+    const tourist = data as Tourist;
     switch (button) {
       case Button.Delete:
         this.usersService.deleteMe().catch(this.handleError);
         break;
       case Button.Edit:
         this.currentForm = {
-          props: this.generateEditForm(data),
-          title: 'Editing ' + data.name,
+          props: this.generateEditForm(tourist),
+          title: 'Editing ' + tourist.name,
           type: Button.Edit,
         };
         break;
