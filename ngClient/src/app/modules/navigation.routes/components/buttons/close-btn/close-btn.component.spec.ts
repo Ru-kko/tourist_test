@@ -27,7 +27,6 @@ describe('CloseBtnComponent', () => {
     fixture.detectChanges();
 
     const open = fixture.debugElement.query(By.css('button')).nativeElement as HTMLButtonElement;
-    console.log(open.className);
     expect(open.className).toBe('on');
 
     component.state = false;

@@ -3,13 +3,20 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
   selector: 'app-form-component-input',
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.css']
+  styleUrls: ['./input.component.css'],
 })
 export class InputComponent implements OnInit {
-  @Input() inputProps!: InputProps;
+  @Input() inputProps: InputProps = {
+    name: 'missing',
+    type: 'button',
+    label: 'missing',
+  };
 
-  changeValue(name:string, event: Event) {
-    this.inputProps.onChange?.(name, (event.target as HTMLInputElement).value ?? '');
+  changeValue(name: string, event: Event) {
+    this.inputProps.onChange?.(
+      name,
+      (event.target as HTMLInputElement).value ?? ''
+    );
   }
 
   ngOnInit(): void {

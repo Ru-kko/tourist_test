@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+// import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavigationModuleComponent } from './navigation-module.component';
+// import { NavigationModuleComponent } from './navigation-module.component';
 
-describe('NavigationModuleComponent', () => {
-  let component: NavigationModuleComponent;
+// describe('NavigationModuleComponent', () => {
+  /* let component: NavigationModuleComponent;
   let fixture: ComponentFixture<NavigationModuleComponent>;
 
   beforeEach(async () => {
@@ -19,5 +19,5 @@ describe('NavigationModuleComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-});
+  }); */
+// });

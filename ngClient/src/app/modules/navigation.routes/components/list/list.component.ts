@@ -7,7 +7,6 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./list.component.css'],
 })
 export class ListComponent<T extends object> implements OnInit {
-  @Input() idCol?: keyof T;
   @Output() rowClick: EventEmitter<{row: T, event: MouseEvent}> = new EventEmitter();
   @Input() headers!: Headers<T>;
   @Input() data: T[] = [];

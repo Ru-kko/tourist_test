@@ -6,10 +6,9 @@ import { InputComponent, InputProps } from './input/input.component';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css'],
 })
-export class FormComponent<T> {
+export class FormComponent {
   @Output() Submit: EventEmitter<FormData> = new EventEmitter();
   @Input() data: (InputProps[] | InputProps)[] = [];
-  formData: Partial<T> = {};
 
   submit(event: Event) {
     event.preventDefault();
