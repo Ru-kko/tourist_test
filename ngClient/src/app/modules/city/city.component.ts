@@ -89,93 +89,105 @@ export class CityComponent implements OnInit {
     this.authService.store$.subscribe((auth) => (this.auth = auth));
   }
 
-  generateCreationForm(): (InputProps | InputProps[])[] {
-    return [
-      { name: 'name', type: 'text', label: 'Name', required: true },
-      {
-        name: 'population',
-        type: 'number',
-        label: 'Population',
-        required: true,
-      },
-      [
+  generateCreationForm() {
+    this.currentForm = {
+      props: [
+        { name: 'name', type: 'text', label: 'Name', required: true },
         {
-          name: 'mostReserverdHotel',
-          type: 'text',
-          label: 'Best Hotel',
+          name: 'population',
+          type: 'number',
+          label: 'Population',
           required: true,
         },
-        {
-          name: 'mostTuristicPlace',
-          type: 'text',
-          label: 'BestPlace',
-          required: true,
-        },
+        [
+          {
+            name: 'mostReserverdHotel',
+            type: 'text',
+            label: 'Best Hotel',
+            required: true,
+          },
+          {
+            name: 'mostTuristicPlace',
+            type: 'text',
+            label: 'BestPlace',
+            required: true,
+          },
+        ],
+        [{ name: 'submit', type: 'submit', label: 'Create' }, this.cancel],
       ],
-      [{ name: 'submit', type: 'submit', label: 'Create' }, this.cancel],
-    ];
+      title: 'Add New City',
+      type: Button.New,
+    };
   }
 
-  generateEditForm(data: City): (InputProps | InputProps[])[] {
-    return [
-      {
-        name: 'id',
-        type: 'number',
-        required: true,
-        label: 'ID',
-        readOnly: true,
-        default: String(data.id),
-      },
-      {
-        name: 'name',
-        type: 'text',
-        label: 'Name',
-        required: true,
-        default: data.name,
-      },
-      {
-        name: 'population',
-        type: 'number',
-        label: 'Population',
-        default: String(data.population),
-        required: true,
-      },
-      [
-        {
-          name: 'mostReserverdHotel',
-          type: 'text',
-          label: 'Best Hotel',
-          default: String(data.mostReserverdHotel),
-          required: true,
-        },
-        {
-          name: 'mostTuristicPlace',
-          type: 'text',
-          label: 'BestPlace',
-          default: String(data.mostTuristicPlace),
-          required: true,
-        },
-      ],
-      [{ name: 'submit', type: 'submit', label: 'Edit' }, this.cancel],
-    ];
-  }
-
-  generateReservationForm(id: number): (InputProps | InputProps[])[] {
-    return [
-      [
+  generateEditForm(data: City) {
+    this.currentForm = {
+      props: [
         {
           name: 'id',
           type: 'number',
           required: true,
           label: 'ID',
           readOnly: true,
-          default: String(id),
+          default: String(data.id),
         },
-        { name: 'startDate', type: 'date', required: true, label: 'Date' },
-        { name: 'submit', type: 'submit', label: 'Reservate' },
-        this.cancel,
+        {
+          name: 'name',
+          type: 'text',
+          label: 'Name',
+          required: true,
+          default: data.name,
+        },
+        {
+          name: 'population',
+          type: 'number',
+          label: 'Population',
+          default: String(data.population),
+          required: true,
+        },
+        [
+          {
+            name: 'mostReserverdHotel',
+            type: 'text',
+            label: 'Best Hotel',
+            default: String(data.mostReserverdHotel),
+            required: true,
+          },
+          {
+            name: 'mostTuristicPlace',
+            type: 'text',
+            label: 'BestPlace',
+            default: String(data.mostTuristicPlace),
+            required: true,
+          },
+        ],
+        [{ name: 'submit', type: 'submit', label: 'Edit' }, this.cancel],
       ],
-    ];
+      title: 'Editing ' + data.name,
+      type: Button.Edit,
+    };
+  }
+
+  generateReservationForm(city: City) {
+    this.currentForm = {
+      props: [
+        [
+          {
+            name: 'id',
+            type: 'number',
+            required: true,
+            label: 'ID',
+            readOnly: true,
+            default: String(city.id),
+          },
+          { name: 'startDate', type: 'date', required: true, label: 'Date' },
+          { name: 'submit', type: 'submit', label: 'Reservate' },
+          this.cancel,
+        ],
+      ],
+      title: 'Reservate ' + city.name,
+      type: Button.Reservate,
+    };
   }
 
   rowClick({ row, event }: { row: City; event: MouseEvent }) {
@@ -259,31 +271,23 @@ export class CityComponent implements OnInit {
     const city = data as City;
     switch (button) {
       case Button.New:
-        this.currentForm = {
-          props: this.generateCreationForm(),
-          title: 'Add New City',
-          type: Button.New,
-        };
+        this.generateCreationForm();
         break;
       case Button.Edit:
-        this.currentForm = {
-          props: this.generateEditForm(city),
-          title: 'Editing ' + city.name,
-          type: Button.Edit,
-        };
+        this.generateEditForm(city);
         break;
       case Button.Reservate:
-        this.currentForm = {
-          props: this.generateReservationForm(city.id),
-          title: 'Reservate ' + city.name,
-          type: Button.Reservate,
-        };
+        this.generateReservationForm(city);
         break;
       case Button.Delete:
         this.cityService
           .deleteCity(city.id)
           .subscribe({ error: this.handleError });
     }
+  }
+
+  isAdmin() {
+    return typeof this.auth !== 'boolean' && this.auth.admin;
   }
 }
 

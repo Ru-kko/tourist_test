@@ -8,13 +8,27 @@
   <ng-template #loading>
     <app-loading-bar class="loading" width="20vw"></app-loading-bar>
   </ng-template>
+  <!-- *ngIf="isAdmin()" -->
+  <button (click)="generateCreationForm()" >New</button>
   <app-pagination
     *ngIf="loaded"
     [pages]="data.totalPages"
     [actual]="page"
   ></app-pagination>
 </app-page-container>
-<app-page-container *ngIf="currentForm" [floating]="true" width="w4" height="h5" [title]="currentForm.title">
-  <app-form-component [data]="currentForm.props" (Submit)="onSubmit($event)" ></app-form-component>
+<app-page-container
+  *ngIf="currentForm"
+  [floating]="true"
+  width="w4"
+  height="h5"
+  [title]="currentForm.title"
+>
+  <app-form-component
+    [data]="currentForm.props"
+    (Submit)="onSubmit($event)"
+  ></app-form-component>
 </app-page-container>
-<app-dropdown-menu [props]="dropdownArguments" (Click)="buttonClick($event)"></app-dropdown-menu>
+<app-dropdown-menu
+  [props]="dropdownArguments"
+  (Click)="buttonClick($event)"
+></app-dropdown-menu>
