@@ -8,8 +8,7 @@
   <ng-template #loading>
     <app-loading-bar class="loading" width="20vw"></app-loading-bar>
   </ng-template>
-  <!-- *ngIf="isAdmin()" -->
-  <button (click)="generateCreationForm()" >New</button>
+  <button *ngIf="isAdmin()" (click)="generateCreationForm()" >New</button>
   <app-pagination
     *ngIf="loaded"
     [pages]="data.totalPages"
