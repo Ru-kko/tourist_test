@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  db:
+    build:
+      dockerfile: ./Docker/db/Dockerfile
+      context: .
+    environment:
+      - MSSQL_SA_PASSWORD=MysecretPassword123
+    ports:
+      - "1433:1433"
+  server:
+    build: 
+      dockerfile: ./Docker/server/Dockerfile
+      context: .
+    environment:
+      - MSSQL_HOST=db
+      - MSSQL_SA_PASSWORD=MysecretPassword123
+    ports: 
+      - "90:90"
+    networks:
+      - default
+    depends_on:
+      db:
+        condition: service_healthy
+  client:
+    build:
+      dockerfile: ./Docker/angular/Dockerfile
+      context: .
+      args:
+        HOST: http://localhost:90
+    ports: 
+      - "80:80"
+    depends_on:
+      - server
+networks:
+  default:
+    driver: bridge
