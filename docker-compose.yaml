@@ -9,6 +9,8 @@ services:
       - MSSQL_SA_PASSWORD=MysecretPassword123
     ports:
       - "1433:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
   server:
     build: 
       dockerfile: ./Docker/server/Dockerfile
@@ -36,3 +38,5 @@ services:
 networks:
   default:
     driver: bridge
+volumes:
+  mssql-data:
