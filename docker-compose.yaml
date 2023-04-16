@@ -23,8 +23,7 @@ services:
     networks:
       - default
     depends_on:
-      db:
-        condition: service_healthy
+      - db
   client:
     build:
       dockerfile: ./Docker/angular/Dockerfile
