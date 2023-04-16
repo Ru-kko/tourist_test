@@ -8,7 +8,7 @@ ENV MSSQL_DATA_DIR=/var/opt/mssql
 
 WORKDIR /src
 
-COPY ./docker .
+COPY ./docker/Database .
 
 HEALTHCHECK CMD /opt/mssql-tools/bin/sqlcmd -U sa -P ${MSSQL_SA_PASSWORD} -Q "SELECT 1" || exit 1
 
