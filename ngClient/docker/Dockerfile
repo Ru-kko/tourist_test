@@ -3,7 +3,7 @@ FROM node:lts as node
 ARG HOST
 
 WORKDIR /app
-COPY ngClient/ /app
+COPY . /app
 
 RUN echo "export const environment = { HOST: '${HOST}', };" > /app/src/environments/environment.prod.ts 
 
@@ -16,4 +16,4 @@ EXPOSE 80
 
 COPY --from=node /app/dist/ng-client /usr/share/nginx/html
 
-COPY Docker/angular/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf

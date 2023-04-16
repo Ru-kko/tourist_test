@@ -2,7 +2,7 @@ FROM maven:3.8.5-openjdk-17
 
 WORKDIR /app
 
-COPY Server /app
+COPY . /app
 
 ENV MSSQL_USER=sa
 ENV MSSQL_SA_PASSWORD=Password1
