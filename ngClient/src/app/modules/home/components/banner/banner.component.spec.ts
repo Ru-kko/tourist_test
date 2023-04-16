@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DelayedLinkComponent } from '../delayed-link/delayed-link.component';
 
 import { BannerComponent } from './banner.component';
 
@@ -8,7 +9,7 @@ describe('BannerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BannerComponent ]
+      declarations: [ BannerComponent, DelayedLinkComponent ]
     })
     .compileComponents();
 

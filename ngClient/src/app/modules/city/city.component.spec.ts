@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+// import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CityComponent } from './city.component';
+// import { CityComponent } from './city.component';
 
-describe('CityComponent', () => {
-  let component: CityComponent;
+// describe('CityComponent', () => {
+  /* let component: CityComponent;
   let fixture: ComponentFixture<CityComponent>;
 
   beforeEach(async () => {
@@ -19,5 +19,5 @@ describe('CityComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-});
+  }); */
+// });

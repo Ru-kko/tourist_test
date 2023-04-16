@@ -44,7 +44,7 @@ h1::before {
   z-index: -10;
 }
 
-:host/deep/ delayed-link > a {
+:host/deep/ app-delayed-link > a {
   display: block;
   height: 100vh;
   width: 50vw;
@@ -53,20 +53,20 @@ h1::before {
   transition: transform 0.5s ease-out;
 }
 
-:host/deep/ delayed-link > a:hover > h1 {
+:host/deep/ app-delayed-link > a:hover > h1 {
   visibility: visible;
 }
 
-:host/deep/ delayed-link > a:hover > h1::before {
+:host/deep/ app-delayed-link > a:hover > h1::before {
   transform-origin: bottom center;
   transform: scale(1);
 }
 
-:host/deep/ delayed-link.city > a::after {
+:host/deep/ app-delayed-link.city > a::after {
   transform: scaleX(-1);
 }
 
-:host/deep/ delayed-link > a::after {
+:host/deep/ app-delayed-link > a::after {
   box-shadow: inset -30vw 0vh 13vw 0vw rgb(0 0 0 / 70%);
   content: "";
   display: block;
@@ -89,15 +89,15 @@ h1::before {
   );
 }
 
-:host/deep/ delayed-link > a:hover > img {
+:host/deep/ app-delayed-link > a:hover > img {
   transform: scale(1.1);
 }
 
-:host/deep/ delayed-link > a:hover:after {
+:host/deep/ app-delayed-link > a:hover:after {
   box-shadow: none;
 }
 
-:host/deep/ delayed-link.city > a > img {
+:host/deep/ app-delayed-link.city > a > img {
   mask-image: linear-gradient(
     90deg,
     rgba(0, 0, 0, 1) 0%,
@@ -114,7 +114,7 @@ h1::before {
   left: 0;
 }
 
-:host/deep/ delayed-link.travelers > a > img {
+:host/deep/ app-delayed-link.travelers > a > img {
   mask-image: linear-gradient(
     270deg,
     rgba(0, 0, 0, 1) 0%,
@@ -132,7 +132,7 @@ h1::before {
   right: 0;
 }
 
-:host/deep/.out delayed-link.travelers > a {
+:host/deep/.out app-delayed-link.travelers > a {
   transform: translateX(100vw);
 }
 

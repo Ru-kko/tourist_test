@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+// import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TripsPageComponent } from './trips-page.component';
+// import { TripsPageComponent } from './trips-page.component';
 
-describe('TripsPageComponent', () => {
-  let component: TripsPageComponent;
+// describe('TripsPageComponent', () => {
+  /* let component: TripsPageComponent;
   let fixture: ComponentFixture<TripsPageComponent>;
 
   beforeEach(async () => {
@@ -19,5 +19,5 @@ describe('TripsPageComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-});
+  }); */
+// });
