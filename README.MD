@@ -19,7 +19,7 @@ This application has an security layer based on JWT
 - Git
 
 ``` sh
-git clone https://github.com/Ru-kko/tourist_test.git /app
+git clone https://gitlab.com/Ru-kko/tourist-app.git /app
 cd /app
 docker compose up
 ```
