@@ -1,0 +1,7 @@
+**/.vscode
+**/dist
+**/.angular
+**/node_modules
+**/target
+**/.mvn
+**/.vscode
