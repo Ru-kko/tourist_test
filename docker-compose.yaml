@@ -3,8 +3,8 @@ version: "3.8"
 services:
   db:
     build:
-      dockerfile: ./Server/docker/Dockerfile.databse
       context: ./Server
+      dockerfile: ./docker/Database/Dockerfile
     environment:
       - MSSQL_SA_PASSWORD=MysecretPassword123
     networks:
@@ -15,21 +15,22 @@ services:
       - mssql-data:/var/opt/mssql
   server:
     build: 
-      dockerfile: ./Server/docker/Dokerfile.server
       context: ./Server
+      dockerfile: ./docker/Dockerfile
     environment:
       - MSSQL_HOST=db
       - MSSQL_SA_PASSWORD=MysecretPassword123
     ports: 
       - "90:90"
+    depends_on:
+      db: 
+        condition: service_healthy
     networks:
       - default
-    depends_on:
-      - db
   client:
     build:
-      dockerfile: ./ngClient/docker/Dockerfile
       context: ./ngClient
+      dockerfile: ./docker/Dockerfile
       args:
         HOST: http://localhost:90
     ports: 
