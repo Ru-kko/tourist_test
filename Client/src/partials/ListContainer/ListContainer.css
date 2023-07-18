@@ -1,9 +1,8 @@
 .list-container {
-  width: calc(80vw - 100px);
   height: calc(90vh - 100px);
   background-color: var(--white);
   border-radius: 20px;
-  padding: 50px;
+  padding: 20px;
   position: absolute;
   display: grid;
   grid-template-rows: 3rem 1fr 30px 5vh;

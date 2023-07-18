@@ -4,7 +4,9 @@
   background-color: var(--main);
   overflow: hidden;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
 }
 
 :root {
